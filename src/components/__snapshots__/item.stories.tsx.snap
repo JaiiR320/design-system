@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`As Link 1`] = `
+- link "Constructed Open folder":
+  - /url: "#constructed"
+  - text: Constructed
+  - paragraph: Open folder
+`;
+
+exports[`Compare Selection 1`] = `
+- group "Snapshots to compare":
+  - button "2 Swap Karn for Birds Nov 7, 2026, 01:00 AM" [pressed]:
+    - text: 2 Swap Karn for Birds
+    - paragraph: Nov 7, 2026, 01:00 AM
+  - button "1 Initial build Nov 7, 2026, 12:59 AM" [pressed]:
+    - text: 1 Initial build
+    - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Save #3 Nov 6, 2026, 11:42 PM":
+    - text: "Save #3"
+    - paragraph: Nov 6, 2026, 11:42 PM
+`;
+
+exports[`Default 1`] = `
+- text: Initial build
+- paragraph: Nov 7, 2026, 12:59 AM
+- button "Load"
+`;
+
+exports[`Settings Rows 1`] = `
+- text: Cover image
+- paragraph: Shown on the deck tile.
+- button "Edit crop"
+- button "Clear"
+- separator
+- text: Constructed
+- paragraph: 0 folders | 1 deck
+`;
+
+exports[`Variants 1`] = `
+- text: outline md
+- paragraph: Description text
+- text: outline md data-selected
+- paragraph: Description text
+- text: muted md
+- paragraph: Description text
+- text: plain md
+- paragraph: Description text
+- text: outline sm
+- paragraph: Description text
+- text: muted sm
+- paragraph: Description text
+- text: plain sm
+- paragraph: Description text
+`;
