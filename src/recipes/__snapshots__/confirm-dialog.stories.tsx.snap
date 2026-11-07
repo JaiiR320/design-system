@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Confirmed 1`] = `
+- button "Delete deck"
+- status: Atraxa Superfriends deleted.
+`;
+
+exports[`Default 1`] = `
+- button "Delete deck"
+`;
+
+exports[`Failed 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This will delete the deck and all 3 snapshots. This can't be undone.
+  - alert: Couldn't delete the deck. Check your connection and try again.
+  - button "Cancel"
+  - button "Try again"
+`;
+
+exports[`From Deck Actions 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This will delete the deck and all 3 snapshots. This can't be undone.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Open 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This will delete the deck and all 3 snapshots. This can't be undone.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Pending 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This will delete the deck and all 3 snapshots. This can't be undone.
+  - button "Cancel" [disabled]
+  - button "Deleting…" [disabled]
+`;
