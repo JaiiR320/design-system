@@ -1,0 +1,118 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Cancel Restores Load 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Compare"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - text: Swap Karn for Birds
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Swap Karn for Birds"
+  - button "Load Swap Karn for Birds": Load
+  - text: Initial build
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete Initial build"
+  - button "Load Initial build": Load
+`;
+
+exports[`Default 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Compare"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - text: Swap Karn for Birds
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Swap Karn for Birds"
+  - button "Load Swap Karn for Birds": Load
+  - text: Initial build
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete Initial build"
+  - button "Load Initial build": Load
+`;
+
+exports[`Delete Confirm Revealed 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Compare"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - text: Swap Karn for Birds
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Swap Karn for Birds"
+  - button "Load Swap Karn for Birds": Load
+  - text: Initial build
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete Initial build" [expanded]
+  - button "Load Initial build": Load
+  - alert "Confirm delete Initial build":
+    - text: Deleting "Initial build" cannot be undone.
+    - button "Cancel"
+    - button "Delete Snapshot"
+`;
+
+exports[`Load Anyways 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Compare"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - text: Swap Karn for Birds
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Swap Karn for Birds"
+  - button "Load Swap Karn for Birds": Load
+  - text: Initial build
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete Initial build"
+  - button "Load Initial build": Load
+`;
+
+exports[`Load Confirm Revealed 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Compare"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - text: Swap Karn for Birds
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Swap Karn for Birds"
+  - button "Load Swap Karn for Birds" [expanded]: Load
+  - alert "Confirm load Swap Karn for Birds":
+    - text: Loading this snapshot will overwrite your current live deck.
+    - button "Cancel"
+    - button "Save Snapshot"
+    - button "Load Anyways"
+  - text: Initial build
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete Initial build"
+  - button "Load Initial build": Load
+`;
+
+exports[`Selection Mode 1`] = `
+- region "Snapshot history":
+  - heading "Snapshot History" [level=2]
+  - paragraph: 2 snapshots
+  - button "Exit Compare" [pressed]
+  - button "Compare Selected"
+  - separator
+  - text: 1 unnamed save collapsed
+  - separator
+  - group "Snapshots to compare":
+    - button "2 Swap Karn for Birds Nov 7, 2026, 01:00 AM" [pressed]:
+      - text: 2 Swap Karn for Birds
+      - paragraph: Nov 7, 2026, 01:00 AM
+    - button "1 Initial build Nov 7, 2026, 12:59 AM" [pressed]:
+      - text: 1 Initial build
+      - paragraph: Nov 7, 2026, 12:59 AM
+`;
