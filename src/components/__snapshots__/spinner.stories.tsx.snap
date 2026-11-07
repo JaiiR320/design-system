@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+
+`;
+
+exports[`Sizes 1`] = `
+
+`;
+
+exports[`Status 1`] = `
+- status "Loading printings"
+`;
