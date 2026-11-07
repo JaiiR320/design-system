@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Caption 1`] = `
+- separator
+- text: 1 unnamed save collapsed
+- separator
+`;
+
+exports[`Default 1`] = `
+- separator
+`;
+
+exports[`Vertical 1`] = `
+- text: Undo
+- separator
+- text: Import
+- separator
+- text: Export
+`;
