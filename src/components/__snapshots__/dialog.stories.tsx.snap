@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Backdrop Closes 1`] = `
+- button "New Deck"
+`;
+
+exports[`Default 1`] = `
+- button "New Deck"
+`;
+
+exports[`Divided 1`] = `
+- dialog "Export Deck":
+  - heading "Export Deck" [level=2]
+  - button "Close"
+  - paragraph: Plain-text decklist, one card per line.
+  - textbox "Decklist": 1 Ajani, Mentor of Heroes 1 Anguished Unmaking 1 Arcane Signet 1 Atraxa, Praetors' Voice 1 Beast Within 1 Birds of Paradise 1 Breeding Pool 1 Chromatic Lantern 1 Command Tower 1 Counterspell
+  - button "Cancel"
+  - button "Copy to Clipboard"
+`;
+
+exports[`Escape Closes 1`] = `
+- button "New Deck"
+`;
+
+exports[`Footer Layouts 1`] = `
+- dialog "Footer layouts":
+  - heading "Footer layouts" [level=2]
+  - button "Close"
+  - button "Cancel"
+  - button "Save"
+  - button "Cancel"
+  - button "Send"
+  - button "Back"
+  - button "Import"
+`;
+
+exports[`Long Content 1`] = `
+- dialog "Change log":
+  - heading "Change log" [level=2]
+  - paragraph: "Snapshot 1: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 2: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 3: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 4: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 5: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 6: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 7: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 8: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 9: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 10: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 11: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 12: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 13: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 14: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 15: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 16: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 17: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 18: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 19: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 20: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 21: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 22: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 23: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 24: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - button "Close"
+`;
+
+exports[`Open 1`] = `
+- dialog "New Deck":
+  - heading "New Deck" [level=2]
+  - text: Deck name
+  - textbox "Deck name":
+    - /placeholder: Enter a deck name
+  - button "Cancel"
+  - button "Create"
+`;
+
+exports[`Screen 1`] = `
+- dialog "Select a printing":
+  - heading "Select a printing" [level=2]
+  - text: Search printings…
+  - textbox "Search printings…":
+    - /placeholder: Filter set name
+  - button "Close"
+  - text: SLD $1.00 EOC $2.00 CMM $3.00 SLD $4.00 2XM $5.00 CM2 $6.00 C16 $7.00 PZ2 $8.00 A25 $9.00 M19 $10.00 M20 $11.00 MH1 $12.00 C20 $13.00 CMR $14.00 40K $15.00
+`;
+
+exports[`Settings 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - button "Close"
+  - paragraph: "Snapshot 1: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 2: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 3: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 4: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 5: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 6: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 7: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 8: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 9: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 10: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 11: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 12: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 13: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 14: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 15: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 16: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 17: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 18: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 19: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 20: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 21: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 22: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 23: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Snapshot 24: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+`;
+
+exports[`Size 2 Xl 1`] = `
+- dialog "Size 2xl":
+  - heading "Size 2xl" [level=2]
+  - paragraph: The panel widens to max-w-2xl; padding and chrome stay the same.
+  - button "Close"
+`;
+
+exports[`Size 3 Xl 1`] = `
+- dialog "Size 3xl":
+  - heading "Size 3xl" [level=2]
+  - paragraph: The panel widens to max-w-3xl; padding and chrome stay the same.
+  - button "Close"
+`;
+
+exports[`Size 4 Xl 1`] = `
+- dialog "Size 4xl":
+  - heading "Size 4xl" [level=2]
+  - paragraph: The panel widens to max-w-4xl; padding and chrome stay the same.
+  - button "Close"
+`;
+
+exports[`Size Lg 1`] = `
+- dialog "Size lg":
+  - heading "Size lg" [level=2]
+  - paragraph: The panel widens to max-w-lg; padding and chrome stay the same.
+  - button "Close"
+`;
+
+exports[`Size Sm 1`] = `
+- dialog "Size sm":
+  - heading "Size sm" [level=2]
+  - paragraph: The panel widens to max-w-sm; padding and chrome stay the same.
+  - button "Close"
+`;
+
+exports[`Size Xl 1`] = `
+- dialog "Size xl":
+  - heading "Size xl" [level=2]
+  - paragraph: The panel widens to max-w-xl; padding and chrome stay the same.
+  - button "Close"
+`;
