@@ -50,6 +50,16 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 - **Behaviour comes from Base UI.** Focus management, keyboard navigation, dismissal and positioning are not reimplemented.
 - **Layers.** Sticky chrome uses `z-(--z-sticky)`. Every portaled overlay shares `z-(--z-overlay)`, and nested overlays stack in the order they open.
 
+## Good to know
+
+- **Select:** pass `items` to `Select` so the closed trigger can render its label during SSR. `onValueChange` can give `null`, so guard for it.
+- **Single-select `ToggleGroup`:** pressing the active item empties the value array. Ignore empty arrays if a selection is required.
+- **App-controlled field errors:** render `{error && <FieldError match>{error}</FieldError>}`. A `Field`'s `invalid` flag alone doesn't show `FieldError`.
+- **Tooltips are visual hints.** Base UI gives them no `role="tooltip"` and no `aria-describedby`. Keep essential information in the control's name or in persistent text.
+- **Dialogs opened from state:** pass `finalFocus` when the element that opened the dialog may be gone by the time it closes.
+- **Popover anchored to an input:** focus stays in the input, so handle Escape on the input itself.
+- **Disabled menu items stay focusable** (`aria-disabled`), as Base UI intends. Clicking them does nothing.
+
 ## Develop
 
 ```sh
