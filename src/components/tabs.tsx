@@ -43,13 +43,10 @@ function TabsTrigger({ className, ...props }: TabsTriggerProps) {
 
 type TabsContentProps = Omit<TabsPrimitive.Panel.Props, "className"> & { className?: string };
 
+// Base UI makes the active panel a tab stop (tabindex=0), so it needs the same visible ring.
 function TabsContent({ className, ...props }: TabsContentProps) {
   return (
-    <TabsPrimitive.Panel
-      data-slot="tabs-content"
-      className={cn("outline-none", className)}
-      {...props}
-    />
+    <TabsPrimitive.Panel data-slot="tabs-content" className={cn(focusRing, className)} {...props} />
   );
 }
 

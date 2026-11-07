@@ -24,6 +24,14 @@ exports[`Keyboard 1`] = `
 - tabpanel "Stats": Stats panel
 `;
 
+exports[`Panel Focus Visible 1`] = `
+- tablist "Deck views":
+  - tab "Editor" [selected]
+  - tab "History"
+  - tab "Stats"
+- tabpanel "Editor": Editor panel
+`;
+
 exports[`Panel Reset 1`] = `
 - tablist "Deck views":
   - tab "Editor"

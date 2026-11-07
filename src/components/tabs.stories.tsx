@@ -139,3 +139,17 @@ export const FocusVisible: Story = {
     await expect(within(canvasElement).getByRole("tab", { name: "History" })).toHaveFocus();
   },
 };
+
+// The active panel is a tab stop (Base UI tabindex=0); keyboard focus on it shows the ring.
+export const PanelFocusVisible: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.tab();
+    await expect(canvas.getByRole("tab", { name: "Editor" })).toHaveFocus();
+    await userEvent.tab();
+    const panel = canvas.getByRole("tabpanel", { name: "Editor" });
+    await expect(panel).toHaveFocus();
+    await expect(panel.matches(":focus-visible")).toBe(true);
+    await expect(getComputedStyle(panel).boxShadow).not.toBe("none");
+  },
+};
