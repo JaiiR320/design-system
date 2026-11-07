@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Invalid email or password.
+`;
+
+exports[`Inline Confirm 1`] = `
+- paragraph: Swap Karn for Birds
+- paragraph: Nov 7, 2026, 01:00 AM
+- button "Load"
+- alert:
+  - text: Loading this snapshot will overwrite your current live deck.
+  - button "Cancel"
+  - button "Save Snapshot"
+  - button "Load Anyways"
+`;
+
+exports[`Narrow Wrapping 1`] = `
+- text: Delete deck? This will delete the deck and all 3 snapshots.
+- button "Cancel"
+- button "Delete"
+- button "Move to Archive"
+`;
+
+exports[`Render As Paragraph 1`] = `
+- paragraph: Could not reach the server.
+`;
+
+exports[`Sizes 1`] = `
+- text: "Default: rounded-xl, px-4 py-3. Small: rounded-lg, px-3 py-2. Panel: rounded-xl, p-4."
+`;
+
+exports[`Tones 1`] = `
+- text: Could not load this deck. Loading this snapshot will overwrite your current live deck. Select two snapshots to compare them. Thanks! Your feedback was sent.
+`;
+
+exports[`With Title 1`] = `
+- region "Warnings":
+  - text: Warnings
+  - button "Dismiss warnings"
+  - list:
+    - listitem: "Line 4: Sol Rng Card not found"
+    - listitem: "Line 9: 2x Mana Crypt Duplicate singleton"
+`;
