@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- tablist "Deck views":
+  - tab "Editor" [selected]
+  - tab "History"
+  - tab "Stats"
+- tabpanel "Editor": Editor panel
+`;
+
+exports[`Focus Visible 1`] = `
+- tablist "Deck views":
+  - tab "Editor" [selected]
+  - tab "History"
+  - tab "Stats"
+- tabpanel "Editor": Editor panel
+`;
+
+exports[`Keyboard 1`] = `
+- tablist "Deck views":
+  - tab "Editor"
+  - tab "History"
+  - tab "Stats" [selected]
+- tabpanel "Stats": Stats panel
+`;
+
+exports[`Panel Reset 1`] = `
+- tablist "Deck views":
+  - tab "Editor"
+  - tab "History" [selected]
+- tabpanel "History":
+  - button "Compared 0"
+`;
+
+exports[`States 1`] = `
+- tablist "Deck settings":
+  - tab "General" [selected]
+  - tab "Categories"
+  - tab "Archived" [disabled]
+`;
