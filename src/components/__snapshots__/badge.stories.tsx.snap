@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: 3 snapshots
+`;
+
+exports[`Narrow Wrapping 1`] = `
+- text: 3 snapshots 12 cards Commander Sideboard
+`;
+
+exports[`Render As Link 1`] = `
+- link "3 snapshots":
+  - /url: "#history"
+`;
+
+exports[`Selected Ribbon 1`] = `
+- text: Current
+`;
+
+exports[`Variants 1`] = `
+- text: neutral 3 snapshots 1 snapshot order 1 2 selected Current outline Drop to move here
+`;
