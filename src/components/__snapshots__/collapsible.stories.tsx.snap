@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- button "Move to folder Root"
+`;
+
+exports[`Default Open 1`] = `
+- button "Move to folder Root" [expanded]
+- button "Root" [disabled]
+- button "Constructed"
+- button "Archive"
+`;
+
+exports[`Keyboard 1`] = `
+- button "Move to folder Root"
+`;
+
+exports[`Open 1`] = `
+- button "Move to folder Root" [expanded]
+- button "Root" [disabled]
+- button "Constructed"
+- button "Archive"
+`;
