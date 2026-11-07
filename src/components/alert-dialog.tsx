@@ -1,8 +1,8 @@
 import type * as React from "react";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
 
-import { Button, type ButtonProps } from "#components/button";
+import { Button, buttonVariants, type ButtonProps } from "#components/button";
 import {
   dialogContentVariants,
   dialogFooterVariants,
@@ -24,14 +24,18 @@ function AlertDialogPortal(props: AlertDialogPrimitive.Portal.Props) {
   return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
+// forceRender: Base UI skips a nested backdrop, but a confirm always dims what it interrupts,
+// including a parent Dialog.
 function AlertDialogOverlay({
   className,
+  forceRender = true,
   ...props
 }: Omit<AlertDialogPrimitive.Backdrop.Props, "className"> & { className?: string }) {
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
       className={cn(dialogOverlayVariants(), className)}
+      forceRender={forceRender}
       {...props}
     />
   );
@@ -54,17 +58,32 @@ function AlertDialogContent({
   viewportProps,
   ...props
 }: AlertDialogContentProps) {
-  const cancelHost = useRef<HTMLDivElement>(null);
+  const cancelHost = useRef<HTMLDivElement | null>(null);
   const { className: overlayClassName, ...overlayRest } = overlayProps ?? {};
-  const { className: viewportClassName, ...viewportRest } = viewportProps ?? {};
+  const { className: viewportClassName, ref: callerRef, ...viewportRest } = viewportProps ?? {};
+  // A caller's viewport ref must not replace the one used to find Cancel.
+  const viewportRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      cancelHost.current = node;
+      const cleanup = typeof callerRef === "function" ? callerRef(node) : undefined;
+      if (callerRef && typeof callerRef === "object") callerRef.current = node;
+      return () => {
+        cancelHost.current = null;
+        if (typeof cleanup === "function") cleanup();
+        else if (typeof callerRef === "function") callerRef(null);
+        else if (callerRef) callerRef.current = null;
+      };
+    },
+    [callerRef],
+  );
   return (
     <AlertDialogPortal {...portalProps}>
       <AlertDialogOverlay className={overlayClassName} {...overlayRest} />
       <AlertDialogPrimitive.Viewport
-        ref={cancelHost}
         data-slot="alert-dialog-viewport"
         className={cn(dialogViewportVariants(), viewportClassName)}
         {...viewportRest}
+        ref={viewportRef}
       >
         <AlertDialogPrimitive.Popup
           data-slot="alert-dialog-content"
@@ -134,11 +153,13 @@ function AlertDialogCancel({
   ...props
 }: Omit<AlertDialogPrimitive.Close.Props, "className"> &
   Pick<ButtonProps, "variant" | "size"> & { className?: string }) {
+  // The recipe sits on Close itself so it reaches a caller's `render` too.
   return (
     <AlertDialogPrimitive.Close
       data-slot="alert-dialog-cancel"
-      render={<Button variant={variant} size={size} className={className} />}
+      render={<Button variant={variant} size={size} />}
       {...props}
+      className={buttonVariants({ variant, size, className })}
     />
   );
 }

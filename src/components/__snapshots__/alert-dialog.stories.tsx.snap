@@ -17,12 +17,32 @@ exports[`Cancel Closes 1`] = `
 - button "Delete deck"
 `;
 
+exports[`Cancel Custom Render 1`] = `
+
+`;
+
 exports[`Default 1`] = `
 - button "Delete deck"
 `;
 
 exports[`Escape Closes 1`] = `
 - button "Delete deck"
+`;
+
+exports[`Explicit Initial Focus 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This can't be undone.
+  - button "Delete"
+  - button "Cancel"
+`;
+
+exports[`Nested In Dialog Dims 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+  - button "Cancel"
+  - button "Delete"
 `;
 
 exports[`Open 1`] = `
@@ -55,4 +75,12 @@ exports[`Small 1`] = `
   - paragraph: Unsaved edits to this deck are lost.
   - button "Keep editing"
   - button "Discard"
+`;
+
+exports[`Viewport Ref Keeps Cancel Focus 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: This can't be undone.
+  - button "Delete"
+  - button "Cancel"
 `;

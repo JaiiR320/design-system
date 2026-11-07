@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useState } from "react";
-import { expect, userEvent, waitFor, within } from "storybook/test";
+import { useRef, useState } from "react";
+import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import {
   AlertDialog,
@@ -14,6 +14,7 @@ import {
   AlertDialogTrigger,
 } from "#components/alert-dialog";
 import { Button } from "#components/button";
+import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
 
 const meta = {
   title: "Primitives/AlertDialog",
@@ -191,4 +192,128 @@ export const Small: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
+};
+
+// Action first in the footer, with the caller holding the viewport ref.
+const viewportRef: { current: HTMLDivElement | null } = { current: null };
+
+function ActionFirst({ focusAction = false }: { focusAction?: boolean }) {
+  const actionRef = useRef<HTMLButtonElement>(null);
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
+        Delete deck
+      </AlertDialogTrigger>
+      <AlertDialogContent
+        viewportProps={{ ref: viewportRef }}
+        initialFocus={focusAction ? actionRef : undefined}
+      >
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete Atraxa Superfriends?</AlertDialogTitle>
+          <AlertDialogDescription>This can't be undone.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogAction ref={actionRef}>Delete</AlertDialogAction>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+// A caller's viewport ref is filled and Cancel still gets initial focus.
+export const ViewportRefKeepsCancelFocus: Story = {
+  render: () => <ActionFirst />,
+  play: async ({ canvasElement }) => {
+    const { dialog } = await openAlert(canvasElement);
+    await waitFor(() =>
+      expect(within(dialog).getByRole("button", { name: "Cancel" })).toHaveFocus(),
+    );
+    await expect(viewportRef.current).toBe(
+      document.querySelector('[data-slot="alert-dialog-viewport"]'),
+    );
+  },
+};
+
+// An explicit initialFocus stays authoritative.
+export const ExplicitInitialFocus: Story = {
+  render: () => <ActionFirst focusAction />,
+  play: async ({ canvasElement }) => {
+    const { dialog } = await openAlert(canvasElement);
+    await waitFor(() =>
+      expect(within(dialog).getByRole("button", { name: "Delete" })).toHaveFocus(),
+    );
+  },
+};
+
+const cancelRef: { current: HTMLButtonElement | null } = { current: null };
+const onCancelClick = fn();
+
+// A custom render keeps Cancel's recipe, caller className and size, ref and click handler.
+export const CancelCustomRender: Story = {
+  args: { onOpenChange: fn() },
+  render: (args) => (
+    <AlertDialog defaultOpen onOpenChange={args.onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Discard changes?</AlertDialogTitle>
+          <AlertDialogDescription>Unsaved edits to this deck are lost.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            ref={cancelRef}
+            render={<button type="button" />}
+            className="border-warning"
+            size="sm"
+            onClick={onCancelClick}
+          >
+            Keep editing
+          </AlertDialogCancel>
+          <AlertDialogAction variant="warning">Discard</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  ),
+  play: async ({ args }) => {
+    onCancelClick.mockClear();
+    const dialog = await body.findByRole("alertdialog", { name: "Discard changes?" });
+    const cancel = within(dialog).getByRole("button", { name: "Keep editing" });
+    await expect(cancelRef.current).toBe(cancel);
+    await expect(cancel).toHaveAttribute("data-slot", "alert-dialog-cancel");
+    // Outline recipe, sm size and the caller's class all reach the custom element.
+    await expect(cancel).toHaveClass("rounded-xl", "border", "border-warning", "px-3", "py-2");
+    await expect(getComputedStyle(cancel).borderTopWidth).toBe("1px");
+    await userEvent.click(cancel);
+    await expect(onCancelClick).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(body.queryByRole("alertdialog")).toBeNull());
+    await expect(args.onOpenChange).toHaveBeenLastCalledWith(false, expect.anything());
+  },
+};
+
+// A confirm opened from inside a Dialog dims the parent dialog too.
+export const NestedInDialogDims: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      {/* Larger than the alert so the dimmed parent shows around it. */}
+      <DialogContent size="2xl" className="min-h-96">
+        <DialogTitle>Atraxa Superfriends</DialogTitle>
+        <div className="mt-5">
+          <DeleteDeck onDelete={succeed} />
+        </div>
+      </DialogContent>
+    </Dialog>
+  ),
+  play: async () => {
+    const parent = await body.findByRole("dialog", { name: "Atraxa Superfriends" });
+    await userEvent.click(within(parent).getByRole("button", { name: "Delete deck" }));
+    await body.findByRole("alertdialog", { name: "Delete Atraxa Superfriends?" });
+    const overlay = document.querySelector<HTMLElement>('[data-slot="alert-dialog-overlay"]');
+    if (!overlay) throw new Error("nested alert overlay not rendered");
+    await expect(getComputedStyle(overlay).backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
+    // The scrim paints above the parent dialog's popup.
+    const rect = parent.getBoundingClientRect();
+    const stack = document.elementsFromPoint(rect.left + 8, rect.top + 8);
+    await expect(stack.indexOf(overlay)).toBeGreaterThanOrEqual(0);
+    await expect(stack.indexOf(overlay)).toBeLessThan(stack.indexOf(parent));
+  },
 };
