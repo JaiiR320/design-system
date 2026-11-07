@@ -1,0 +1,52 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- textbox "Email":
+  - /placeholder: you@example.com
+`;
+
+exports[`Focus Visible 1`] = `
+- textbox "Email":
+  - /placeholder: you@example.com
+`;
+
+exports[`Inline Form 1`] = `
+- textbox "Deck name":
+  - /placeholder: you@example.com
+  - text: Atraxa Superfriends
+- button "Save"
+`;
+
+exports[`Sizes 1`] = `
+- textbox "Extra small":
+  - /placeholder: "xs: printing filter"
+- textbox "Small":
+  - /placeholder: "sm: inline rename"
+- textbox "Medium":
+  - /placeholder: "md: default form field"
+`;
+
+exports[`States 1`] = `
+- textbox "Placeholder":
+  - /placeholder: you@example.com
+- textbox "Filled":
+  - /placeholder: you@example.com
+  - text: atraxa@example.com
+- textbox "Read-only":
+  - /placeholder: you@example.com
+  - text: Read-only value
+- textbox "Invalid":
+  - /placeholder: you@example.com
+  - text: not-an-email
+- textbox "Disabled" [disabled]:
+  - /placeholder: you@example.com
+- textbox "Native size":
+  - /placeholder: size=12
+`;
+
+exports[`Typing 1`] = `
+- text: Email
+- textbox "Email":
+  - /placeholder: you@example.com
+  - text: jace@example.com
+`;

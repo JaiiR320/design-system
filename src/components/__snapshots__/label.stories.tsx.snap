@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Deck name
+`;
+
+exports[`With Input 1`] = `
+- text: Deck name
+- textbox "Deck name":
+  - /placeholder: Atraxa Superfriends
+`;
+
+exports[`With Range 1`] = `
+- text: Zoom
+- slider "Zoom": "1.5"
+`;
