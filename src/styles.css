@@ -5,10 +5,9 @@
  */
 @import "@fontsource-variable/jetbrains-mono";
 
-/* node_modules is skipped by Tailwind's auto-detection; scan this package's sources (not its stories). */
+/* node_modules is skipped by Tailwind's auto-detection; scan this package's sources. */
 @source "./components";
 @source "./lib";
-@source not "./**/*.stories.tsx";
 
 @theme {
   --font-sans:

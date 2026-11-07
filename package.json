@@ -5,7 +5,13 @@
   "description": "DeckDiff's design system: tokens and composable React primitives on shadcn/ui + Base UI.",
   "license": "MIT",
   "files": [
-    "src"
+    "src",
+    "!src/**/*.stories.tsx",
+    "!src/**/*.test.ts",
+    "!src/**/__screenshots__",
+    "!src/**/__snapshots__",
+    "!src/foundation",
+    "!src/recipes"
   ],
   "type": "module",
   "sideEffects": [
@@ -13,14 +19,12 @@
   ],
   "imports": {
     "#components/*": "./src/components/*.tsx",
-    "#lib/*": "./src/lib/*.ts",
-    "#hooks/*": "./src/hooks/*.ts"
+    "#lib/*": "./src/lib/*.ts"
   },
   "exports": {
     "./styles.css": "./src/styles.css",
     "./components/*": "./src/components/*.tsx",
-    "./lib/*": "./src/lib/*.ts",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./lib/*": "./src/lib/*.ts"
   },
   "scripts": {
     "storybook": "storybook dev -p 6106 --no-open",
