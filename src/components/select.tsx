@@ -78,8 +78,9 @@ function SelectContent({
 }: SelectContentProps) {
   const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <SelectPrimitive.Portal {...portalProps}>
+    <SelectPrimitive.Portal data-slot="select-portal" {...portalProps}>
       <SelectPrimitive.Positioner
+        data-slot="select-positioner"
         side={side}
         align={align}
         sideOffset={sideOffset}

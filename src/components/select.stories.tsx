@@ -285,8 +285,9 @@ export const Scrolling: Story = {
 
 /** Full-width trigger at phone width (the printing picker): the popup matches the trigger. */
 export const OpenMobileWidth: Story = {
+  globals: { viewport: { value: "mobile" } },
   render: (args) => (
-    <div className="w-[358px]">
+    <div>
       <span className="text-sm font-semibold text-strong-foreground">Order by</span>
       <Select items={printingOptions} defaultValue="date" onValueChange={args.onValueChange}>
         <SelectTrigger aria-label="Order printings by" className="mt-1">
@@ -307,6 +308,10 @@ export const OpenMobileWidth: Story = {
     await userEvent.click(trigger);
     const listbox = await body().findByRole("listbox");
     const popup = listbox.closest("[data-slot='select-content']");
+    await expect(window.innerWidth).toBe(390);
+    const positioner = popup?.parentElement;
+    await expect(positioner).toHaveAttribute("data-slot", "select-positioner");
+    await expect(positioner?.parentElement).toHaveAttribute("data-slot", "select-portal");
     await waitFor(() =>
       expect(popup?.getBoundingClientRect().width).toBe(trigger.getBoundingClientRect().width),
     );
