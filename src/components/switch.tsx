@@ -37,7 +37,7 @@ function SwitchChip({ className, children, ...props }: SwitchChipProps) {
     <SwitchPrimitive.Root
       data-slot="switch-chip"
       className={cn(
-        "group/switch inline-flex items-center gap-3 rounded-full border border-border bg-surface px-3 py-2 text-sm text-secondary-foreground transition not-data-checked:hover:border-border-strong not-data-checked:hover:bg-secondary data-checked:border-selected-border data-checked:bg-selected data-checked:text-selected-foreground motion-reduce:transition-none",
+        "group/switch inline-flex items-center gap-3 rounded-full border border-border bg-surface px-3 py-2 text-secondary-foreground transition not-data-checked:hover:border-border-strong not-data-checked:hover:bg-secondary data-checked:border-selected-border data-checked:bg-selected data-checked:text-selected-foreground motion-reduce:transition-none",
         focusRing,
         disabledState,
         className,

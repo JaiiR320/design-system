@@ -7,7 +7,7 @@ import { cn } from "#lib/utils";
 
 // Off-state hovers are scoped to not-data-pressed so hovering an active toggle changes nothing.
 const toggleCva = cva(
-  `inline-flex items-center justify-center gap-2 text-sm font-medium transition motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4 ${focusRing} ${disabledState}`,
+  `inline-flex items-center justify-center gap-2 transition motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4 ${focusRing} ${disabledState}`,
   {
     variants: {
       variant: {

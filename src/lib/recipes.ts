@@ -19,7 +19,7 @@ export const popupLayer = "z-(--z-overlay)";
 
 /** Rows inside menus and select lists; Base UI marks the active row with data-highlighted. */
 export const menuItemVariants = cva(
-  `flex w-full cursor-default items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition outline-none select-none ${disabledState}`,
+  `flex w-full cursor-default items-center gap-3 rounded-lg px-3 py-2 text-left transition outline-none select-none ${disabledState}`,
   {
     variants: {
       variant: {

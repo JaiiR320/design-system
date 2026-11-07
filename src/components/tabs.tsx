@@ -31,7 +31,7 @@ function TabsTrigger({ className, ...props }: TabsTriggerProps) {
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       className={cn(
-        "px-5 py-3 text-sm font-medium text-muted-foreground transition not-data-active:hover:text-secondary-foreground data-active:border-b-2 data-active:border-primary data-active:text-primary motion-reduce:transition-none",
+        "px-5 py-3 text-muted-foreground transition not-data-active:hover:text-secondary-foreground data-active:border-b-2 data-active:border-primary data-active:text-primary motion-reduce:transition-none",
         focusRing,
         disabledState,
         className,

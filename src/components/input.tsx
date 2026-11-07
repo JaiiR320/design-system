@@ -12,9 +12,9 @@ const inputVariants = cva(
     variants: {
       // Named inputSize so native `size` stays the numeric HTML attribute.
       inputSize: {
-        xs: "rounded-lg px-3 py-2 text-sm",
-        sm: "px-4 py-2 text-sm",
-        md: "px-4 py-3 text-base",
+        xs: "rounded-lg px-3 py-2",
+        sm: "px-4 py-2",
+        md: "px-4 py-3",
       },
     },
     defaultVariants: { inputSize: "md" },

@@ -12,13 +12,13 @@ import { cn } from "#lib/utils";
 const buttonSizeVariants = cva("", {
   variants: {
     size: {
-      xs: "rounded-lg px-3 py-1.5 text-sm",
-      sm: "px-3 py-2 text-sm",
-      md: "px-4 py-2 text-sm",
-      lg: "px-4 py-3 text-sm",
+      xs: "rounded-lg px-3 py-1.5",
+      sm: "px-3 py-2",
+      md: "px-4 py-2",
+      lg: "px-4 py-3",
       "icon-xs": "size-5 rounded-md p-0",
       "icon-sm": "size-7 p-0",
-      icon: "p-2.5 text-sm",
+      icon: "p-2.5",
       "icon-lg": "size-12 rounded-full p-0",
       none: "p-0",
     },
@@ -27,7 +27,7 @@ const buttonSizeVariants = cva("", {
 
 const buttonRecipe = cva(
   [
-    "inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium transition motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4",
+    "inline-flex items-center justify-center gap-2 rounded-xl transition motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4",
     focusRing,
     disabledState,
   ],
@@ -54,7 +54,7 @@ const buttonRecipe = cva(
         overlay: "rounded-none text-on-image-foreground hover:bg-on-image-hover",
         raised:
           "border border-border-strong bg-secondary text-secondary-foreground shadow-lg shadow-black/40 hover:bg-border-strong hover:text-highlight",
-        link: "rounded-none p-0 font-normal text-primary underline underline-offset-2 hover:text-primary-hover",
+        link: "rounded-none p-0 text-primary underline underline-offset-2 hover:text-primary-hover",
       },
     },
     defaultVariants: { variant: "outline" },
