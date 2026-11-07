@@ -7,6 +7,7 @@ import { cn } from "#lib/utils";
 const thumbClassName =
   "pointer-events-none block h-5 w-5 rounded-full bg-white transition-transform motion-reduce:transition-none data-unchecked:translate-x-1 data-checked:translate-x-5";
 
+// A native <button> root (not Base UI's default span) so a disabled <fieldset> disables it.
 type SwitchProps = Omit<SwitchPrimitive.Root.Props, "className"> & { className?: string };
 
 function Switch({ className, ...props }: SwitchProps) {
@@ -19,6 +20,8 @@ function Switch({ className, ...props }: SwitchProps) {
         disabledState,
         className,
       )}
+      nativeButton
+      render={<button type="button" />}
       {...props}
     >
       <SwitchPrimitive.Thumb data-slot="switch-thumb" className={thumbClassName} />
@@ -39,6 +42,8 @@ function SwitchChip({ className, children, ...props }: SwitchChipProps) {
         disabledState,
         className,
       )}
+      nativeButton
+      render={<button type="button" />}
       {...props}
     >
       <span

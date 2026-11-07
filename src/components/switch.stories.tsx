@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Field, FieldLabel, FieldLegend, FieldSet } from "#components/field";
 import { Switch, SwitchChip } from "#components/switch";
 
 const meta = {
@@ -165,5 +166,46 @@ export const FocusVisible: Story = {
     await userEvent.tab();
     await userEvent.tab();
     await expect(within(canvasElement).getByRole("switch", { name: "Hide Ramp" })).toHaveFocus();
+  },
+};
+
+/** A disabled fieldset disables every switch inside it, including one in a Field. */
+export const FieldSetDisabled: Story = {
+  render: (args) => (
+    <FieldSet disabled>
+      <FieldLegend>Export options</FieldLegend>
+      <div className="flex flex-wrap items-center gap-3">
+        <Switch aria-label="Bare switch" onCheckedChange={args.onCheckedChange} />
+        <SwitchChip onCheckedChange={args.onCheckedChange}>Quantity</SwitchChip>
+        <Field orientation="horizontal">
+          <FieldLabel>Ghosts</FieldLabel>
+          <Switch onCheckedChange={args.onCheckedChange} />
+        </Field>
+      </div>
+    </FieldSet>
+  ),
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const switches = ["Bare switch", "Quantity", "Ghosts"].map((name) =>
+      canvas.getByRole("switch", { name }),
+    );
+    for (const control of switches) {
+      await expect(control).toBeDisabled();
+      // Pointer: nothing under the switch receives the hit, and a forced click does nothing.
+      const box = control.getBoundingClientRect();
+      const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+      await expect(control.contains(hit)).toBe(false);
+      await userEvent.click(control, { pointerEventsCheck: 0 });
+      // Keyboard: the switch can't take focus, so Space can't reach it.
+      control.focus();
+      await expect(control).not.toHaveFocus();
+      await userEvent.keyboard(" ");
+      await expect(control).toHaveAttribute("aria-checked", "false");
+    }
+    await userEvent.click(canvas.getByText("Ghosts"));
+    await userEvent.tab();
+    await expect(document.body).toHaveFocus();
+    await expect(switches[2]).toHaveAttribute("aria-checked", "false");
+    await expect(args.onCheckedChange).not.toHaveBeenCalled();
   },
 };

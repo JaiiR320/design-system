@@ -28,6 +28,15 @@ exports[`Export Chips 1`] = `
 - switch "Separate sideboard" [disabled]
 `;
 
+exports[`Field Set Disabled 1`] = `
+- group "Export options":
+  - text: Export options
+  - switch "Bare switch" [disabled]
+  - switch "Quantity" [disabled]
+  - text: Ghosts
+  - switch "Ghosts" [disabled]
+`;
+
 exports[`Focus Visible 1`] = `
 - switch "Bare switch" [checked]
 - switch "Hide Ramp"
