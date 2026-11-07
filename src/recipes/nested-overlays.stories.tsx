@@ -435,12 +435,7 @@ export const EdgeOfViewport: Story = {
 
 /** Phone width: the dialog fills the screen and the submenu stays on screen. */
 export const Mobile390: Story = {
-  parameters: {
-    viewport: {
-      options: { mobile390: { name: "Mobile 390", styles: { width: "390px", height: "844px" } } },
-    },
-  },
-  globals: { viewport: { value: "mobile390", isRotated: false } },
+  globals: { viewport: { value: "mobile" } },
   play: async ({ canvasElement }) => {
     await expect(window.innerWidth).toBe(390);
     const { dialog } = await openDialog(canvasElement);
