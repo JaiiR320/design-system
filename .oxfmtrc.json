@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "ignorePatterns": [
+    "node_modules/**",
+    "storybook-static/**",
+    "**/__screenshots__/**",
+    "**/__snapshots__/**"
+  ]
+}
