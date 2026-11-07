@@ -39,6 +39,14 @@ exports[`Keyboard 1`] = `
 - button "Button"
 `;
 
+exports[`Link Keyboard 1`] = `
+- link "Decks":
+  - /url: "#link-keyboard"
+- link "Disabled link" [disabled]:
+  - /url: "#link-keyboard"
+- button "Action"
+`;
+
 exports[`Loading 1`] = `
 - button "Signing in" [disabled]
 `;

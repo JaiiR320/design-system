@@ -1,5 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
+import { isValidElement } from "react";
 
 import { disabledState, focusRing } from "#lib/recipes";
 import { cn } from "#lib/utils";
@@ -77,16 +78,37 @@ function buttonVariants({
 
 type ButtonProps = ButtonPrimitive.Props & ButtonVariantProps & { className?: string };
 
-function Button({ className, variant, size, role, ...props }: ButtonProps) {
+type KeyEvent = Parameters<NonNullable<ButtonProps["onKeyDown"]>>[0];
+
+// Base UI gives links rendered with nativeButton={false} button keys: it blocks Space's
+// page scroll and clicks on keyup. A real link only activates on Enter (left to the
+// browser), so Space is handed back to the browser. Disabled links stay blocked by Base UI.
+function keepLinkSpace(event: KeyEvent) {
+  const target = event.currentTarget;
+  if (event.key === " " && event.target === target && target.matches("a[href]")) {
+    event.preventBaseUIHandler();
+  }
+}
+
+function Button({ className, variant, size, render, onKeyDown, onKeyUp, ...props }: ButtonProps) {
+  // An <a href> keeps its link role; any other non-native element keeps Base UI's role="button".
+  const isLink =
+    isValidElement<{ href?: string }>(render) && render.type === "a" && Boolean(render.props.href);
   return (
     <ButtonPrimitive
       data-slot="button"
-      // Always passed (even undefined) so it replaces Base UI's role="button" on non-native
-      // elements: a link rendered with nativeButton={false} keeps its link role.
-      // Pass role="button" yourself when rendering some other non-button element.
-      role={role}
+      render={render}
       className={buttonVariants({ variant, size, className })}
+      {...(isLink && { role: undefined })}
       {...props}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        keepLinkSpace(event);
+      }}
+      onKeyUp={(event) => {
+        onKeyUp?.(event);
+        keepLinkSpace(event);
+      }}
     />
   );
 }

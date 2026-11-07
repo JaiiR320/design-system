@@ -1,6 +1,7 @@
 import { Collapsible } from "@base-ui/react/collapsible";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Download, Ellipsis, Plus, Settings, Trash2, TriangleAlert, X } from "lucide-react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
 import { Button } from "#components/button";
@@ -237,5 +238,83 @@ export const AsTrigger: Story = {
     await expect(args.onClick).toHaveBeenCalledTimes(1);
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
     await expect(canvas.getByText("Root")).toBeVisible();
+  },
+};
+
+const actionClick = fn();
+const linkClick = fn();
+
+// Records whether Base UI already blocked the click, then stops the test page navigating.
+function trapLinkClick(event: ReactMouseEvent) {
+  linkClick(event.defaultPrevented);
+  event.preventDefault();
+}
+
+// Links keep link keys: Enter follows the href, Space is left to the browser (page scroll)
+// and never clicks. Other non-native elements stay buttons that Space and Enter activate.
+export const LinkKeyboard: Story = {
+  render: () => (
+    <div className="flex items-center gap-3">
+      <Button render={<a href="#link-keyboard" />} nativeButton={false} onClick={trapLinkClick}>
+        Decks
+      </Button>
+      <Button
+        render={<a href="#link-keyboard" />}
+        nativeButton={false}
+        disabled
+        onClick={trapLinkClick}
+      >
+        Disabled link
+      </Button>
+      <Button render={<div />} nativeButton={false} onClick={actionClick}>
+        Action
+      </Button>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const keys: KeyboardEvent[] = [];
+    const clicks: MouseEvent[] = [];
+    const onKey = (event: KeyboardEvent) => keys.push(event);
+    const onClick = (event: MouseEvent) => clicks.push(event);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("keyup", onKey);
+    document.addEventListener("click", onClick);
+    actionClick.mockClear();
+    linkClick.mockClear();
+
+    try {
+      const link = canvas.getByRole("link", { name: "Decks" });
+      link.focus();
+      await userEvent.keyboard(" ");
+      await expect(keys.map((event) => [event.type, event.defaultPrevented])).toEqual([
+        ["keydown", false],
+        ["keyup", false],
+      ]);
+      await expect(linkClick).not.toHaveBeenCalled();
+
+      await userEvent.keyboard("{Enter}");
+      await expect(linkClick).toHaveBeenCalledTimes(1);
+      await expect(linkClick).toHaveBeenCalledWith(false);
+
+      clicks.length = 0;
+      const disabled = canvas.getByRole("link", { name: "Disabled link" });
+      disabled.focus();
+      await userEvent.keyboard("{Enter}");
+      await userEvent.keyboard(" ");
+      await expect(linkClick).toHaveBeenCalledTimes(1);
+      await expect(clicks.length).toBeGreaterThan(0);
+      await expect(clicks.every((event) => event.defaultPrevented)).toBe(true);
+
+      const action = canvas.getByRole("button", { name: "Action" });
+      action.focus();
+      await userEvent.keyboard(" ");
+      await userEvent.keyboard("{Enter}");
+      await expect(actionClick).toHaveBeenCalledTimes(2);
+    } finally {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("keyup", onKey);
+      document.removeEventListener("click", onClick);
+    }
   },
 };
