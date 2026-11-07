@@ -1,0 +1,58 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Action Fails 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+  - alert: Couldn't delete the deck. Try again.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Action Succeeds 1`] = `
+- button "Delete deck"
+`;
+
+exports[`Cancel Closes 1`] = `
+- button "Delete deck"
+`;
+
+exports[`Default 1`] = `
+- button "Delete deck"
+`;
+
+exports[`Escape Closes 1`] = `
+- button "Delete deck"
+`;
+
+exports[`Open 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Outside Press Stays Open 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Pending 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+  - button "Cancel"
+  - button "Deleting…" [disabled]
+`;
+
+exports[`Small 1`] = `
+- alertdialog "Discard changes?":
+  - heading "Discard changes?" [level=2]
+  - paragraph: Unsaved edits to this deck are lost.
+  - button "Keep editing"
+  - button "Discard"
+`;
