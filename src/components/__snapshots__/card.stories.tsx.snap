@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- heading "Deck colors" [level=3]
+- paragraph: Used to clamp flexible mana production stats.
+- button "Deck color actions"
+- text: White, blue, black and green are selected. Saved with the deck.
+`;
+
+exports[`Header Band 1`] = `
+- region "Ramp":
+  - heading "Ramp" [level=2]
+  - text: 12 Card stack
+`;
+
+exports[`Narrow 1`] = `
+- heading "A long title that wraps across lines" [level=3]
+- text: Action
+- paragraph: Description text wraps inside a narrow card.
+`;
+
+exports[`Paddings 1`] = `
+- text: none sm md lg xl
+`;
+
+exports[`Panel Overrides 1`] = `
+- heading "Sign in" [level=2]
+- paragraph: "Auth card: rounded-3xl, glass 90."
+- heading "Judge" [level=2]
+- paragraph: "Judge card: rounded-2xl, glass 70."
+- heading "Editor" [level=2]
+- paragraph: Panel variant.
+`;
+
+exports[`Variants 1`] = `
+- heading "default" [level=3]
+- paragraph: Card surface
+- heading "inset" [level=3]
+- paragraph: Card surface
+- heading "glass" [level=3]
+- paragraph: Card surface
+- heading "outline" [level=3]
+- paragraph: Card surface
+- heading "panel" [level=3]
+- paragraph: Card surface
+`;
