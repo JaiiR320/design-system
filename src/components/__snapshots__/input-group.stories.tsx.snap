@@ -1,5 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Addon Click Handler 1`] = `
+- group:
+  - text: https://
+  - textbox "Art URL":
+    - /placeholder: example.com/art.jpg
+  - link "Help":
+    - /url: "#art-url-help"
+`;
+
 exports[`Addon Focuses Control 1`] = `
 - group:
   - text: https://
@@ -31,6 +40,25 @@ exports[`Default 1`] = `
 - group:
   - textbox "Add card":
     - /placeholder: Add card…
+`;
+
+exports[`Field Control Textarea 1`] = `
+- text: Notes
+- group:
+  - textbox "Notes":
+    - /placeholder: Add a note…
+  - text: Notes · 0 / 200
+- paragraph: Markdown is supported.
+- text: Invalid notes
+- group:
+  - textbox "Invalid notes":
+    - /placeholder: Add a note…
+  - text: Invalid notes · 0 / 200
+- text: Disabled notes
+- group:
+  - textbox "Disabled notes" [disabled]:
+    - /placeholder: Add a note…
+  - text: Disabled notes · 0 / 200
 `;
 
 exports[`In Field 1`] = `
