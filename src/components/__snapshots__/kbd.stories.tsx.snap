@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Esc
+`;
+
+exports[`Group 1`] = `
+- text: Ctrl Shift Z
+`;
+
+exports[`In Text 1`] = `
+- paragraph: Press Ctrl Z to undo the last change, or Esc to close the dialog without saving.
+`;
+
+exports[`Keys 1`] = `
+- text: Z Esc Enter ⌘ Shift
+`;
