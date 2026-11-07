@@ -1,3 +1,6 @@
 /* Storybook plays the consuming app: it owns the Tailwind import, the package brings tokens + sources. */
 @import "tailwindcss";
 @import "../src/styles.css";
+
+/* The package excludes stories from consumers' CSS; Storybook renders them. */
+@source "../src/**/*.stories.tsx";
