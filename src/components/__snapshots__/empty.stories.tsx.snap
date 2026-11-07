@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Compositions 1`] = `
+- paragraph: No cards
+- paragraph: Drop a category here
+- paragraph: Feedback sent
+- paragraph: Thanks for helping improve DeckDiff.
+`;
+
+exports[`Default 1`] = `
+- paragraph: No saves yet
+- paragraph: Save the deck to start its history.
+- button "Save"
+- button "Import"
+`;
+
+exports[`Narrow 1`] = `
+- paragraph: Nothing matches the current filters
+- paragraph: Try clearing filters or searching for another card.
+- button "Clear filters"
+- button "Search"
+`;
+
+exports[`Variants 1`] = `
+- paragraph: plain
+- paragraph: Nothing here yet.
+- paragraph: inset
+- paragraph: Nothing here yet.
+- paragraph: outline
+- paragraph: Nothing here yet.
+`;
