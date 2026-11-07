@@ -1,0 +1,177 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Confirm Delete 1`] = `
+- button "Deck options"
+`;
+
+exports[`Default 1`] = `
+- button "Deck options"
+`;
+
+exports[`Dialog Open 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions"
+  - button "Delete deck"
+  - button "Done"
+`;
+
+exports[`Edge Of Viewport 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions" [expanded]
+  - menu "Deepglow Skate actions":
+    - menuitem "Use as deck cover"
+    - menuitem "Change printing"
+    - menuitem "Move to" [expanded]
+    - group:
+      - menu "Move to":
+        - menuitem "Commander"
+        - menuitem "Ramp"
+        - menuitem "Sideboard"
+        - menuitem "Planeswalker"
+    - separator
+    - menuitem "Remove"
+  - button "Delete deck"
+  - button "Done"
+`;
+
+exports[`Escape Closes Top Layer First 1`] = `
+- button "Deck options"
+`;
+
+exports[`Mobile 390 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions" [expanded]
+  - menu "Deepglow Skate actions":
+    - menuitem "Use as deck cover"
+    - menuitem "Change printing"
+    - menuitem "Move to" [expanded]
+    - group:
+      - menu "Move to":
+        - menuitem "Commander"
+        - menuitem "Ramp"
+        - menuitem "Sideboard"
+        - menuitem "Planeswalker"
+    - separator
+    - menuitem "Remove"
+  - button "Delete deck"
+  - button "Done"
+`;
+
+exports[`Move To Category 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions"
+  - button "Delete deck"
+  - button "Done"
+`;
+
+exports[`Nested Alert Dialog 1`] = `
+- alertdialog "Delete Atraxa Superfriends?":
+  - heading "Delete Atraxa Superfriends?" [level=2]
+  - paragraph: The deck and its 3 snapshots are removed for good.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`Popover And Tooltip 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42" [expanded]
+  - dialog "Price":
+    - heading "Price" [level=2]
+    - paragraph: Cheapest printing, Nov 7, 2026.
+  - button "Deepglow Skate actions"
+  - button "Delete deck"
+  - button "Done"
+- text: Saved Nov 7, 2026, 01:00 AM
+`;
+
+exports[`Select Open 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards" [expanded]: Type
+  - listbox:
+    - option "Categories"
+    - option "Type" [selected]
+    - option "Mana value"
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions"
+  - button "Delete deck"
+  - button "Done"
+`;
+
+exports[`Submenu Open 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck options
+  - button "Last saved"
+  - button "Close"
+  - text: Group cards
+  - combobox "Group cards": Categories
+  - text: Deepglow Skate
+  - paragraph: Ramp
+  - button "$0.42"
+  - button "Deepglow Skate actions" [expanded]
+  - menu "Deepglow Skate actions":
+    - menuitem "Use as deck cover"
+    - menuitem "Change printing"
+    - menuitem "Move to" [expanded]
+    - group:
+      - menu "Move to":
+        - menuitem "Commander"
+        - menuitem "Ramp"
+        - menuitem "Sideboard"
+        - menuitem "Planeswalker"
+    - separator
+    - menuitem "Remove"
+  - button "Delete deck"
+  - button "Done"
+`;
