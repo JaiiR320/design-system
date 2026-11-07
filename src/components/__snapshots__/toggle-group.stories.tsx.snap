@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Auth Mode 1`] = `
+- group "Authentication mode":
+  - button "Sign in" [pressed]
+  - button "Sign up"
+`;
+
+exports[`Default 1`] = `
+- group "Text style":
+  - button "Bold" [pressed]
+  - button "Italic"
+  - button "Underline"
+`;
+
+exports[`Disabled Stable 1`] = `
+- group "Text style":
+  - button "Bold" [disabled] [pressed]
+  - button "Italic" [disabled]
+`;
+
+exports[`Feedback Type 1`] = `
+- group "Issue type":
+  - button "Bug Report" [pressed]
+  - button "Feature Request"
+`;
+
+exports[`Multiple Keyboard 1`] = `
+- group "Text style":
+  - button "Bold" [pressed]
+  - button "Italic" [pressed]
+  - button "Underline"
+`;
+
+exports[`Variants 1`] = `
+- text: outline
+- group "Outline":
+  - button "Bug" [pressed]
+  - button "Feature"
+- text: accent
+- group "Accent":
+  - button "Bold" [pressed]
+  - button "Italic"
+  - button "Underline"
+- text: segmented
+- group "Segmented":
+  - button "Sign in"
+  - button "Sign up" [pressed]
+- text: round
+- group "Deck colors":
+  - button "White" [pressed]
+  - button "Blue" [pressed]
+  - button "Black" [pressed]
+  - button "Red"
+  - button "Green" [pressed]
+- text: outline size=xs
+- group "Outline xs":
+  - button "Bug" [pressed]
+  - button "Feature"
+- text: disabled
+- group "Disabled":
+  - button "Bug" [disabled] [pressed]
+  - button "Feature" [disabled]
+`;
