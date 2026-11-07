@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Card Grid 1`] = `
+- status "Loading printings"
+`;
+
+exports[`Default 1`] = `
+
+`;
+
+exports[`Loading Row 1`] = `
+- status "Loading snapshots"
+`;
