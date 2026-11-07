@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button Crumbs 1`] = `
+- navigation "Deck folders":
+  - list:
+    - listitem:
+      - button "Decks"
+    - listitem:
+      - button "Constructed"
+    - listitem:
+      - button "Modern"
+`;
+
+exports[`Custom Separator 1`] = `
+- navigation "Breadcrumb":
+  - list:
+    - listitem:
+      - link "Decks":
+        - /url: "#decks"
+    - listitem: Archive
+`;
+
+exports[`Default 1`] = `
+- navigation "Breadcrumb":
+  - list:
+    - listitem:
+      - link "Decks":
+        - /url: "#decks"
+    - listitem:
+      - link "Constructed":
+        - /url: "#constructed"
+    - listitem: Modern
+`;
+
+exports[`Keyboard Focus 1`] = `
+- navigation "Deck folders":
+  - list:
+    - listitem:
+      - button "Decks"
+    - listitem:
+      - button "Constructed"
+    - listitem:
+      - button "Modern"
+`;
+
+exports[`Wrapping 1`] = `
+- navigation "Breadcrumb":
+  - list:
+    - listitem:
+      - link "Decks":
+        - /url: "#0"
+    - listitem:
+      - link "Constructed":
+        - /url: "#1"
+    - listitem:
+      - link "Modern":
+        - /url: "#2"
+    - listitem: Burn variants
+`;
