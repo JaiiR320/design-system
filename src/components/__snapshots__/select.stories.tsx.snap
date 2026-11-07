@@ -1,0 +1,105 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- combobox "Group cards": Categories
+`;
+
+exports[`Grouped 1`] = `
+- combobox "Format" [expanded]: Commander
+- listbox:
+  - group "Constructed":
+    - option "Standard"
+    - option "Pioneer"
+    - option "Modern"
+  - group "Eternal":
+    - option "Legacy"
+    - option "Vintage"
+    - option "Commander" [selected]
+`;
+
+exports[`Keyboard 1`] = `
+- combobox "Sort cards" [expanded]: Alphabetical
+- listbox:
+  - option "Mana value"
+  - option "Alphabetical" [selected]
+  - option "Price" [disabled]
+  - option "EDHREC rank"
+`;
+
+exports[`Open 1`] = `
+- combobox "Sort cards" [expanded]: Mana value
+- listbox:
+  - option "Mana value" [selected]
+  - option "Alphabetical"
+  - option "Price" [disabled]
+  - option "EDHREC rank"
+`;
+
+exports[`Open Mobile Width 1`] = `
+- text: Order by
+- combobox "Order printings by" [expanded]: Edition date
+- listbox:
+  - option "Edition date" [selected]
+  - option "Set Name"
+  - option "Price"
+`;
+
+exports[`Scrolling 1`] = `
+- combobox "Set" [expanded]: Set 01
+- listbox:
+  - option "Set 01" [selected]
+  - option "Set 02"
+  - option "Set 03"
+  - option "Set 04"
+  - option "Set 05"
+  - option "Set 06"
+  - option "Set 07"
+  - option "Set 08"
+  - option "Set 09"
+  - option "Set 10"
+  - option "Set 11"
+  - option "Set 12"
+  - option "Set 13"
+  - option "Set 14"
+  - option "Set 15"
+  - option "Set 16"
+  - option "Set 17"
+  - option "Set 18"
+  - option "Set 19"
+  - option "Set 20"
+  - option "Set 21"
+  - option "Set 22"
+  - option "Set 23"
+  - option "Set 24"
+  - option "Set 25"
+  - option "Set 26"
+  - option "Set 27"
+  - option "Set 28"
+  - option "Set 29"
+  - option "Set 30"
+  - option "Set 31"
+  - option "Set 32"
+  - option "Set 33"
+  - option "Set 34"
+  - option "Set 35"
+  - option "Set 36"
+  - option "Set 37"
+  - option "Set 38"
+  - option "Set 39"
+  - option "Set 40"
+`;
+
+exports[`Selected 1`] = `
+- combobox "Sort cards": EDHREC rank
+`;
+
+exports[`States 1`] = `
+- combobox "Group cards": Categories
+- combobox "Sort cards": Mana value
+- text: Order by
+- combobox "Order printings by": Edition date
+- combobox "Placeholder": Choose a sort
+- combobox "Disabled" [disabled]: Alphabetical
+- combobox "Invalid": Price
+- combobox "A very long option": EDHREC rank, then alphabetical
+`;
