@@ -37,9 +37,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // A history row: title + timestamp on the left, Load on the right.
+// text-base: DeckDiff's history titles are 16px/24px; the description stays text-sm.
 export const Default: Story = {
   render: (args) => (
-    <Item {...args}>
+    <Item {...args} className="text-base">
       <ItemContent>
         <ItemTitle>Initial build</ItemTitle>
         <ItemDescription>Nov 7, 2026, 12:59 AM</ItemDescription>
@@ -145,7 +146,29 @@ const saves = [
   { id: "s0", label: "Save #3", savedAt: "Nov 6, 2026, 11:42 PM" },
 ];
 
+// Background of every :hover rule that would apply to this element (nested rules resolved).
+function hoverBackgrounds(element: Element) {
+  const found: string[] = [];
+  const walk = (rules: CSSRuleList, parent: string) => {
+    for (const rule of rules) {
+      let selector = parent;
+      if (rule instanceof CSSStyleRule) {
+        selector = parent ? rule.selectorText.replaceAll("&", parent) : rule.selectorText;
+        const background = rule.style.backgroundColor;
+        // Drop real :hover pseudo-classes, not the escaped `\:hover` inside variant class names.
+        const plain = selector.replace(/(?<!\\):hover/g, "");
+        if (background && plain !== selector && element.matches(plain)) found.push(background);
+      }
+      if ("cssRules" in rule && rule.cssRules instanceof CSSRuleList) walk(rule.cssRules, selector);
+    }
+  };
+  for (const sheet of document.styleSheets) walk(sheet.cssRules, "");
+  return found;
+}
+
 // History compare mode: each row is one Toggle (aria-pressed), never a nested button.
+// As in DeckDiff: 16px/24px titles (text-base) and a border-only hover on unselected rows,
+// so Toggle's off-state hover fill is overridden on the row.
 export const CompareSelection: Story = {
   render: () => {
     function Example() {
@@ -157,6 +180,7 @@ export const CompareSelection: Story = {
             return (
               <Item
                 key={save.id}
+                className="text-base not-data-pressed:hover:bg-background"
                 render={
                   <Toggle
                     pressed={order > 0}
@@ -191,6 +215,15 @@ export const CompareSelection: Story = {
     const canvas = within(canvasElement);
     const karn = canvas.getByRole("button", { name: /Swap Karn for Birds/ });
     await expect(karn).toHaveAttribute("aria-pressed", "false");
+    // Unselected hover changes only the border; the fill stays the row background.
+    await expect(hoverBackgrounds(karn).filter((value) => !value.includes("background"))).toEqual(
+      [],
+    );
+    const title = within(karn).getByText("Swap Karn for Birds");
+    await expect(getComputedStyle(title).fontSize).toBe("16px");
+    await expect(getComputedStyle(title).lineHeight).toBe("24px");
+    const timestamp = within(karn).getByText("Nov 7, 2026, 01:00 AM");
+    await expect(getComputedStyle(timestamp).fontSize).toBe("14px");
     await userEvent.click(karn);
     await expect(karn).toHaveAttribute("aria-pressed", "true");
     await expect(karn.querySelector("button")).toBeNull();
