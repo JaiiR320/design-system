@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Right-click empty lane space
+`;
+
+exports[`Open Submenu 1`] = `
+- menu:
+  - group "Lane 1":
+    - menuitem "New category"
+    - menuitem "Paste cards" [disabled]
+  - separator
+  - menuitem "Sort lane by" [expanded]
+  - group:
+    - menu "Sort lane by":
+      - menuitem "Mana value"
+      - menuitem "Name"
+      - menuitem "Price"
+  - menuitem "Collapse lane"
+  - menuitem "Remove lane"
+`;
+
+exports[`Right Click 1`] = `
+- menu:
+  - group "Lane 1":
+    - menuitem "New category"
+    - menuitem "Paste cards" [disabled]
+  - separator
+  - menuitem "Sort lane by"
+  - menuitem "Collapse lane"
+  - menuitem "Remove lane"
+`;
