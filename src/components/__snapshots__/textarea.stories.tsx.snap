@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- textbox "Description":
+  - /placeholder: Describe the issue in detail…
+`;
+
+exports[`Export Preview 1`] = `
+- textbox "Export preview":
+  - /placeholder: Describe the issue in detail…
+  - text: 1 Atraxa, Praetors' Voice 1 Sol Ring 1 Arcane Signet 1 Command Tower
+`;
+
+exports[`Focus Visible 1`] = `
+- textbox "Description":
+  - /placeholder: Describe the issue in detail…
+`;
+
+exports[`States 1`] = `
+- textbox "Filled":
+  - /placeholder: Describe the issue in detail…
+  - text: 1 Sol Ring 1 Command Tower
+- textbox "Invalid":
+  - /placeholder: Describe the issue in detail…
+  - text: Too short
+- textbox "Disabled" [disabled]:
+  - /placeholder: Describe the issue in detail…
+- textbox "Read-only":
+  - /placeholder: Describe the issue in detail…
+  - text: Read-only value
+`;
+
+exports[`Typing 1`] = `
+- text: Description
+- textbox "Description":
+  - /placeholder: Describe the issue in detail…
+  - text: Proliferate
+`;
