@@ -1,0 +1,143 @@
+/*
+ * @jaiir320/design-system theme entry.
+ * The consuming app owns `@import "tailwindcss"` and imports this file right after it.
+ * Dark only. Semantic tokens point at Tailwind's palette so values stay 1:1 with DeckDiff.
+ */
+@import "@fontsource-variable/jetbrains-mono";
+
+/* node_modules is skipped by Tailwind's auto-detection; scan this package's components. */
+@source "./components";
+
+@theme {
+  --font-sans:
+    "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-mono: var(--font-sans);
+
+  /* Surfaces */
+  --color-background: var(--color-zinc-950);
+  --color-foreground: var(--color-zinc-100);
+  --color-card: var(--color-background);
+  --color-card-foreground: var(--color-foreground);
+  --color-popover: var(--color-background);
+  --color-popover-foreground: var(--color-foreground);
+  --color-surface: var(--color-zinc-900);
+  --color-surface-glass: var(--color-zinc-950);
+  --color-muted: color-mix(in oklab, var(--color-zinc-900) 40%, transparent);
+  --color-accent: var(--color-zinc-900);
+  --color-accent-foreground: var(--color-zinc-100);
+  --color-secondary: var(--color-zinc-800);
+  --color-secondary-foreground: var(--color-zinc-300);
+  --color-overlay: oklch(0 0 0 / 70%);
+
+  /* Text ramp, strongest to faintest */
+  --color-strong-foreground: var(--color-zinc-200);
+  --color-subtle-foreground: var(--color-zinc-400);
+  --color-muted-foreground: var(--color-zinc-500);
+  --color-faint-foreground: var(--color-zinc-600);
+
+  /* Lines */
+  --color-border: var(--color-zinc-800);
+  --color-border-strong: var(--color-zinc-700);
+  --color-border-subtle: var(--color-zinc-900);
+  --color-input: var(--color-zinc-800);
+  --color-ring: var(--color-cyan-500);
+
+  /* Brand and selection */
+  --color-primary: var(--color-cyan-400);
+  --color-primary-foreground: var(--color-cyan-950);
+  --color-primary-hover: var(--color-cyan-300);
+  --color-selected: color-mix(in oklab, var(--color-cyan-950) 40%, transparent);
+  --color-selected-foreground: var(--color-cyan-200);
+  --color-selected-border: var(--color-cyan-800);
+  --color-highlight: var(--color-cyan-300);
+  --color-highlight-strong: var(--color-cyan-200);
+
+  /* Status families: solid, hover, text, muted text, tinted surface, border */
+  --color-destructive: var(--color-rose-500);
+  --color-destructive-foreground: var(--color-white);
+  --color-destructive-hover: var(--color-rose-400);
+  --color-destructive-text: var(--color-rose-400);
+  --color-destructive-muted-foreground: var(--color-rose-300);
+  --color-destructive-emphasis: var(--color-rose-200);
+  --color-destructive-surface: var(--color-rose-950);
+  --color-destructive-border: var(--color-rose-900);
+  --color-warning: var(--color-amber-500);
+  --color-warning-foreground: var(--color-amber-950);
+  --color-warning-hover: var(--color-amber-400);
+  --color-warning-text: var(--color-amber-300);
+  --color-warning-muted-foreground: var(--color-amber-200);
+  --color-warning-surface: var(--color-amber-950);
+  --color-warning-border: var(--color-amber-900);
+  --color-success: var(--color-emerald-400);
+  --color-success-foreground: var(--color-emerald-950);
+  --color-success-text: var(--color-emerald-300);
+  --color-success-surface: var(--color-emerald-950);
+  --color-success-border: var(--color-emerald-900);
+  --color-info: var(--color-cyan-400);
+  --color-info-foreground: var(--color-cyan-950);
+  --color-info-text: var(--color-cyan-300);
+  --color-info-surface: var(--color-cyan-950);
+  --color-info-border: var(--color-cyan-900);
+
+  /* Controls laid over artwork */
+  --color-on-image: var(--color-black);
+  --color-on-image-foreground: var(--color-zinc-100);
+  --color-on-image-border: var(--color-white);
+  --color-on-image-hover: oklch(1 0 0 / 15%);
+
+  /* Data visualisation */
+  --color-chart-1: var(--color-cyan-700);
+  --color-chart-2: var(--color-cyan-300);
+
+  /* Uppercase micro-type: labels, eyebrows, wordmark */
+  --tracking-label: 0.08em;
+  --tracking-eyebrow: 0.2em;
+  --tracking-brand: 0.3em;
+
+  /* Elevation */
+  --shadow-overlay: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+  --shadow-raised: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-panel: 0 24px 60px rgb(0 0 0 / 0.2);
+  --shadow-glow: 0 0 18px rgb(34 211 238 / 0.14);
+  --shadow-drag: 0 25px 50px -12px oklch(30.2% 0.056 229.695 / 0.5);
+}
+
+/*
+ * Stacking: sticky chrome < every portaled overlay < drag feedback.
+ * Overlays share one layer; nested popups stack by portal order (last opened on top).
+ * Use as `z-(--z-overlay)`.
+ */
+:root {
+  color-scheme: dark;
+  --z-sticky: 1000;
+  --z-overlay: 1100;
+  --z-drag: 1150;
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-border);
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+}
