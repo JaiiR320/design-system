@@ -1,0 +1,61 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Deck Colors 1`] = `
+- group "Deck colors":
+  - button "Remove White" [pressed]
+  - button "Remove Blue" [pressed]
+  - button "Remove Black" [pressed]
+  - button "Add Red"
+  - button "Remove Green" [pressed]
+`;
+
+exports[`Default 1`] = `
+- button "Show prices"
+`;
+
+exports[`Diff Toggle 1`] = `
+- button "Show all cards" [pressed]
+`;
+
+exports[`Disabled Stable 1`] = `
+- button "Show prices" [disabled] [pressed]
+`;
+
+exports[`Keyboard 1`] = `
+- button "Show prices"
+`;
+
+exports[`Round Keyboard 1`] = `
+- button "Blue" [pressed]
+`;
+
+exports[`Sizes 1`] = `
+- button "xs"
+- button "sm"
+- button "md"
+- button "lg"
+- button "none"
+- button "icon-xs"
+- button "icon-sm"
+- button "icon"
+- button "icon-lg"
+`;
+
+exports[`Variants 1`] = `
+- text: Off Pressed Disabled outline
+- button "Bug"
+- button "Bug" [pressed]
+- button "Bug" [disabled]
+- text: accent
+- button "Bold off"
+- button "Bold on" [pressed]
+- button "Bold disabled" [disabled]
+- text: segmented
+- button "Sign in"
+- button "Sign in" [pressed]
+- button "Sign in" [disabled]
+- text: round
+- button "Add Blue"
+- button "Remove Blue" [pressed]
+- button "Blue unavailable" [disabled]
+`;
