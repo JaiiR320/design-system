@@ -5,8 +5,9 @@ exports[`Default 1`] = `
 `;
 
 exports[`Disabled Reason 1`] = `
-- button "Redo" [disabled]
-- text: Nothing to redo
+- group "Redo":
+  - button "Redo" [disabled]
+- text: Nothing to redo Nothing to redo
 `;
 
 exports[`Escape Closes 1`] = `

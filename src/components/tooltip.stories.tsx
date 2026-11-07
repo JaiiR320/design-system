@@ -101,26 +101,42 @@ export const Sides: Story = {
   ),
 };
 
-// Disabled buttons can't take focus, so the reason lives on a focusable wrapper.
+// Base UI 1.9 tooltips are visual hints: no role="tooltip", no aria-describedby. Disabled
+// buttons can't take focus, so a focusable group carries the name and describes itself with
+// persistent sr-only text; the tooltip only repeats it for sighted users.
 export const DisabledReason: Story = {
   render: () => (
-    <Tooltip>
-      <TooltipTrigger
-        render={<span tabIndex={0} />}
-        aria-label="Redo unavailable: nothing to redo"
-        className="inline-flex rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-      >
-        <button type="button" disabled aria-label="Redo" className={iconButton}>
-          <Redo2 className="size-4" strokeWidth={1.75} />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>Nothing to redo</TooltipContent>
-    </Tooltip>
+    <>
+      <Tooltip>
+        <TooltipTrigger
+          render={<span tabIndex={0} />}
+          role="group"
+          aria-label="Redo"
+          aria-describedby="redo-reason"
+          className="inline-flex rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          <button type="button" disabled aria-label="Redo" className={iconButton}>
+            <Redo2 className="size-4" strokeWidth={1.75} />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>Nothing to redo</TooltipContent>
+      </Tooltip>
+      <span id="redo-reason" className="sr-only">
+        Nothing to redo
+      </span>
+    </>
   ),
-  play: async () => {
+  play: async ({ canvasElement }) => {
+    const group = within(canvasElement).getByRole("group", { name: "Redo" });
+    await expect(group).toHaveAccessibleDescription("Nothing to redo");
     await userEvent.tab();
+    await expect(group).toHaveFocus();
     const body = within(document.body);
-    await waitFor(() => expect(body.getByText("Nothing to redo")).toBeVisible());
+    await waitFor(() =>
+      expect(
+        body.getByText("Nothing to redo", { selector: "[data-slot=tooltip-content]" }),
+      ).toBeVisible(),
+    );
   },
 };
 
