@@ -1,0 +1,87 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Deck name
+- textbox "Deck name":
+  - /placeholder: Enter a deck name
+- paragraph: Shown on the deck tile and in breadcrumbs.
+`;
+
+exports[`Field Set Legend 1`] = `
+- group "Deck colors":
+  - text: Deck colors
+  - button "White"
+  - button "Blue" [pressed]
+  - button "Black"
+  - button "Green"
+`;
+
+exports[`Form Group 1`] = `
+- text: Email
+- textbox "Email":
+  - /placeholder: you@example.com
+- text: Password
+- textbox "Password":
+  - /placeholder: At least 8 characters
+- button "Sign in"
+`;
+
+exports[`Label Focuses Control 1`] = `
+- text: Title
+- textbox "Title":
+  - /placeholder: Brief summary
+  - text: Crash
+- paragraph: One line, shown in the issue list.
+`;
+
+exports[`Label Sizes 1`] = `
+- text: md label
+- textbox "md label":
+  - /placeholder: Default form field
+- text: sm label
+- textbox "sm label":
+  - /placeholder: Compact filter
+`;
+
+exports[`Legend Sizes 1`] = `
+- group "md legend":
+  - text: md legend
+  - textbox "md legend control"
+- group "sm legend":
+  - text: sm legend
+  - textbox "sm legend control"
+`;
+
+exports[`Orientations 1`] = `
+- text: Vertical
+- textbox "Vertical":
+  - /placeholder: Label above
+- text: Horizontal
+- textbox "Horizontal":
+  - /placeholder: Label beside
+`;
+
+exports[`Required Validation 1`] = `
+- text: Email
+- textbox "Email":
+  - /placeholder: you@example.com
+- text: Email is required.
+`;
+
+exports[`States 1`] = `
+- text: Invalid
+- textbox "Invalid": not-an-email
+- text: Enter a valid email address. Disabled
+- textbox "Disabled" [disabled]: Atraxa Superfriends
+- paragraph: Renaming is unavailable while saving.
+- text: Read-only
+- textbox "Read-only": Initial build
+`;
+
+exports[`Textarea Control 1`] = `
+- text: Description
+- textbox "Description":
+  - /placeholder: Describe the issue or feature in detail…
+  - text: Steps
+- paragraph: Markdown is supported.
+`;
