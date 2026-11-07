@@ -22,6 +22,9 @@ export default mergeConfig(
           test: {
             name: "storybook",
             setupFiles: ["./vitest.setup.ts"],
+            // Stories share one browser; running files concurrently starves focus/timer-driven
+            // plays (menus, selects) and makes them flaky. Serial is slower but deterministic.
+            fileParallelism: false,
             browser: {
               enabled: true,
               headless: true,

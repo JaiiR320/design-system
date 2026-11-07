@@ -106,6 +106,8 @@ export const OpenSubmenu: Story = {
     const body = within(document.body);
     await rightClick(canvas.getByLabelText("Lane 1"));
     const sortBy = await body.findByRole("menuitem", { name: "Sort lane by" });
+    // Let the menu take its opening focus before typing, or typeahead races it.
+    await waitFor(() => expect(body.getByRole("menu")).toHaveFocus());
     await userEvent.keyboard("s");
     await waitFor(() => expect(sortBy).toHaveFocus());
     await userEvent.keyboard("{ArrowRight}");
