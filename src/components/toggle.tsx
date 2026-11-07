@@ -1,6 +1,7 @@
 import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
 import { cva, type VariantProps } from "class-variance-authority";
 
+import { buttonSizeVariants } from "#components/button";
 import { disabledState, focusRing } from "#lib/recipes";
 import { cn } from "#lib/utils";
 
@@ -19,24 +20,12 @@ const toggleCva = cva(
         round:
           "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-on-image-border/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-glow",
       },
-      // Mirrors Button's sizes; size radii win over the variant's.
-      size: {
-        xs: "rounded-lg px-3 py-1.5 text-sm",
-        sm: "px-3 py-2 text-sm",
-        md: "px-4 py-2 text-sm",
-        lg: "px-4 py-3 text-sm",
-        "icon-xs": "size-5 rounded-md p-0",
-        "icon-sm": "size-7 p-0",
-        icon: "p-2.5 text-sm",
-        "icon-lg": "size-12 rounded-full p-0",
-        none: "p-0",
-      },
     },
   },
 );
 
 type ToggleVariant = NonNullable<VariantProps<typeof toggleCva>["variant"]>;
-type ToggleSize = NonNullable<VariantProps<typeof toggleCva>["size"]>;
+type ToggleSize = NonNullable<VariantProps<typeof buttonSizeVariants>["size"]>;
 
 const defaultSizes: Record<ToggleVariant, ToggleSize> = {
   outline: "sm",
@@ -52,7 +41,12 @@ function toggleVariants({
   className,
 }: { variant?: ToggleVariant | null; size?: ToggleSize | null; className?: string } = {}) {
   const resolved = variant ?? "outline";
-  return cn(toggleCva({ variant: resolved, size: size ?? defaultSizes[resolved] }), className);
+  // Button's size axis comes after the variant, so size radii win over the variant's.
+  return cn(
+    toggleCva({ variant: resolved }),
+    buttonSizeVariants({ size: size ?? defaultSizes[resolved] }),
+    className,
+  );
 }
 
 type ToggleProps = Omit<TogglePrimitive.Props, "className"> &

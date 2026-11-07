@@ -3,6 +3,7 @@ import { Bold, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
+import { buttonSizeVariants } from "#components/button";
 import { Toggle } from "#components/toggle";
 import { cn } from "#lib/utils";
 
@@ -95,6 +96,26 @@ export const Sizes: Story = {
       </div>
     </div>
   ),
+  // Sizes come from Button's size recipe, so the two can't drift.
+  play: async ({ canvasElement }) => {
+    const sizes = [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "none",
+      "icon-xs",
+      "icon-sm",
+      "icon",
+      "icon-lg",
+    ] as const;
+    for (const size of sizes) {
+      const toggle = within(canvasElement).getByRole("button", { name: size });
+      for (const name of buttonSizeVariants({ size }).split(" ").filter(Boolean)) {
+        await expect(toggle).toHaveClass(name);
+      }
+    }
+  },
 };
 
 // Mana symbols stay in DeckDiff; a CSS dot stands in for them here.
