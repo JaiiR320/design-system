@@ -84,6 +84,16 @@ exports[`Screen 1`] = `
   - text: SLD $1.00 EOC $2.00 CMM $3.00 SLD $4.00 2XM $5.00 CM2 $6.00 C16 $7.00 PZ2 $8.00 A25 $9.00 M19 $10.00 M20 $11.00 MH1 $12.00 C20 $13.00 CMR $14.00 40K $15.00
 `;
 
+exports[`Screen Mobile 1`] = `
+- dialog "Select a printing":
+  - heading "Select a printing" [level=2]
+  - text: Search printings…
+  - textbox "Search printings…":
+    - /placeholder: Filter set name
+  - button "Close"
+  - text: SLD $1.00 EOC $2.00 CMM $3.00 SLD $4.00 2XM $5.00 CM2 $6.00 C16 $7.00 PZ2 $8.00 A25 $9.00 M19 $10.00 M20 $11.00 MH1 $12.00 C20 $13.00 CMR $14.00 40K $15.00
+`;
+
 exports[`Settings 1`] = `
 - dialog "Atraxa Superfriends":
   - heading "Atraxa Superfriends" [level=2]

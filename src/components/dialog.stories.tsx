@@ -284,8 +284,8 @@ const printings = [
 ];
 
 // PrintingPickerModal: bare full-width page over a blurred scrim, scrolling as one.
-export const Screen: Story = {
-  render: () => (
+function PrintingPicker() {
+  return (
     <OpenDialog size="screen">
       <DialogHeader className="mb-5">
         <div className="min-w-0 flex-1">
@@ -320,11 +320,37 @@ export const Screen: Story = {
         ))}
       </DialogBody>
     </OpenDialog>
-  ),
+  );
+}
+
+export const Screen: Story = {
+  render: () => <PrintingPicker />,
   play: async () => {
     await body.findByRole("dialog", { name: "Select a printing" });
     const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
     if (!viewport) throw new Error("viewport missing");
     await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+  },
+};
+
+// The printing picker on a real 390x844 phone: two columns, no sideways scroll, viewport scrolls.
+export const ScreenMobile: Story = {
+  globals: { viewport: { value: "mobile" } },
+  render: () => <PrintingPicker />,
+  play: async () => {
+    await expect(window.innerWidth).toBe(390);
+    const dialog = await body.findByRole("dialog", { name: "Select a printing" });
+    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
+    const grid = dialog.querySelector<HTMLElement>('[data-slot="dialog-body"]');
+    if (!viewport || !grid) throw new Error("viewport or body missing");
+    await expect(getComputedStyle(grid).gridTemplateColumns.split(" ")).toHaveLength(2);
+    await expect(viewport.scrollWidth).toBe(viewport.clientWidth);
+    await expect(dialog.getBoundingClientRect().right).toBeLessThanOrEqual(390);
+    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+    // The close button stays reachable on screen.
+    const close = within(dialog).getByRole("button", { name: "Close" });
+    const box = close.getBoundingClientRect();
+    const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+    await expect(close.contains(hit)).toBe(true);
   },
 };
