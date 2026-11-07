@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- button "Undo"
+`;
+
+exports[`Disabled Reason 1`] = `
+- button "Redo" [disabled]
+- text: Nothing to redo
+`;
+
+exports[`Escape Closes 1`] = `
+- button "Undo"
+`;
+
+exports[`Keyboard Focus 1`] = `
+- button "Undo"
+- text: Undo
+`;
+
+exports[`Long Text 1`] = `
+- button "Sort direction"
+- text: Sort direction toggles between ascending and descending order for the current grouping
+`;
+
+exports[`Open 1`] = `
+- button "Undo"
+- text: Undo
+`;
+
+exports[`Sides 1`] = `
+- button "Tooltip top"
+- button "Tooltip right"
+- button "Tooltip bottom"
+- button "Tooltip left"
+- text: Side top Side right Side bottom Side left
+`;
