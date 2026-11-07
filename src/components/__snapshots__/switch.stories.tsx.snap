@@ -1,0 +1,50 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chip States 1`] = `
+- switch "Off"
+- switch "On" [checked]
+- switch "Disabled off" [disabled]
+- switch "Disabled on" [checked] [disabled]
+`;
+
+exports[`Contextual Name 1`] = `
+- switch "Removed-card ghosts": "Off"
+`;
+
+exports[`Default 1`] = `
+- switch "Notifications"
+`;
+
+exports[`Disabled Stable 1`] = `
+- switch "Locked" [disabled]
+- switch "Hide Ramp" [checked] [disabled]
+`;
+
+exports[`Export Chips 1`] = `
+- switch "Quantity" [checked]
+- switch "Added only"
+- switch "Group by category" [checked]
+- switch "Include out-of-deck" [checked]
+- switch "Separate sideboard" [disabled]
+`;
+
+exports[`Focus Visible 1`] = `
+- switch "Bare switch" [checked]
+- switch "Hide Ramp"
+`;
+
+exports[`Keyboard 1`] = `
+- form "Preferences":
+  - switch "Include Ramp in deck" [checked]
+`;
+
+exports[`States 1`] = `
+- text: "Off"
+- switch "Off"
+- text: "On"
+- switch "On" [checked]
+- text: Disabled off
+- switch "Disabled off" [disabled]
+- text: Disabled on
+- switch "Disabled on" [checked] [disabled]
+`;
