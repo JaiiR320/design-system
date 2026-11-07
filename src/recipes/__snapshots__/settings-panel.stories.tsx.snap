@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Categories Open 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck settings
+  - tablist:
+    - tab "General"
+    - tab "Categories" [selected]
+  - tabpanel "Categories":
+    - text: New category
+    - textbox "New category"
+    - button "Add"
+    - text: Land
+    - paragraph: 27 cards
+    - switch "Hide Land" [checked]: Hide
+    - switch "Land in deck" [checked]: In Deck
+    - button "Rename Land": Rename
+    - button "Remove Land" [disabled]: Remove
+    - text: Creature
+    - paragraph: 7 cards
+    - switch "Hide Creature": Hide
+    - switch "Creature in deck" [checked]: In Deck
+    - button "Rename Creature": Rename
+    - button "Remove Creature" [disabled]: Remove
+    - text: Artifact
+    - paragraph: 10 cards
+    - switch "Hide Artifact": Hide
+    - switch "Artifact in deck" [checked]: In Deck
+    - button "Rename Artifact": Rename
+    - button "Remove Artifact" [disabled]: Remove
+    - text: Enchantment
+    - paragraph: 5 cards
+    - switch "Hide Enchantment": Hide
+    - switch "Enchantment in deck" [checked]: In Deck
+    - button "Rename Enchantment": Rename
+    - button "Remove Enchantment" [disabled]: Remove
+    - text: Instant
+    - paragraph: 10 cards
+    - switch "Hide Instant": Hide
+    - switch "Instant in deck" [checked]: In Deck
+    - button "Rename Instant": Rename
+    - button "Remove Instant" [disabled]: Remove
+    - text: Sideboard
+    - paragraph: 1 card
+    - switch "Hide Sideboard" [checked]: Hide
+    - switch "Sideboard in deck": In Deck
+    - button "Rename Sideboard": Rename
+    - button "Remove Sideboard" [disabled]: Remove
+    - text: Ramp
+    - paragraph: 0 cards
+    - switch "Hide Ramp": Hide
+    - switch "Ramp in deck" [checked]: In Deck
+    - button "Rename Ramp": Rename
+    - button "Remove Ramp": Remove
+  - button "Close"
+`;
+
+exports[`Default 1`] = `
+- button "Settings"
+`;
+
+exports[`General Open 1`] = `
+- dialog "Atraxa Superfriends":
+  - heading "Atraxa Superfriends" [level=2]
+  - paragraph: Deck settings
+  - tablist:
+    - tab "General" [selected]
+    - tab "Categories"
+  - tabpanel "General":
+    - text: Deck name
+    - textbox "Deck name": Atraxa Superfriends
+    - button "Save"
+    - paragraph: Shown on the deck tile and in exports.
+    - text: Deck colors
+    - paragraph: Used to clamp flexible mana production stats.
+    - group "Deck colors":
+      - button "White" [pressed]
+      - button "Blue" [pressed]
+      - button "Black"
+      - button "Red" [pressed]
+      - button "Green" [pressed]
+    - text: Cover zoom
+    - paragraph: How far the tile art is cropped in.
+    - slider "Cover zoom": "140"
+    - status: 140%
+    - text: Removed-card ghosts
+    - paragraph: Keep cards visible in their old category after moving them.
+    - switch "Removed-card ghosts": "Off"
+  - button "Close"
+`;
