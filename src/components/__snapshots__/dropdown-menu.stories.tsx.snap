@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- button "Actions"
+`;
+
+exports[`Keyboard Navigation 1`] = `
+- button "Ramp actions"
+`;
+
+exports[`Open 1`] = `
+- button "Actions" [expanded]
+- menu "Actions":
+  - group "Category":
+    - menuitem "Move all cards"
+    - menuitem "Rename"
+  - separator
+  - menuitem "Back"
+  - menuitem "Hide category" [disabled]
+  - menuitem "Remove"
+  - menuitem "Remove (disabled)" [disabled]
+`;
+
+exports[`Open Submenu 1`] = `
+- button "Deepglow Skate actions" [expanded]
+- menu "Deepglow Skate actions":
+  - menuitem "Use as deck cover"
+  - menuitem "Change printing"
+  - menuitem "Move to" [expanded]
+  - group:
+    - menu "Move to":
+      - menuitem "Land"
+      - menuitem "Artifact"
+      - menuitem "Enchantment"
+      - menuitem "Instant"
+      - menuitem "Sorcery"
+      - menuitem "Planeswalker"
+      - menuitem "Battle"
+      - menuitem "Other"
+      - menuitem "Ramp"
+      - menuitem "Sideboard"
+      - menuitem "Commander"
+`;
+
+exports[`Second Page 1`] = `
+- button "Ramp actions" [expanded]
+- menu "Ramp actions":
+  - group "Move cards to":
+    - menuitem "Land"
+    - menuitem "Artifact"
+    - menuitem "Enchantment"
+    - menuitem "Instant"
+  - menuitem "Back"
+`;
