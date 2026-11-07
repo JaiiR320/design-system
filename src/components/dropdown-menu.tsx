@@ -25,7 +25,7 @@ type DropdownMenuContentProps = Omit<MenuPrimitive.Popup.Props, "className"> &
   > & {
     className?: string;
     portalProps?: MenuPrimitive.Portal.Props;
-    positionerProps?: MenuPrimitive.Positioner.Props;
+    positionerProps?: Omit<MenuPrimitive.Positioner.Props, "className"> & { className?: string };
   };
 
 function DropdownMenuContent({
@@ -39,6 +39,7 @@ function DropdownMenuContent({
   positionerProps,
   ...props
 }: DropdownMenuContentProps) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
     <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...portalProps}>
       <MenuPrimitive.Positioner
@@ -48,8 +49,8 @@ function DropdownMenuContent({
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         collisionPadding={collisionPadding}
-        className={popupLayer}
-        {...positionerProps}
+        className={cn(popupLayer, positionerClassName)}
+        {...restPositionerProps}
       >
         <MenuPrimitive.Popup
           data-slot="dropdown-menu-content"

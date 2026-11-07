@@ -4,6 +4,15 @@ exports[`Default 1`] = `
 - text: Right-click empty lane space
 `;
 
+exports[`In Dialog With Positioner Class 1`] = `
+- menu:
+  - menuitem "New category"
+  - menuitem "Paste cards"
+  - menuitem "Collapse lane"
+  - menuitem "Rename lane"
+  - menuitem "Remove lane"
+`;
+
 exports[`Open Submenu 1`] = `
 - menu:
   - group "Lane 1":

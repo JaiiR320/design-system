@@ -26,7 +26,9 @@ type ContextMenuContentProps = Omit<ContextMenuPrimitive.Popup.Props, "className
   > & {
     className?: string;
     portalProps?: ContextMenuPrimitive.Portal.Props;
-    positionerProps?: ContextMenuPrimitive.Positioner.Props;
+    positionerProps?: Omit<ContextMenuPrimitive.Positioner.Props, "className"> & {
+      className?: string;
+    };
   };
 
 function ContextMenuContent({
@@ -40,6 +42,7 @@ function ContextMenuContent({
   positionerProps,
   ...props
 }: ContextMenuContentProps) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
     <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...portalProps}>
       <ContextMenuPrimitive.Positioner
@@ -49,8 +52,8 @@ function ContextMenuContent({
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         collisionPadding={collisionPadding}
-        className={popupLayer}
-        {...positionerProps}
+        className={cn(popupLayer, positionerClassName)}
+        {...restPositionerProps}
       >
         <ContextMenuPrimitive.Popup
           data-slot="context-menu-content"

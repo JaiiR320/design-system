@@ -8,6 +8,15 @@ exports[`Escape Returns Focus 1`] = `
 - button "Details"
 `;
 
+exports[`In Dialog With Positioner Class 1`] = `
+- dialog "Deck settings":
+  - heading "Deck settings" [level=2]
+  - button "Details" [expanded]
+  - dialog "Snapshot":
+    - heading "Snapshot" [level=2]
+    - paragraph: Saved before the last import. Restoring it replaces the current list.
+`;
+
 exports[`Open 1`] = `
 - button "Details" [expanded]
 - dialog "Snapshot":

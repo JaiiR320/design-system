@@ -3,6 +3,7 @@ import { Ellipsis } from "lucide-react";
 import { useRef, useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
 import {
   Popover,
   PopoverClose,
@@ -284,5 +285,40 @@ export const SearchOpen: Story = {
     await expect(body.getByRole("button", { name: "Thrasios, Triton Hero" })).toHaveFocus();
     // Let the input's blur repaint settle before the snapshot.
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  },
+};
+
+/** A positioner class extends the overlay layer: the popover paints above its Dialog. */
+export const InDialogWithPositionerClass: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogContent size="sm">
+        <DialogTitle>Deck settings</DialogTitle>
+        <Popover>
+          <PopoverTrigger className={`mt-4 ${outlineButton}`}>Details</PopoverTrigger>
+          <PopoverContent align="start" positionerProps={{ className: "mt-1" }}>
+            <PopoverHeader>
+              <PopoverTitle>Snapshot</PopoverTitle>
+              <PopoverDescription>
+                Saved before the last import. Restoring it replaces the current list.
+              </PopoverDescription>
+            </PopoverHeader>
+          </PopoverContent>
+        </Popover>
+      </DialogContent>
+    </Dialog>
+  ),
+  play: async () => {
+    const body = within(document.body);
+    await userEvent.click(await body.findByRole("button", { name: "Details" }));
+    const popup = await body.findByRole("dialog", { name: "Snapshot" });
+    await waitFor(() => expect(popup).toBeVisible());
+    const positioner = popup.closest("[data-slot='popover-positioner']");
+    await expect(positioner).toHaveClass("mt-1");
+    // Hit test the lower half of the popover, which overlaps the dialog's bottom edge and backdrop.
+    const rect = popup.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
+    await expect(popup.contains(hit)).toBe(true);
+    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };

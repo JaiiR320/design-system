@@ -3,6 +3,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -239,5 +240,38 @@ export const SecondPage: Story = {
     await expect(await body.findByRole("menuitem", { name: "Move all cards" })).toBeVisible();
     await userEvent.click(body.getByRole("menuitem", { name: "Move all cards" }));
     await expect(await body.findByRole("menuitem", { name: "Instant" })).toBeVisible();
+  },
+};
+
+/** A positioner class extends the overlay layer: the menu paints above its Dialog. */
+export const InDialogWithPositionerClass: Story = {
+  render: (args) => (
+    <Dialog defaultOpen>
+      <DialogContent size="sm">
+        <DialogTitle>Deck settings</DialogTitle>
+        <DropdownMenu {...args}>
+          <DropdownMenuTrigger className={`mt-4 ${triggerClass}`}>Actions</DropdownMenuTrigger>
+          <DropdownMenuContent align="start" positionerProps={{ className: "mt-1" }}>
+            <DropdownMenuItem>Move all cards</DropdownMenuItem>
+            <DropdownMenuItem>Rename</DropdownMenuItem>
+            <DropdownMenuItem>Duplicate</DropdownMenuItem>
+            <DropdownMenuItem variant="destructive">Remove</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </DialogContent>
+    </Dialog>
+  ),
+  play: async () => {
+    const body = within(document.body);
+    await userEvent.click(await body.findByRole("button", { name: "Actions" }));
+    const menu = await body.findByRole("menu");
+    await waitFor(() => expect(menu).toBeVisible());
+    const positioner = menu.closest("[data-slot='dropdown-menu-positioner']");
+    await expect(positioner).toHaveClass("mt-1");
+    // Hit test the lower half of the menu, which overlaps the dialog's bottom edge and backdrop.
+    const rect = menu.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
+    await expect(menu.contains(hit)).toBe(true);
+    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };

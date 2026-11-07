@@ -4,6 +4,17 @@ exports[`Default 1`] = `
 - button "Actions"
 `;
 
+exports[`In Dialog With Positioner Class 1`] = `
+- dialog "Deck settings":
+  - heading "Deck settings" [level=2]
+  - button "Actions" [expanded]
+  - menu "Actions":
+    - menuitem "Move all cards"
+    - menuitem "Rename"
+    - menuitem "Duplicate"
+    - menuitem "Remove"
+`;
+
 exports[`Keyboard Navigation 1`] = `
 - button "Ramp actions"
 `;

@@ -20,7 +20,7 @@ type PopoverContentProps = Omit<PopoverPrimitive.Popup.Props, "className"> &
   > & {
     className?: string;
     portalProps?: PopoverPrimitive.Portal.Props;
-    positionerProps?: PopoverPrimitive.Positioner.Props;
+    positionerProps?: Omit<PopoverPrimitive.Positioner.Props, "className"> & { className?: string };
   };
 
 function PopoverContent({
@@ -35,6 +35,7 @@ function PopoverContent({
   positionerProps,
   ...props
 }: PopoverContentProps) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
     <PopoverPrimitive.Portal data-slot="popover-portal" {...portalProps}>
       <PopoverPrimitive.Positioner
@@ -45,8 +46,8 @@ function PopoverContent({
         alignOffset={alignOffset}
         collisionPadding={collisionPadding}
         anchor={anchor}
-        className={popupLayer}
-        {...positionerProps}
+        className={cn(popupLayer, positionerClassName)}
+        {...restPositionerProps}
       >
         <PopoverPrimitive.Popup
           data-slot="popover-content"

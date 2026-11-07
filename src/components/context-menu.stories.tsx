@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -81,7 +82,9 @@ export const RightClick: Story = {
 
     // Reopen and choose an item with the keyboard; disabled Paste cards is focusable but inert.
     await rightClick(canvas.getByLabelText("Lane 1"));
-    await body.findByRole("menu");
+    const menu = await body.findByRole("menu");
+    // Base UI focuses the popup after opening; navigating before that would race it.
+    await waitFor(() => expect(menu).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
     await waitFor(() => expect(body.getByRole("menuitem", { name: "New category" })).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
@@ -112,5 +115,44 @@ export const OpenSubmenu: Story = {
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(1));
     await userEvent.hover(sortBy);
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
+  },
+};
+
+/** A positioner class extends the overlay layer: the menu paints above its Dialog. */
+export const InDialogWithPositionerClass: Story = {
+  render: (args) => (
+    <Dialog defaultOpen>
+      <DialogContent size="sm">
+        <DialogTitle>Deck settings</DialogTitle>
+        <ContextMenu {...args}>
+          <ContextMenuTrigger
+            aria-label="Lane 1"
+            className="mt-4 flex h-24 items-center justify-center rounded-xl border border-dashed border-border-strong text-sm text-muted-foreground"
+          >
+            Right-click empty lane space
+          </ContextMenuTrigger>
+          <ContextMenuContent positionerProps={{ className: "ml-1" }}>
+            <ContextMenuItem>New category</ContextMenuItem>
+            <ContextMenuItem>Paste cards</ContextMenuItem>
+            <ContextMenuItem>Collapse lane</ContextMenuItem>
+            <ContextMenuItem>Rename lane</ContextMenuItem>
+            <ContextMenuItem variant="destructive">Remove lane</ContextMenuItem>
+          </ContextMenuContent>
+        </ContextMenu>
+      </DialogContent>
+    </Dialog>
+  ),
+  play: async () => {
+    const body = within(document.body);
+    await rightClick(await body.findByLabelText("Lane 1"));
+    const menu = await body.findByRole("menu");
+    await waitFor(() => expect(menu).toBeVisible());
+    const positioner = menu.closest("[data-slot='context-menu-positioner']");
+    await expect(positioner).toHaveClass("ml-1");
+    // Hit test the lower half of the menu, which overlaps the dialog's bottom edge and backdrop.
+    const rect = menu.getBoundingClientRect();
+    const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
+    await expect(menu.contains(hit)).toBe(true);
+    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };
