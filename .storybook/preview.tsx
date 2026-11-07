@@ -14,6 +14,12 @@ const preview: Preview = {
   parameters: {
     layout: "centered",
     backgrounds: { options: { dark: { name: "Dark", value: "#09090b" } } },
+    // Opt a story into a phone-sized page with `globals: { viewport: { value: "mobile" } }`.
+    viewport: {
+      options: {
+        mobile: { name: "Mobile", styles: { width: "390px", height: "844px" }, type: "mobile" },
+      },
+    },
     docs: { theme: themes.dark },
   },
   initialGlobals: { backgrounds: { value: "dark" } },
