@@ -20,7 +20,7 @@ export const Keys: Story = {
       <Kbd>Z</Kbd>
       <Kbd>Esc</Kbd>
       <Kbd>Enter</Kbd>
-      <Kbd>⌘</Kbd>
+      <Kbd>Ctrl</Kbd>
       <Kbd>Shift</Kbd>
     </div>
   ),

@@ -254,7 +254,7 @@ function SearchResults() {
                 key={name}
                 type="button"
                 aria-label={name}
-                className={`aspect-[488/680] w-28 shrink-0 rounded-lg border border-border bg-gradient-to-b from-surface to-secondary ${ring}`}
+                className={`aspect-[488/680] w-28 shrink-0 rounded-lg border border-border bg-surface ${ring}`}
               />
             ))}
           </section>

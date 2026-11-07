@@ -63,6 +63,12 @@ pnpm verify                             # format, lint, types, tests, Storybook 
 
 Every story is a test. After it renders and its play function runs, the whole page gets an aria snapshot and a pixel-exact screenshot, including any open menu or dialog. Baselines sit next to each story in `__screenshots__/` and `__snapshots__/`.
 
+Keep stories host-independent so baselines match on any Linux:
+
+- no network images;
+- no smooth gradients, which dither differently per machine; use hard color stops;
+- no glyphs outside JetBrains Mono's bundled Latin subsets, such as `⌘`, which fall back to OS fonts.
+
 ### Adding a shadcn component
 
 ```sh

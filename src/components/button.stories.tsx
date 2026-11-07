@@ -45,8 +45,8 @@ export const Variants: Story = {
           </Button>
         </div>
       </div>
-      {/* Gradient stands in for card artwork behind the on-image variants. */}
-      <div className="flex items-center gap-3 rounded-xl bg-linear-to-br from-cyan-900 via-zinc-700 to-amber-800 p-4">
+      {/* Two-tone fill stands in for card artwork (hard stops: smooth gradients dither per machine). */}
+      <div className="flex items-center gap-3 rounded-xl bg-[linear-gradient(to_right,var(--color-cyan-900)_50%,var(--color-amber-800)_50%)] p-4">
         <Button variant="glass">glass</Button>
         <div className="flex overflow-hidden rounded-lg border border-on-image-border/20 bg-on-image/60">
           <Button variant="overlay" size="icon-sm" aria-label="Add one">

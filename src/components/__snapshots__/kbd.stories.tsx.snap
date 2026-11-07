@@ -13,5 +13,5 @@ exports[`In Text 1`] = `
 `;
 
 exports[`Keys 1`] = `
-- text: Z Esc Enter ⌘ Shift
+- text: Z Esc Enter Ctrl Shift
 `;
