@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- button "Details"
+`;
+
+exports[`Escape Returns Focus 1`] = `
+- button "Details"
+`;
+
+exports[`Open 1`] = `
+- button "Details" [expanded]
+- dialog "Snapshot":
+  - heading "Snapshot" [level=2]
+  - paragraph: Saved before the last import.
+`;
+
+exports[`Outside Press Closes 1`] = `
+- button "Details"
+`;
+
+exports[`Rename Open 1`] = `
+- text: Ramp
+- button "Ramp actions" [expanded]
+- dialog "Rename category":
+  - text: Rename category
+  - textbox "Rename category": Ramp
+  - button "Cancel"
+  - button "Save"
+`;
+
+exports[`Rename Save 1`] = `
+- text: Ramp
+- button "Ramp actions"
+`;
+
+exports[`Rename Typing 1`] = `
+- text: Ramp
+- button "Ramp actions" [expanded]
+- dialog "Rename category":
+  - text: Rename category
+  - textbox "Rename category": Mana rocks
+  - button "Cancel"
+  - button "Save"
+`;
+
+exports[`Search Open 1`] = `
+- textbox "Add card": Th
+- dialog "Search results":
+  - region "Results":
+    - button "Thrasios, Triton Hero"
+    - button "Tymna the Weaver"
+    - button "Thassa's Oracle"
+    - button "Tymna"
+    - button "Toxrill"
+`;
+
+exports[`Sides 1`] = `
+- button "top" [expanded]
+- dialog "Side top":
+  - heading "Side top" [level=2]
+- button "right" [expanded]
+- dialog "Side right":
+  - heading "Side right" [level=2]
+- button "bottom" [expanded]
+- dialog "Side bottom":
+  - heading "Side bottom" [level=2]
+- button "left" [expanded]
+- dialog "Side left":
+  - heading "Side left" [level=2]
+`;
