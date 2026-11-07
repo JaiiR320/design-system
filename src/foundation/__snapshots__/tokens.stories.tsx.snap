@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Accents 1`] = `
+- heading "Brand and selection" [level=2]
+- paragraph: primary
+- paragraph: primary-hover
+- paragraph: selected
+- paragraph: selected-border
+- paragraph: highlight
+- paragraph: highlight-strong
+- paragraph: chart-1
+- paragraph: chart-2
+- heading "Status" [level=2]
+- paragraph: destructive
+- paragraph: destructive-text
+- paragraph: destructive-surface/30
+- paragraph: destructive-border/50
+- paragraph: warning
+- paragraph: warning-text
+- paragraph: warning-surface/20
+- paragraph: warning-border/60
+- paragraph: success
+- paragraph: success-text
+- paragraph: success-surface/20
+- paragraph: success-border/50
+- paragraph: info
+- paragraph: info-text
+- paragraph: info-surface/20
+- paragraph: info-border/50
+`;
+
+exports[`Elevation 1`] = `
+- paragraph: shadow-raised
+- paragraph: shadow-overlay
+- paragraph: shadow-panel
+- paragraph: shadow-glow
+- paragraph: shadow-drag
+`;
+
+exports[`Neutrals 1`] = `
+- heading "Surfaces" [level=2]
+- paragraph: background
+- paragraph: surface
+- paragraph: surface-glass/80
+- paragraph: muted
+- paragraph: accent
+- paragraph: secondary
+- paragraph: popover
+- paragraph: overlay
+- heading "Text" [level=2]
+- paragraph: foreground
+- paragraph: strong-foreground
+- paragraph: secondary-foreground
+- paragraph: subtle-foreground
+- paragraph: muted-foreground
+- paragraph: faint-foreground
+- heading "Lines" [level=2]
+- paragraph: border-subtle
+- paragraph: border
+- paragraph: border-strong
+- paragraph: ring
+`;

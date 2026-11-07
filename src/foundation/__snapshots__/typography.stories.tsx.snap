@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Micro Type 1`] = `
+- paragraph: "tracking-label: field and section labels"
+- paragraph: "tracking-eyebrow: eyebrows"
+- paragraph: "tracking-brand: wordmark"
+`;
+
+exports[`Ramp 1`] = `
+- paragraph: "foreground: primary text"
+- paragraph: "strong-foreground: hover target for quiet controls"
+- paragraph: "secondary-foreground: control text"
+- paragraph: "subtle-foreground: secondary copy"
+- paragraph: "muted-foreground: meta and labels"
+- paragraph: "faint-foreground: placeholders"
+`;
+
+exports[`Scale 1`] = `
+- paragraph: "text-3xl semibold: page titles"
+- paragraph: "text-2xl semibold: dialog titles"
+- paragraph: "text-xl semibold: section titles"
+- paragraph: "text-lg semibold: panel titles"
+- paragraph: "text-base: large inputs"
+- paragraph: "text-sm medium: controls and body"
+- paragraph: "text-xs: meta and badges"
+`;
