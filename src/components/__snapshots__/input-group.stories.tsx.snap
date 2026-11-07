@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Addon Focuses Control 1`] = `
+- group:
+  - text: https://
+  - textbox "Background URL":
+    - /placeholder: example.com/art.jpg
+    - text: art
+`;
+
+exports[`Addons 1`] = `
+- group:
+  - textbox "Inline start":
+    - /placeholder: inline-start icon
+- group:
+  - textbox "Inline end":
+    - /placeholder: inline-end text
+  - text: 0 / 40
+- group:
+  - textbox "With button": Thrasios
+  - button "Clear search"
+- group:
+  - text: block-start
+  - textbox "Block addons":
+    - /placeholder: Ask the judge…
+  - text: block-end
+  - button "Send"
+`;
+
+exports[`Default 1`] = `
+- group:
+  - textbox "Add card":
+    - /placeholder: Add card…
+`;
+
+exports[`In Field 1`] = `
+- text: Search cards
+- group:
+  - textbox "Search cards":
+    - /placeholder: Add card…
+`;
+
+exports[`Keyboard Focus 1`] = `
+- group:
+  - textbox "Add card":
+    - /placeholder: Add card…
+  - button "Add"
+`;
+
+exports[`Sizes 1`] = `
+- group:
+  - textbox "xs"
+- group:
+  - textbox "sm"
+- group:
+  - textbox "md"
+`;
+
+exports[`States 1`] = `
+- group:
+  - textbox "Invalid": Not a card
+- group:
+  - textbox "Disabled" [disabled]
+- group:
+  - textbox "Read-only"
+`;
