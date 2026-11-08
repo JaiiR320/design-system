@@ -91,8 +91,8 @@ function TileMedia({ media }: { media: Media }) {
           </div>
         </div>
       )}
-      <div className="absolute inset-x-0 top-0 h-24 bg-linear-to-b from-on-image/85 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-on-image/85 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-24 bg-linear-to-b from-black/85 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/85 to-transparent" />
     </>
   );
 }
@@ -112,7 +112,7 @@ function DeckTile({ deck, onOpenDeck, onAction }: DeckTileProps) {
       <div className="pointer-events-none relative z-10 flex h-full flex-col justify-between px-6 py-5 pr-16">
         <div className="flex items-center gap-3">
           <Layers
-            className="size-7 shrink-0 text-highlight drop-shadow-lg"
+            className="size-7 shrink-0 text-cyan-300 drop-shadow-lg"
             strokeWidth={1.75}
             aria-hidden
           />

@@ -31,7 +31,6 @@ function SwatchGrid({ title, swatches }: { title: string; swatches: Swatch[] }) 
 const surfaces: Swatch[] = [
   { name: "background", className: "bg-background" },
   { name: "surface", className: "bg-surface" },
-  { name: "surface-glass/80", className: "bg-surface-glass/80" },
   { name: "muted", className: "bg-muted" },
   { name: "accent", className: "bg-accent" },
   { name: "secondary", className: "bg-secondary" },
@@ -60,10 +59,6 @@ const brand: Swatch[] = [
   { name: "primary-hover", className: "bg-primary-hover" },
   { name: "selected", className: "bg-selected" },
   { name: "selected-border", className: "bg-selected-border" },
-  { name: "highlight", className: "bg-highlight" },
-  { name: "highlight-strong", className: "bg-highlight-strong" },
-  { name: "chart-1", className: "bg-chart-1" },
-  { name: "chart-2", className: "bg-chart-2" },
 ];
 
 const status: Swatch[] = [
@@ -108,13 +103,11 @@ const shadows = [
   { name: "shadow-raised", className: "shadow-raised" },
   { name: "shadow-overlay", className: "shadow-overlay" },
   { name: "shadow-panel", className: "shadow-panel" },
-  { name: "shadow-glow", className: "shadow-glow" },
-  { name: "shadow-drag", className: "shadow-drag" },
 ];
 
 export const Elevation: Story = {
   render: () => (
-    <div className="grid w-[720px] grid-cols-5 gap-6 p-6">
+    <div className="grid w-[480px] grid-cols-3 gap-6 p-6">
       {shadows.map((shadow) => (
         <div key={shadow.name} className="space-y-3">
           <div className={`h-16 rounded-xl border border-border bg-surface ${shadow.className}`} />

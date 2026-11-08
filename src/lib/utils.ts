@@ -6,8 +6,8 @@ import { extendTailwindMerge } from "tailwind-merge";
 const merge = extendTailwindMerge({
   extend: {
     classGroups: {
-      shadow: [{ shadow: ["overlay", "raised", "panel", "glow", "drag"] }],
-      tracking: [{ tracking: ["label", "eyebrow", "brand"] }],
+      shadow: [{ shadow: ["overlay", "raised", "panel"] }],
+      tracking: [{ tracking: ["label", "eyebrow"] }],
     },
   },
 });

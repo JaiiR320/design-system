@@ -15,8 +15,8 @@ export const Scale: Story = {
       <p className="text-2xl font-semibold tracking-tight">text-2xl semibold: dialog titles</p>
       <p className="text-xl font-semibold">text-xl semibold: section titles</p>
       <p className="text-lg font-semibold">text-lg semibold: panel titles</p>
-      <p className="text-base">text-base: large inputs</p>
-      <p className="text-sm font-medium">text-sm medium: controls and body</p>
+      <p className="text-base">text-base: body text; controls inherit their parent</p>
+      <p className="text-sm font-medium">text-sm medium: labels and dense UI</p>
       <p className="text-xs">text-xs: meta and badges</p>
     </div>
   ),
@@ -43,9 +43,6 @@ export const MicroType: Story = {
       </p>
       <p className="text-xs font-medium tracking-eyebrow text-primary uppercase">
         tracking-eyebrow: eyebrows
-      </p>
-      <p className="text-sm font-semibold tracking-brand text-primary uppercase">
-        tracking-brand: wordmark
       </p>
     </div>
   ),

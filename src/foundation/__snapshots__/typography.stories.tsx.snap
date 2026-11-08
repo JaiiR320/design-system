@@ -1,9 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Micro Type 1`] = `
-- paragraph: "tracking-label: field and section labels"
-- paragraph: "tracking-eyebrow: eyebrows"
-- paragraph: "tracking-brand: wordmark"
+- paragraph: tracking-label: field and section labels
+- paragraph: tracking-eyebrow: eyebrows
 `;
 
 exports[`Ramp 1`] = `
@@ -16,11 +15,11 @@ exports[`Ramp 1`] = `
 `;
 
 exports[`Scale 1`] = `
-- paragraph: "text-3xl semibold: page titles"
-- paragraph: "text-2xl semibold: dialog titles"
-- paragraph: "text-xl semibold: section titles"
-- paragraph: "text-lg semibold: panel titles"
-- paragraph: "text-base: large inputs"
-- paragraph: "text-sm medium: controls and body"
-- paragraph: "text-xs: meta and badges"
+- paragraph: text-3xl semibold: page titles
+- paragraph: text-2xl semibold: dialog titles
+- paragraph: text-xl semibold: section titles
+- paragraph: text-lg semibold: panel titles
+- paragraph: "text-base: body text; controls inherit their parent"
+- paragraph: "text-sm medium: labels and dense UI"
+- paragraph: text-xs: meta and badges
 `;
