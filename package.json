@@ -1,8 +1,8 @@
 {
   "name": "@jaiir320/design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "DeckDiff's design system: tokens and composable React primitives on shadcn/ui + Base UI.",
+  "description": "Semantic tokens and composable React primitives on shadcn/ui + Base UI.",
   "license": "MIT",
   "files": [
     "src",
