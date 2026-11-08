@@ -25,7 +25,8 @@ function TabsList({ className, activateOnFocus = false, ...props }: TabsListProp
 
 type TabsTriggerProps = Omit<TabsPrimitive.Tab.Props, "className"> & { className?: string };
 
-// Underline lives on the active tab itself (2px border), as in DeckDiff; no indicator element.
+// Underline lives on the active tab itself (2px border); no indicator element.
+// Styled for horizontal tabs only: a vertical TabsList needs its own className.
 function TabsTrigger({ className, ...props }: TabsTriggerProps) {
   return (
     <TabsPrimitive.Tab
