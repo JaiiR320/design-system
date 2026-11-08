@@ -3,7 +3,7 @@ import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { disabledState, focusRing } from "#lib/recipes";
 import { cn } from "#lib/utils";
 
-// DeckDiff's 44x24 track; the thumb sits 4px in when off and slides to 20px when on.
+// 44x24 track; the thumb sits 4px in when off and slides to 20px when on.
 const thumbClassName =
   "pointer-events-none block h-5 w-5 rounded-full bg-white transition-transform motion-reduce:transition-none data-unchecked:translate-x-1 data-checked:translate-x-5";
 

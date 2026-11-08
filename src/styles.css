@@ -1,7 +1,7 @@
 /*
  * @jaiir320/design-system theme entry.
  * The consuming app owns `@import "tailwindcss"` and imports this file right after it.
- * Dark only. Semantic tokens point at Tailwind's palette so values stay 1:1 with DeckDiff.
+ * Dark only. Semantic tokens point at Tailwind's palette; override them in a later @theme block.
  */
 @import "@fontsource-variable/jetbrains-mono";
 
