@@ -25,9 +25,9 @@ exports[`Paddings 1`] = `
 
 exports[`Panel Overrides 1`] = `
 - heading "Sign in" [level=2]
-- paragraph: "Auth card: rounded-3xl, glass 90."
+- paragraph: rounded-3xl, 90% surface.
 - heading "Judge" [level=2]
-- paragraph: "Judge card: rounded-2xl, glass 70."
+- paragraph: rounded-2xl, 70% surface.
 - heading "Editor" [level=2]
 - paragraph: Panel variant.
 `;
@@ -36,8 +36,6 @@ exports[`Variants 1`] = `
 - heading "default" [level=3]
 - paragraph: Card surface
 - heading "inset" [level=3]
-- paragraph: Card surface
-- heading "glass" [level=3]
 - paragraph: Card surface
 - heading "outline" [level=3]
 - paragraph: Card surface

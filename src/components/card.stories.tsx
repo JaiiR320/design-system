@@ -51,11 +51,11 @@ export const Default: Story = {
   ),
 };
 
-const variants = ["default", "inset", "glass", "outline", "panel"] as const;
+const variants = ["default", "inset", "outline", "panel"] as const;
 
 export const Variants: Story = {
   render: () => (
-    <div className="grid w-[56rem] grid-cols-5 gap-3">
+    <div className="grid w-[45rem] grid-cols-4 gap-3">
       {variants.map((variant) => (
         <Card key={variant} variant={variant} padding="md" className="space-y-1">
           <CardTitle>{variant}</CardTitle>
@@ -109,27 +109,19 @@ export const HeaderBand: Story = {
   },
 };
 
-// Caller overrides reproduce DeckDiff's auth and judge panels.
+// Translucent and rounder panels are caller overrides, not variants.
 export const PanelOverrides: Story = {
   render: () => (
     <div className="flex items-start gap-4">
-      <Card
-        variant="glass"
-        padding="lg"
-        className="w-72 rounded-3xl bg-surface-glass/90 shadow-2xl shadow-black/40"
-      >
+      <Card padding="lg" className="w-72 rounded-3xl bg-card/90 shadow-2xl shadow-black/40">
         <CardTitle render={<h2 />} className="text-lg">
           Sign in
         </CardTitle>
-        <CardDescription className="mt-1">Auth card: rounded-3xl, glass 90.</CardDescription>
+        <CardDescription className="mt-1">rounded-3xl, 90% surface.</CardDescription>
       </Card>
-      <Card
-        variant="glass"
-        padding="md"
-        className="w-72 rounded-2xl bg-surface-glass/70 shadow-2xl shadow-black/20"
-      >
+      <Card padding="md" className="w-72 rounded-2xl bg-card/70 shadow-2xl shadow-black/20">
         <CardTitle render={<h2 />}>Judge</CardTitle>
-        <CardDescription className="mt-1">Judge card: rounded-2xl, glass 70.</CardDescription>
+        <CardDescription className="mt-1">rounded-2xl, 70% surface.</CardDescription>
       </Card>
       <Card variant="panel" padding="md" className="w-72">
         <CardTitle render={<h2 />}>Editor</CardTitle>

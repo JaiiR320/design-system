@@ -5,13 +5,12 @@ import type * as React from "react";
 
 import { cn } from "#lib/utils";
 
-// No imposed layout, padding, overflow or shadow: callers compose those locally.
+// No imposed layout, padding or overflow; only the elevated `panel` variant adds a shadow.
 const cardVariants = cva("rounded-xl border border-border text-card-foreground", {
   variants: {
     variant: {
       default: "bg-card",
       inset: "bg-muted",
-      glass: "bg-surface-glass/80",
       outline: "bg-transparent",
       panel: "rounded-2xl bg-card shadow-panel",
     },

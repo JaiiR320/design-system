@@ -9,7 +9,7 @@ const emptyVariants = cva("flex flex-col items-center justify-center gap-4 text-
     variant: {
       plain: "",
       inset: "bg-muted",
-      outline: "rounded-xl border border-border bg-surface-glass/80",
+      outline: "rounded-xl border border-border bg-card/80",
     },
   },
   defaultVariants: { variant: "plain" },
