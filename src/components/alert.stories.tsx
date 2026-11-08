@@ -38,9 +38,9 @@ export const Default: Story = {};
 export const Tones: Story = {
   render: () => (
     <div className="grid gap-3">
-      <Alert tone="destructive">Could not load this deck.</Alert>
-      <Alert tone="warning">Loading this snapshot will overwrite your current live deck.</Alert>
-      <Alert tone="info">Select two snapshots to compare them.</Alert>
+      <Alert tone="destructive">Could not load this project.</Alert>
+      <Alert tone="warning">Restoring this version will overwrite your current draft.</Alert>
+      <Alert tone="info">Select two versions to compare them.</Alert>
       <Alert tone="success">Thanks! Your feedback was sent.</Alert>
     </div>
   ),
@@ -56,7 +56,7 @@ export const Sizes: Story = {
   ),
 };
 
-// DeckAlerts' import warnings: a section with a heading, dismiss button and list copy.
+// Import warnings: a section with a heading, dismiss button and list copy.
 export const WithTitle: Story = {
   render: () => (
     <Alert tone="warning" size="panel" render={<section aria-labelledby="warnings-title" />}>
@@ -73,12 +73,12 @@ export const WithTitle: Story = {
       <AlertDescription className="mt-3">
         <ul className="space-y-2 text-sm text-warning-muted-foreground/90">
           <li>
-            <span className="font-medium">Line 4:</span> Sol Rng{" "}
-            <span className="text-warning-text">Card not found</span>
+            <span className="font-medium">Row 4:</span> Ada Prak{" "}
+            <span className="text-warning-text">Person not found</span>
           </li>
           <li>
-            <span className="font-medium">Line 9:</span> 2x Mana Crypt{" "}
-            <span className="text-warning-text">Duplicate singleton</span>
+            <span className="font-medium">Row 9:</span> Sam Lee{" "}
+            <span className="text-warning-text">Already invited</span>
           </li>
         </ul>
       </AlertDescription>
@@ -103,12 +103,12 @@ export const RenderAsParagraph: Story = {
   },
 };
 
-function InlineLoadConfirm() {
+function InlineRestoreConfirm() {
   const [pending, setPending] = useState(false);
-  const loadRef = useRef<HTMLButtonElement>(null);
+  const restoreRef = useRef<HTMLButtonElement>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
 
-  // Focus moves to Cancel when the confirm is revealed; Cancel hands it back to Load.
+  // Focus moves to Cancel when the confirm is revealed; Cancel hands it back to Restore.
   useEffect(() => {
     if (pending) cancelRef.current?.focus();
   }, [pending]);
@@ -117,22 +117,22 @@ function InlineLoadConfirm() {
     <div className="space-y-3 rounded-xl border border-border bg-background p-4">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-foreground">Swap Karn for Birds</p>
+          <p className="text-sm font-medium text-foreground">Revise launch plan</p>
           <p className="mt-1 text-xs text-muted-foreground">Nov 7, 2026, 01:00 AM</p>
         </div>
         <button
-          ref={loadRef}
+          ref={restoreRef}
           type="button"
           className={secondaryButton}
           onClick={() => setPending(true)}
         >
-          Load
+          Restore
         </button>
       </div>
       {pending ? (
         <Alert tone="warning" size="panel" role="alert">
           <AlertDescription>
-            Loading this snapshot will overwrite your current live deck.
+            Restoring this version will overwrite your current draft.
           </AlertDescription>
           <AlertActions>
             <button
@@ -141,16 +141,16 @@ function InlineLoadConfirm() {
               ref={cancelRef}
               onClick={() => {
                 setPending(false);
-                loadRef.current?.focus();
+                restoreRef.current?.focus();
               }}
             >
               Cancel
             </button>
             <button type="button" className={primaryButton}>
-              Save Snapshot
+              Save Version
             </button>
             <button type="button" className={warningButton}>
-              Load Anyways
+              Restore Anyway
             </button>
           </AlertActions>
         </Alert>
@@ -160,17 +160,17 @@ function InlineLoadConfirm() {
 }
 
 export const InlineConfirm: Story = {
-  render: () => <InlineLoadConfirm />,
+  render: () => <InlineRestoreConfirm />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "Load" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Restore" }));
     const alert = await canvas.findByRole("alert");
-    await expect(alert).toHaveTextContent("overwrite your current live deck");
+    await expect(alert).toHaveTextContent("overwrite your current draft");
     await waitFor(() => expect(canvas.getByRole("button", { name: "Cancel" })).toHaveFocus());
 
     await userEvent.keyboard("{Enter}");
     await waitFor(() => expect(canvas.queryByRole("alert")).toBeNull());
-    await waitFor(() => expect(canvas.getByRole("button", { name: "Load" })).toHaveFocus());
+    await waitFor(() => expect(canvas.getByRole("button", { name: "Restore" })).toHaveFocus());
 
     // Re-open so the snapshot captures the revealed confirm.
     await userEvent.keyboard("{Enter}");
@@ -188,9 +188,9 @@ export const NarrowWrapping: Story = {
   ],
   render: () => (
     <Alert tone="destructive" size="panel">
-      <AlertTitle>Delete deck?</AlertTitle>
+      <AlertTitle>Delete project?</AlertTitle>
       <AlertDescription className="mt-1">
-        This will delete the deck and all 3 snapshots.
+        This will delete the project and all 3 snapshots.
       </AlertDescription>
       <AlertActions>
         <button type="button" className={secondaryButton}>

@@ -13,7 +13,7 @@ exports[`Default 1`] = `
   - button "Underline"
 `;
 
-exports[`Disabled Stable 1`] = `
+exports[`Disabled Stable Test 1`] = `
 - group "Text style":
   - button "Bold" [disabled] [pressed]
   - button "Italic" [disabled]
@@ -52,12 +52,12 @@ exports[`Variants 1`] = `
   - button "Week" [pressed]
   - button "Month"
 - text: custom look (variant=null)
-- group "Colors":
-  - button "White" [pressed]
-  - button "Blue" [pressed]
-  - button "Black" [pressed]
+- group "Label colors":
+  - button "Amber" [pressed]
+  - button "Sky" [pressed]
+  - button "Slate" [pressed]
   - button "Red"
-  - button "Green" [pressed]
+  - button "Emerald" [pressed]
 - text: outline size=xs
 - group "Outline xs":
   - button "Bug" [pressed]

@@ -66,9 +66,9 @@ export const NarrowWrapping: Story = {
   render: () => (
     <div className="flex w-56 flex-wrap gap-2 rounded-lg border border-border p-3">
       <Badge>3 snapshots</Badge>
-      <Badge>12 cards</Badge>
-      <Badge>Commander</Badge>
-      <Badge>Sideboard</Badge>
+      <Badge>12 items</Badge>
+      <Badge>Shared</Badge>
+      <Badge>Archived</Badge>
     </div>
   ),
 };

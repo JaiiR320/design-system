@@ -1,22 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Button Crumbs 1`] = `
-- navigation "Deck folders":
+- navigation "Project folders":
   - list:
     - listitem:
-      - button "Decks"
+      - button "Projects"
     - listitem:
-      - button "Constructed"
+      - button "Atlas"
     - listitem:
-      - button "Modern"
+      - button "Reports"
 `;
 
 exports[`Custom Separator 1`] = `
 - navigation "Breadcrumb":
   - list:
     - listitem:
-      - link "Decks":
-        - /url: "#decks"
+      - link "Projects":
+        - /url: "#projects"
     - listitem: Archive
 `;
 
@@ -24,36 +24,36 @@ exports[`Default 1`] = `
 - navigation "Breadcrumb":
   - list:
     - listitem:
-      - link "Decks":
-        - /url: "#decks"
+      - link "Projects":
+        - /url: "#projects"
     - listitem:
-      - link "Constructed":
-        - /url: "#constructed"
-    - listitem: Modern
+      - link "Atlas":
+        - /url: "#atlas"
+    - listitem: Reports
 `;
 
 exports[`Keyboard Focus 1`] = `
-- navigation "Deck folders":
+- navigation "Project folders":
   - list:
     - listitem:
-      - button "Decks"
+      - button "Projects"
     - listitem:
-      - button "Constructed"
+      - button "Atlas"
     - listitem:
-      - button "Modern"
+      - button "Reports"
 `;
 
 exports[`Wrapping 1`] = `
 - navigation "Breadcrumb":
   - list:
     - listitem:
-      - link "Decks":
+      - link "Projects":
         - /url: "#0"
     - listitem:
-      - link "Constructed":
+      - link "Atlas":
         - /url: "#1"
     - listitem:
-      - link "Modern":
+      - link "Reports":
         - /url: "#2"
-    - listitem: Burn variants
+    - listitem: Quarterly report drafts
 `;

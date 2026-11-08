@@ -47,14 +47,14 @@ export const Variants: Story = {
 
 /**
  * App-specific looks: `variant={null}` keeps Button's structure, focus ring and disabled
- * handling, and the app's own classes supply the look. Here, a translucent control over artwork.
+ * handling, and the app's own classes supply the look. Here, a translucent control over an image.
  */
 export const CustomLook: Story = {
   render: () => (
-    // Two-tone fill stands in for artwork (hard stops: smooth gradients dither per machine).
+    // Two-tone fill stands in for an image (hard stops: smooth gradients dither per machine).
     <div className="flex items-center gap-3 rounded-xl bg-[linear-gradient(to_right,var(--color-cyan-900)_50%,var(--color-amber-800)_50%)] p-4">
       <Button variant={null} className="bg-black/35 text-white backdrop-blur-sm hover:bg-black/50">
-        Over artwork
+        Over image
       </Button>
       <Button
         variant={null}
@@ -122,7 +122,7 @@ export const WithIcon: Story = {
     <div className="flex items-center gap-3">
       <Button variant="default">
         <Plus strokeWidth={1.75} />
-        New Deck
+        New project
       </Button>
       <Button>
         <Download strokeWidth={1.75} />
@@ -130,7 +130,7 @@ export const WithIcon: Story = {
       </Button>
       <Button variant="outline" size="lg" className="w-72 justify-start text-left">
         <Download className="size-5 text-muted-foreground" strokeWidth={1.75} />
-        Export deck list
+        Export report
       </Button>
     </div>
   ),
@@ -181,7 +181,7 @@ export const AsLink: Story = {
   render: () => (
     <div className="flex items-center gap-3">
       <Button render={<a href="#x" />} nativeButton={false}>
-        Decks
+        Projects
       </Button>
       <Button
         render={<a href="#x" aria-current="page" />}
@@ -200,7 +200,7 @@ export const AsLink: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const link = canvas.getByRole("link", { name: "Decks" });
+    const link = canvas.getByRole("link", { name: "Projects" });
     await expect(link.tagName).toBe("A");
     await expect(link).toHaveAttribute("href", "#x");
     await expect(link).not.toHaveAttribute("type");
@@ -255,11 +255,12 @@ function trapLinkClick(event: ReactMouseEvent) {
 
 // Links keep link keys: Enter follows the href, Space is left to the browser (page scroll)
 // and never clicks. Other non-native elements stay buttons that Space and Enter activate.
-export const LinkKeyboard: Story = {
+export const LinkKeyboardTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => (
     <div className="flex items-center gap-3">
       <Button render={<a href="#link-keyboard" />} nativeButton={false} onClick={trapLinkClick}>
-        Decks
+        Projects
       </Button>
       <Button
         render={<a href="#link-keyboard" />}
@@ -287,7 +288,7 @@ export const LinkKeyboard: Story = {
     linkClick.mockClear();
 
     try {
-      const link = canvas.getByRole("link", { name: "Decks" });
+      const link = canvas.getByRole("link", { name: "Projects" });
       link.focus();
       await userEvent.keyboard(" ");
       await expect(keys.map((event) => [event.type, event.defaultPrevented])).toEqual([

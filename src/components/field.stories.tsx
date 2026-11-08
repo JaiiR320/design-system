@@ -33,9 +33,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => (
     <Field {...args}>
-      <FieldLabel>Deck name</FieldLabel>
-      <Input placeholder="Enter a deck name" />
-      <FieldDescription>Shown on the deck tile and in breadcrumbs.</FieldDescription>
+      <FieldLabel>Project name</FieldLabel>
+      <Input placeholder="Enter a project name" />
+      <FieldDescription>Shown on the project card and in breadcrumbs.</FieldDescription>
     </Field>
   ),
 };
@@ -81,18 +81,18 @@ export const States: Story = {
       </Field>
       <Field {...args} disabled>
         <FieldLabel>Disabled</FieldLabel>
-        <Input defaultValue="Atraxa Superfriends" />
+        <Input defaultValue="Quarterly report" />
         <FieldDescription>Renaming is unavailable while saving.</FieldDescription>
       </Field>
       <Field {...args}>
         <FieldLabel>Read-only</FieldLabel>
-        <Input readOnly defaultValue="Initial build" />
+        <Input readOnly defaultValue="Initial draft" />
       </Field>
     </FieldGroup>
   ),
 };
 
-/** DeckDiff's auth form: stacked fields 16px apart, label 8px above each control. */
+/** A sign-in form: stacked fields 16px apart, label 8px above each control. */
 export const FormGroup: Story = {
   render: (args) => (
     <form onSubmit={(event) => event.preventDefault()}>
@@ -184,11 +184,11 @@ export const TextareaControl: Story = {
 export const FieldSetLegend: Story = {
   render: () => (
     <FieldSet>
-      <FieldLegend>Deck colors</FieldLegend>
+      <FieldLegend>Tags</FieldLegend>
       <div className="flex gap-2">
-        {["White", "Blue", "Black", "Green"].map((color) => (
-          <Button key={color} size="sm" aria-pressed={color === "Blue"}>
-            {color}
+        {["Draft", "Shared", "Archived"].map((tag) => (
+          <Button key={tag} size="sm" aria-pressed={tag === "Shared"}>
+            {tag}
           </Button>
         ))}
       </div>
@@ -196,7 +196,7 @@ export const FieldSetLegend: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("group", { name: "Deck colors" })).toBeInTheDocument();
+    await expect(canvas.getByRole("group", { name: "Tags" })).toBeInTheDocument();
   },
 };
 

@@ -1,16 +1,16 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- heading "Deck colors" [level=3]
-- paragraph: Used to clamp flexible mana production stats.
-- button "Deck color actions"
-- text: White, blue, black and green are selected. Saved with the deck.
+- heading "Notifications" [level=3]
+- paragraph: Choose what Atlas emails you about.
+- button "Notification actions"
+- text: Mentions, comments and shares are on. Saved to your profile.
 `;
 
 exports[`Header Band 1`] = `
-- region "Ramp":
-  - heading "Ramp" [level=2]
-  - text: 12 Card stack
+- region "Draft":
+  - heading "Draft" [level=2]
+  - text: 12 Documents
 `;
 
 exports[`Narrow 1`] = `
@@ -26,7 +26,7 @@ exports[`Paddings 1`] = `
 exports[`Panel Overrides 1`] = `
 - heading "Sign in" [level=2]
 - paragraph: rounded-3xl, 90% surface.
-- heading "Judge" [level=2]
+- heading "Feedback" [level=2]
 - paragraph: rounded-2xl, 70% surface.
 - heading "Editor" [level=2]
 - paragraph: Panel variant.

@@ -10,10 +10,10 @@ import { cn } from "#lib/utils";
 const meta = {
   title: "Primitives/Toggle",
   component: Toggle,
-  args: { children: "Show prices", onPressedChange: fn() },
+  args: { children: "Show archived", onPressedChange: fn() },
 } satisfies Meta<typeof Toggle>;
 
-// App-owned look layered on Toggle with variant={null}: a color swatch that lights up when pressed.
+// App-owned look layered on Toggle with variant={null}: a label-color swatch that lights up when pressed.
 const swatchLook =
   "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-white/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-[0_0_18px_rgb(34_211_238/0.14)]";
 
@@ -61,13 +61,13 @@ export const Variants: Story = {
       </Toggle>
 
       <span>custom look (variant=null)</span>
-      <Toggle variant={null} className={swatchLook} aria-label="Add Blue">
+      <Toggle variant={null} className={swatchLook} aria-label="Add Sky">
         <ColorDot />
       </Toggle>
-      <Toggle variant={null} className={swatchLook} aria-label="Remove Blue" defaultPressed>
+      <Toggle variant={null} className={swatchLook} aria-label="Remove Sky" defaultPressed>
         <ColorDot />
       </Toggle>
-      <Toggle variant={null} className={swatchLook} aria-label="Blue unavailable" disabled>
+      <Toggle variant={null} className={swatchLook} aria-label="Sky unavailable" disabled>
         <ColorDot />
       </Toggle>
     </div>
@@ -122,27 +122,27 @@ export const Sizes: Story = {
   },
 };
 
-// Mana symbols stay in DeckDiff; a CSS dot stands in for them here.
+// A CSS dot stands in for a label color.
 function ColorDot({ className = "bg-sky-400" }: { className?: string }) {
   return <span aria-hidden className={cn("size-7 rounded-full", className)} />;
 }
 
 const colors = [
-  { label: "White", dot: "bg-amber-100" },
-  { label: "Blue", dot: "bg-sky-400" },
-  { label: "Black", dot: "bg-zinc-500" },
+  { label: "Amber", dot: "bg-amber-100" },
+  { label: "Sky", dot: "bg-sky-400" },
+  { label: "Slate", dot: "bg-zinc-500" },
   { label: "Red", dot: "bg-red-500" },
-  { label: "Green", dot: "bg-emerald-500" },
+  { label: "Emerald", dot: "bg-emerald-500" },
 ];
 
 // Static: toggling one of these glowing neighbours repaints only part of the
-// overlapping blur, which is not pixel-stable. Interaction lives in RoundKeyboard.
-export const DeckColors: Story = {
+// overlapping blur, which is not pixel-stable. Interaction lives in CustomLookKeyboard.
+export const LabelColors: Story = {
   render: () => {
     function Example() {
-      const [selected, setSelected] = useState(["White", "Blue", "Black", "Green"]);
+      const [selected, setSelected] = useState(["Amber", "Sky", "Slate", "Emerald"]);
       return (
-        <div role="group" aria-label="Deck colors" className="flex shrink-0 gap-2">
+        <div role="group" aria-label="Label colors" className="flex shrink-0 gap-2">
           {colors.map(({ label, dot }) => {
             const isSelected = selected.includes(label);
             return (
@@ -169,12 +169,12 @@ export const DeckColors: Story = {
   },
 };
 
-// The editor's "Show differences only" toggle.
-export const DiffToggle: Story = {
+// An icon toggle whose name follows its state.
+export const ChangesOnlyToggle: Story = {
   render: () => {
     function Example() {
-      const [diffOnly, setDiffOnly] = useState(false);
-      const label = diffOnly ? "Show all cards" : "Show differences only";
+      const [changesOnly, setChangesOnly] = useState(false);
+      const label = changesOnly ? "Show all items" : "Show changes only";
       return (
         <Toggle
           variant="accent"
@@ -182,8 +182,8 @@ export const DiffToggle: Story = {
           className="relative"
           aria-label={label}
           title={label}
-          pressed={diffOnly}
-          onPressedChange={setDiffOnly}
+          pressed={changesOnly}
+          onPressedChange={setChangesOnly}
         >
           <Minus className="size-3.5 translate-y-[2px]" strokeWidth={2} />
           <Plus className="absolute size-3.5 -translate-y-[2px]" strokeWidth={2} />
@@ -194,8 +194,8 @@ export const DiffToggle: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "Show differences only" }));
-    await expect(canvas.getByRole("button", { name: "Show all cards" })).toHaveAttribute(
+    await userEvent.click(canvas.getByRole("button", { name: "Show changes only" }));
+    await expect(canvas.getByRole("button", { name: "Show all items" })).toHaveAttribute(
       "data-pressed",
     );
   },
@@ -203,7 +203,7 @@ export const DiffToggle: Story = {
 
 export const Keyboard: Story = {
   play: async ({ args, canvasElement }) => {
-    const toggle = within(canvasElement).getByRole("button", { name: "Show prices" });
+    const toggle = within(canvasElement).getByRole("button", { name: "Show archived" });
     await userEvent.tab();
     await expect(toggle).toHaveFocus();
     await userEvent.keyboard(" ");
@@ -214,10 +214,11 @@ export const Keyboard: Story = {
   },
 };
 
-export const DisabledStable: Story = {
+export const DisabledStableTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { disabled: true, defaultPressed: true },
   play: async ({ args, canvasElement }) => {
-    const toggle = within(canvasElement).getByRole("button", { name: "Show prices" });
+    const toggle = within(canvasElement).getByRole("button", { name: "Show archived" });
     await userEvent.click(toggle, { pointerEventsCheck: 0 });
     await expect(toggle).toHaveAttribute("aria-pressed", "true");
     await expect(args.onPressedChange).not.toHaveBeenCalled();
@@ -229,17 +230,17 @@ export const CustomLookKeyboard: Story = {
     <Toggle
       variant={null}
       className={swatchLook}
-      aria-label="Blue"
+      aria-label="Sky"
       onPressedChange={args.onPressedChange}
     >
       <ColorDot />
     </Toggle>
   ),
   play: async ({ args, canvasElement }) => {
-    const blue = within(canvasElement).getByRole("button", { name: "Blue" });
+    const sky = within(canvasElement).getByRole("button", { name: "Sky" });
     await userEvent.tab();
     await userEvent.keyboard(" ");
-    await expect(blue).toHaveAttribute("aria-pressed", "true");
+    await expect(sky).toHaveAttribute("aria-pressed", "true");
     await expect(args.onPressedChange).toHaveBeenCalledWith(true, expect.anything());
   },
 };

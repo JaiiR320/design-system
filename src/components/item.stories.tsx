@@ -40,16 +40,16 @@ const stepLook =
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// A history row: title + timestamp on the left, Load on the right.
+// A history row: title + timestamp on the left, Restore on the right.
 export const Default: Story = {
   render: (args) => (
     <Item {...args}>
       <ItemContent>
-        <ItemTitle>Initial build</ItemTitle>
+        <ItemTitle>Initial draft</ItemTitle>
         <ItemDescription>Nov 7, 2026, 12:59 AM</ItemDescription>
       </ItemContent>
       <ItemActions>
-        <Button size="xs">Load</Button>
+        <Button size="xs">Restore</Button>
       </ItemActions>
     </Item>
   ),
@@ -100,7 +100,7 @@ export const SettingsRows: Story = {
         <Item variant="plain" size="sm" className="p-0">
           <ItemContent>
             <ItemTitle>Cover image</ItemTitle>
-            <ItemDescription>Shown on the deck tile.</ItemDescription>
+            <ItemDescription>Shown on the project card.</ItemDescription>
           </ItemContent>
           <ItemActions>
             <Button size="xs">Edit crop</Button>
@@ -113,8 +113,8 @@ export const SettingsRows: Story = {
         <Item variant="plain" size="sm" className="p-0">
           <ItemMedia className="size-10 rounded-lg bg-surface" />
           <ItemContent>
-            <ItemTitle>Constructed</ItemTitle>
-            <ItemDescription>0 folders | 1 deck</ItemDescription>
+            <ItemTitle>Atlas</ItemTitle>
+            <ItemDescription>2 folders | 5 documents</ItemDescription>
           </ItemContent>
         </Item>
       </ItemGroup>
@@ -126,17 +126,17 @@ export const SettingsRows: Story = {
 export const AsLink: Story = {
   render: () => (
     <ItemGroup>
-      <Item render={<a href="#constructed" />}>
+      <Item render={<a href="#atlas" />}>
         <ItemContent>
-          <ItemTitle>Constructed</ItemTitle>
+          <ItemTitle>Atlas</ItemTitle>
           <ItemDescription>Open folder</ItemDescription>
         </ItemContent>
       </Item>
     </ItemGroup>
   ),
   play: async ({ canvasElement }) => {
-    const link = within(canvasElement).getByRole("link", { name: /Constructed/ });
-    await expect(link).toHaveAttribute("href", "#constructed");
+    const link = within(canvasElement).getByRole("link", { name: /Atlas/ });
+    await expect(link).toHaveAttribute("href", "#atlas");
     await expect(link).toHaveAttribute("data-slot", "item");
     await userEvent.tab();
     await expect(link).toHaveFocus();
@@ -144,9 +144,9 @@ export const AsLink: Story = {
 };
 
 const saves = [
-  { id: "s2", label: "Swap Karn for Birds", savedAt: "Nov 7, 2026, 01:00 AM" },
-  { id: "s1", label: "Initial build", savedAt: "Nov 7, 2026, 12:59 AM" },
-  { id: "s0", label: "Save #3", savedAt: "Nov 6, 2026, 11:42 PM" },
+  { id: "s2", label: "Revise launch plan", savedAt: "Nov 7, 2026, 01:00 AM" },
+  { id: "s1", label: "Initial draft", savedAt: "Nov 7, 2026, 12:59 AM" },
+  { id: "s0", label: "Version 3", savedAt: "Nov 6, 2026, 11:42 PM" },
 ];
 
 // Background of every :hover rule that would apply to this element (nested rules resolved).
@@ -170,14 +170,14 @@ function hoverBackgrounds(element: Element) {
 }
 
 // History compare mode: each row is one Toggle (aria-pressed), never a nested button.
-// As in DeckDiff: titles inherit 16px/24px and unselected rows hover with the border only,
+// Titles inherit 16px/24px and unselected rows hover with the border only,
 // so Toggle's off-state hover fill is overridden on the row.
 export const CompareSelection: Story = {
   render: () => {
     function Example() {
       const [selected, setSelected] = useState(["s1"]);
       return (
-        <ItemGroup role="group" aria-label="Snapshots to compare">
+        <ItemGroup role="group" aria-label="Versions to compare">
           {saves.map((save) => {
             const order = selected.indexOf(save.id) + 1;
             return (
@@ -220,22 +220,22 @@ export const CompareSelection: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const karn = canvas.getByRole("button", { name: /Swap Karn for Birds/ });
-    await expect(karn).toHaveAttribute("aria-pressed", "false");
+    const row = canvas.getByRole("button", { name: /Revise launch plan/ });
+    await expect(row).toHaveAttribute("aria-pressed", "false");
     // Unselected hover changes only the border; the fill stays the row background.
-    await expect(hoverBackgrounds(karn).filter((value) => !value.includes("background"))).toEqual(
+    await expect(hoverBackgrounds(row).filter((value) => !value.includes("background"))).toEqual(
       [],
     );
-    const title = within(karn).getByText("Swap Karn for Birds");
+    const title = within(row).getByText("Revise launch plan");
     await expect(getComputedStyle(title).fontSize).toBe("16px");
     await expect(getComputedStyle(title).lineHeight).toBe("24px");
-    const timestamp = within(karn).getByText("Nov 7, 2026, 01:00 AM");
+    const timestamp = within(row).getByText("Nov 7, 2026, 01:00 AM");
     await expect(getComputedStyle(timestamp).fontSize).toBe("14px");
-    await userEvent.click(karn);
-    await expect(karn).toHaveAttribute("aria-pressed", "true");
-    await expect(karn.querySelector("button")).toBeNull();
+    await userEvent.click(row);
+    await expect(row).toHaveAttribute("aria-pressed", "true");
+    await expect(row.querySelector("button")).toBeNull();
     // Keyboard: Tab moves to the next row.
     await userEvent.tab();
-    await expect(canvas.getByRole("button", { name: /Initial build/ })).toHaveFocus();
+    await expect(canvas.getByRole("button", { name: /Initial draft/ })).toHaveFocus();
   },
 };

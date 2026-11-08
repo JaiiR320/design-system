@@ -12,7 +12,7 @@ const meta = {
   args: { "aria-label": "Text style", onValueChange: fn() },
 } satisfies Meta<typeof ToggleGroup>;
 
-// App-owned look layered on Toggle with variant={null}: a color swatch that lights up when pressed.
+// App-owned look layered on Toggle with variant={null}: a label-color swatch that lights up when pressed.
 const swatchLook =
   "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-white/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-[0_0_18px_rgb(34_211_238/0.14)]";
 
@@ -30,17 +30,17 @@ export const Default: Story = {
   ),
 };
 
-// Mana symbols stay in DeckDiff; a CSS dot stands in for them here.
+// A CSS dot stands in for a label color.
 function ColorDot({ className }: { className: string }) {
   return <span aria-hidden className={cn("size-7 rounded-full", className)} />;
 }
 
 const colors = [
-  { label: "White", dot: "bg-amber-100" },
-  { label: "Blue", dot: "bg-sky-400" },
-  { label: "Black", dot: "bg-zinc-500" },
+  { label: "Amber", dot: "bg-amber-100" },
+  { label: "Sky", dot: "bg-sky-400" },
+  { label: "Slate", dot: "bg-zinc-500" },
   { label: "Red", dot: "bg-red-500" },
-  { label: "Green", dot: "bg-emerald-500" },
+  { label: "Emerald", dot: "bg-emerald-500" },
 ];
 
 // Each variant with its default item size, plus an explicit group size and a disabled group.
@@ -87,11 +87,11 @@ export const Variants: Story = {
 
       <span>custom look (variant=null)</span>
       <ToggleGroup
-        aria-label="Colors"
+        aria-label="Label colors"
         variant={null}
         className="flex shrink-0 gap-2"
         multiple
-        defaultValue={["White", "Blue", "Black", "Green"]}
+        defaultValue={["Amber", "Sky", "Slate", "Emerald"]}
       >
         {colors.map(({ label, dot }) => (
           <ToggleGroupItem key={label} value={label} aria-label={label} className={swatchLook}>
@@ -227,7 +227,8 @@ export const MultipleKeyboard: Story = {
   },
 };
 
-export const DisabledStable: Story = {
+export const DisabledStableTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { disabled: true, defaultValue: ["bold"] },
   render: (args) => (
     <ToggleGroup {...args}>

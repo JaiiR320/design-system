@@ -39,9 +39,9 @@ export const LoadingRow: Story = {
 
 export const CardGrid: Story = {
   render: () => (
-    <div role="status" aria-label="Loading printings" className="grid grid-cols-4 gap-3">
+    <div role="status" aria-label="Loading images" className="grid grid-cols-4 gap-3">
       {["a", "b", "c", "d"].map((key) => (
-        <Skeleton key={key} className="aspect-[5/7] w-32 rounded-xl" />
+        <Skeleton key={key} className="aspect-[3/4] w-32 rounded-xl" />
       ))}
     </div>
   ),

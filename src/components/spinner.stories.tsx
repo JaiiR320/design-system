@@ -27,16 +27,16 @@ export const Status: Story = {
   render: () => (
     <div
       role="status"
-      aria-label="Loading printings"
+      aria-label="Loading documents"
       className="flex items-center gap-2 text-sm text-muted-foreground"
     >
       <Spinner />
-      Loading printings
+      Loading documents
     </div>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("status", { name: "Loading printings" })).toBeInTheDocument();
+    await expect(canvas.getByRole("status", { name: "Loading documents" })).toBeInTheDocument();
     const spinner = canvasElement.querySelector("[data-slot=spinner]");
     await expect(spinner).toHaveAttribute("aria-hidden", "true");
   },

@@ -1,32 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Custom Look Keyboard 1`] = `
-- button "Blue" [pressed]
+exports[`Changes Only Toggle 1`] = `
+- button "Show all items" [pressed]
 `;
 
-exports[`Deck Colors 1`] = `
-- group "Deck colors":
-  - button "Remove White" [pressed]
-  - button "Remove Blue" [pressed]
-  - button "Remove Black" [pressed]
-  - button "Add Red"
-  - button "Remove Green" [pressed]
+exports[`Custom Look Keyboard 1`] = `
+- button "Sky" [pressed]
 `;
 
 exports[`Default 1`] = `
-- button "Show prices"
+- button "Show archived"
 `;
 
-exports[`Diff Toggle 1`] = `
-- button "Show all cards" [pressed]
-`;
-
-exports[`Disabled Stable 1`] = `
-- button "Show prices" [disabled] [pressed]
+exports[`Disabled Stable Test 1`] = `
+- button "Show archived" [disabled] [pressed]
 `;
 
 exports[`Keyboard 1`] = `
-- button "Show prices"
+- button "Show archived"
+`;
+
+exports[`Label Colors 1`] = `
+- group "Label colors":
+  - button "Remove Amber" [pressed]
+  - button "Remove Sky" [pressed]
+  - button "Remove Slate" [pressed]
+  - button "Add Red"
+  - button "Remove Emerald" [pressed]
 `;
 
 exports[`Sizes 1`] = `
@@ -55,7 +55,7 @@ exports[`Variants 1`] = `
 - button "Sign in" [pressed]
 - button "Sign in" [disabled]
 - text: custom look (variant=null)
-- button "Add Blue"
-- button "Remove Blue" [pressed]
-- button "Blue unavailable" [disabled]
+- button "Add Sky"
+- button "Remove Sky" [pressed]
+- button "Sky unavailable" [disabled]
 `;

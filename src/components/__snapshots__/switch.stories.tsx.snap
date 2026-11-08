@@ -8,43 +8,43 @@ exports[`Chip States 1`] = `
 `;
 
 exports[`Contextual Name 1`] = `
-- switch "Removed-card ghosts": "Off"
+- switch "Archived items": "Off"
 `;
 
 exports[`Default 1`] = `
 - switch "Notifications"
 `;
 
-exports[`Disabled Stable 1`] = `
+exports[`Disabled Stable Test 1`] = `
 - switch "Locked" [disabled]
-- switch "Hide Ramp" [checked] [disabled]
+- switch "Hide archived" [checked] [disabled]
 `;
 
 exports[`Export Chips 1`] = `
-- switch "Quantity" [checked]
-- switch "Added only"
-- switch "Group by category" [checked]
-- switch "Include out-of-deck" [checked]
-- switch "Separate sideboard" [disabled]
+- switch "Comments" [checked]
+- switch "Changes only"
+- switch "Group by folder" [checked]
+- switch "Include archived" [checked]
+- switch "Separate appendix" [disabled]
 `;
 
 exports[`Field Set Disabled 1`] = `
 - group "Export options":
   - text: Export options
   - switch "Bare switch" [disabled]
-  - switch "Quantity" [disabled]
-  - text: Ghosts
-  - switch "Ghosts" [disabled]
+  - switch "Comments" [disabled]
+  - text: Mentions
+  - switch "Mentions" [disabled]
 `;
 
 exports[`Focus Visible 1`] = `
 - switch "Bare switch" [checked]
-- switch "Hide Ramp"
+- switch "Hide archived"
 `;
 
 exports[`Keyboard 1`] = `
 - form "Preferences":
-  - switch "Include Ramp in deck" [checked]
+  - switch "Email notifications" [checked]
 `;
 
 exports[`States 1`] = `

@@ -1,20 +1,20 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Addon Click Handler 1`] = `
+exports[`Addon Click Handler Test 1`] = `
 - group:
   - text: https://
-  - textbox "Art URL":
-    - /placeholder: example.com/art.jpg
+  - textbox "Image URL":
+    - /placeholder: example.com/cover.png
   - link "Help":
-    - /url: "#art-url-help"
+    - /url: "#image-url-help"
 `;
 
 exports[`Addon Focuses Control 1`] = `
 - group:
   - text: https://
-  - textbox "Background URL":
-    - /placeholder: example.com/art.jpg
-    - text: art
+  - textbox "Cover URL":
+    - /placeholder: example.com/cover.png
+    - text: cover
 `;
 
 exports[`Addons 1`] = `
@@ -26,20 +26,20 @@ exports[`Addons 1`] = `
     - /placeholder: inline-end text
   - text: 0 / 40
 - group:
-  - textbox "With button": Thrasios
+  - textbox "With button": Ada Park
   - button "Clear search"
 - group:
   - text: block-start
   - textbox "Block addons":
-    - /placeholder: Ask the judge…
+    - /placeholder: Leave a comment…
   - text: block-end
   - button "Send"
 `;
 
 exports[`Default 1`] = `
 - group:
-  - textbox "Add card":
-    - /placeholder: Add card…
+  - textbox "Add member":
+    - /placeholder: Add member…
 `;
 
 exports[`Field Control Textarea 1`] = `
@@ -62,16 +62,16 @@ exports[`Field Control Textarea 1`] = `
 `;
 
 exports[`In Field 1`] = `
-- text: Search cards
+- text: Search documents
 - group:
-  - textbox "Search cards":
-    - /placeholder: Add card…
+  - textbox "Search documents":
+    - /placeholder: Search…
 `;
 
 exports[`Keyboard Focus 1`] = `
 - group:
-  - textbox "Add card":
-    - /placeholder: Add card…
+  - textbox "Add member":
+    - /placeholder: Add member…
   - button "Add"
 `;
 
@@ -86,7 +86,7 @@ exports[`Sizes 1`] = `
 
 exports[`States 1`] = `
 - group:
-  - textbox "Invalid": Not a card
+  - textbox "Invalid": Not a member
 - group:
   - textbox "Disabled" [disabled]
 - group:

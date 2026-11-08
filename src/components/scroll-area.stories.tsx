@@ -16,16 +16,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const rules = Array.from({ length: 24 }, (_, index) => `Rule 100.${index + 1}`);
-const cards = Array.from({ length: 14 }, (_, index) => `Card ${index + 1}`);
+const documents = Array.from({ length: 24 }, (_, index) => `Document ${index + 1}`);
+const files = Array.from({ length: 14 }, (_, index) => `File ${index + 1}`);
 
 function VerticalList() {
   return (
     <ScrollArea className="h-56 w-64 rounded-xl border border-border">
-      <ScrollAreaViewport tabIndex={0} role="region" aria-label="Rules">
+      <ScrollAreaViewport tabIndex={0} role="region" aria-label="Documents">
         <ul className="space-y-1 p-3 text-sm text-secondary-foreground">
-          {rules.map((rule) => (
-            <li key={rule}>{rule}</li>
+          {documents.map((name) => (
+            <li key={name}>{name}</li>
           ))}
         </ul>
       </ScrollAreaViewport>
@@ -43,12 +43,12 @@ export const Horizontal: Story = {
     <ScrollArea className="w-[28rem] rounded-xl border border-border">
       <ScrollAreaViewport tabIndex={0} role="region" aria-label="Search results">
         <div className="flex gap-3 p-3">
-          {cards.map((card) => (
+          {files.map((file) => (
             <div
-              key={card}
-              className="flex aspect-[488/680] w-24 shrink-0 items-end rounded-lg bg-surface p-2 text-xs text-subtle-foreground"
+              key={file}
+              className="flex aspect-[3/4] w-24 shrink-0 items-end rounded-lg bg-surface p-2 text-xs text-subtle-foreground"
             >
-              {card}
+              {file}
             </div>
           ))}
         </div>
@@ -61,13 +61,13 @@ export const Horizontal: Story = {
 export const BothAxes: Story = {
   render: () => (
     <ScrollArea className="h-56 w-80 rounded-xl border border-border">
-      <ScrollAreaViewport tabIndex={0} role="region" aria-label="Price table">
+      <ScrollAreaViewport tabIndex={0} role="region" aria-label="Activity table">
         <table className="w-[36rem] text-left text-sm text-secondary-foreground">
           <tbody>
-            {rules.map((rule, index) => (
-              <tr key={rule} className="border-b border-border-subtle">
-                <td className="px-3 py-1.5">{rule}</td>
-                <td className="px-3 py-1.5 text-muted-foreground">Set {index + 1}</td>
+            {documents.map((name, index) => (
+              <tr key={name} className="border-b border-border-subtle">
+                <td className="px-3 py-1.5">{name}</td>
+                <td className="px-3 py-1.5 text-muted-foreground">Version {index + 1}</td>
                 <td className="px-3 py-1.5 text-right">{index + 1}.00</td>
               </tr>
             ))}
@@ -96,7 +96,7 @@ export const KeyboardFocus: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const viewport = canvas.getByRole("region", { name: "Rules" });
+    const viewport = canvas.getByRole("region", { name: "Documents" });
     await userEvent.tab();
     await expect(viewport).toHaveFocus();
     await userEvent.tab();
@@ -111,10 +111,10 @@ export const Scrolled: Story = {
   render: () => <VerticalList />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const viewport = canvas.getByRole("region", { name: "Rules" });
+    const viewport = canvas.getByRole("region", { name: "Documents" });
     await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
     viewport.scrollTop = viewport.scrollHeight;
-    await waitFor(() => expect(canvas.getByText("Rule 100.24")).toBeVisible());
+    await waitFor(() => expect(canvas.getByText("Document 24")).toBeVisible());
     const thumb = canvasElement.querySelector<HTMLElement>("[data-slot=scroll-area-thumb]");
     await waitFor(() => expect(thumb?.style.transform ?? "").toMatch(/translate3d\(0px, [1-9]/));
   },

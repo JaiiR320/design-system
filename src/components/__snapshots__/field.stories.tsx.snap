@@ -1,19 +1,18 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- text: Deck name
-- textbox "Deck name":
-  - /placeholder: Enter a deck name
-- paragraph: Shown on the deck tile and in breadcrumbs.
+- text: Project name
+- textbox "Project name":
+  - /placeholder: Enter a project name
+- paragraph: Shown on the project card and in breadcrumbs.
 `;
 
 exports[`Field Set Legend 1`] = `
-- group "Deck colors":
-  - text: Deck colors
-  - button "White"
-  - button "Blue" [pressed]
-  - button "Black"
-  - button "Green"
+- group "Tags":
+  - text: Tags
+  - button "Draft"
+  - button "Shared" [pressed]
+  - button "Archived"
 `;
 
 exports[`Form Group 1`] = `
@@ -72,10 +71,10 @@ exports[`States 1`] = `
 - text: Invalid
 - textbox "Invalid": not-an-email
 - text: Enter a valid email address. Disabled
-- textbox "Disabled" [disabled]: Atraxa Superfriends
+- textbox "Disabled" [disabled]: Quarterly report
 - paragraph: Renaming is unavailable while saving.
 - text: Read-only
-- textbox "Read-only": Initial build
+- textbox "Read-only": Initial draft
 `;
 
 exports[`Textarea Control 1`] = `

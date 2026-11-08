@@ -44,32 +44,32 @@ export const ChipStates: Story = {
   ),
 };
 
-// Export modal options, as in DeckDiff (flex-wrap gap-3 above the preview).
+// Export dialog options (flex-wrap gap-3 above the preview).
 function ExportOptions() {
   const [options, setOptions] = useState({
-    quantity: true,
-    addedOnly: false,
-    groupByCategory: true,
-    includeOutOfDeck: true,
+    comments: true,
+    changesOnly: false,
+    groupByFolder: true,
+    includeArchived: true,
   });
   const set = (key: keyof typeof options) => (checked: boolean) =>
     setOptions((current) => ({ ...current, [key]: checked }));
 
   return (
     <div className="flex w-[640px] flex-wrap gap-3">
-      <SwitchChip checked={options.quantity} onCheckedChange={set("quantity")}>
-        Quantity
+      <SwitchChip checked={options.comments} onCheckedChange={set("comments")}>
+        Comments
       </SwitchChip>
-      <SwitchChip checked={options.addedOnly} onCheckedChange={set("addedOnly")}>
-        Added only
+      <SwitchChip checked={options.changesOnly} onCheckedChange={set("changesOnly")}>
+        Changes only
       </SwitchChip>
-      <SwitchChip checked={options.groupByCategory} onCheckedChange={set("groupByCategory")}>
-        Group by category
+      <SwitchChip checked={options.groupByFolder} onCheckedChange={set("groupByFolder")}>
+        Group by folder
       </SwitchChip>
-      <SwitchChip checked={options.includeOutOfDeck} onCheckedChange={set("includeOutOfDeck")}>
-        Include out-of-deck
+      <SwitchChip checked={options.includeArchived} onCheckedChange={set("includeArchived")}>
+        Include archived
       </SwitchChip>
-      <SwitchChip disabled>Separate sideboard</SwitchChip>
+      <SwitchChip disabled>Separate appendix</SwitchChip>
     </div>
   );
 }
@@ -78,13 +78,13 @@ export const ExportChips: Story = {
   render: () => <ExportOptions />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const addedOnly = canvas.getByRole("switch", { name: "Added only" });
-    await expect(addedOnly).not.toBeChecked();
+    const changesOnly = canvas.getByRole("switch", { name: "Changes only" });
+    await expect(changesOnly).not.toBeChecked();
     // The whole pill is the click target, label included.
-    await userEvent.click(canvas.getByText("Added only"));
-    await expect(addedOnly).toBeChecked();
-    await userEvent.click(addedOnly);
-    await expect(addedOnly).not.toBeChecked();
+    await userEvent.click(canvas.getByText("Changes only"));
+    await expect(changesOnly).toBeChecked();
+    await userEvent.click(changesOnly);
+    await expect(changesOnly).not.toBeChecked();
   },
 };
 
@@ -94,7 +94,7 @@ export const ContextualName: Story = {
     function Example() {
       const [checked, setChecked] = useState(true);
       return (
-        <SwitchChip aria-label="Removed-card ghosts" checked={checked} onCheckedChange={setChecked}>
+        <SwitchChip aria-label="Archived items" checked={checked} onCheckedChange={setChecked}>
           {checked ? "On" : "Off"}
         </SwitchChip>
       );
@@ -102,51 +102,52 @@ export const ContextualName: Story = {
     return <Example />;
   },
   play: async ({ canvasElement }) => {
-    const chip = within(canvasElement).getByRole("switch", { name: "Removed-card ghosts" });
+    const chip = within(canvasElement).getByRole("switch", { name: "Archived items" });
     await userEvent.click(chip);
     await expect(chip).not.toBeChecked();
-    await expect(chip).toHaveAccessibleName("Removed-card ghosts");
+    await expect(chip).toHaveAccessibleName("Archived items");
   },
 };
 
 export const Keyboard: Story = {
   render: (args) => (
     <form aria-label="Preferences" className="flex items-center gap-3">
-      <SwitchChip name="ramp" onCheckedChange={args.onCheckedChange}>
-        Include Ramp in deck
+      <SwitchChip name="notifications" onCheckedChange={args.onCheckedChange}>
+        Email notifications
       </SwitchChip>
     </form>
   ),
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const chip = canvas.getByRole("switch", { name: "Include Ramp in deck" });
+    const chip = canvas.getByRole("switch", { name: "Email notifications" });
     await userEvent.tab();
     await expect(chip).toHaveFocus();
     await userEvent.keyboard(" ");
     await expect(chip).toBeChecked();
     await expect(args.onCheckedChange).toHaveBeenCalledTimes(1);
     // The hidden native input carries the form value when named.
-    const input = canvasElement.querySelector<HTMLInputElement>('input[name="ramp"]');
+    const input = canvasElement.querySelector<HTMLInputElement>('input[name="notifications"]');
     await waitFor(() => expect(input?.checked).toBe(true));
-    await expect(new FormData(canvasElement.querySelector("form") ?? undefined).get("ramp")).toBe(
-      "on",
-    );
+    await expect(
+      new FormData(canvasElement.querySelector("form") ?? undefined).get("notifications"),
+    ).toBe("on");
   },
 };
 
-export const DisabledStable: Story = {
+export const DisabledStableTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <div className="flex items-center gap-3">
       <Switch aria-label="Locked" disabled onCheckedChange={args.onCheckedChange} />
       <SwitchChip disabled defaultChecked onCheckedChange={args.onCheckedChange}>
-        Hide Ramp
+        Hide archived
       </SwitchChip>
     </div>
   ),
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
     const locked = canvas.getByRole("switch", { name: "Locked" });
-    const chip = canvas.getByRole("switch", { name: "Hide Ramp" });
+    const chip = canvas.getByRole("switch", { name: "Hide archived" });
     await userEvent.click(locked, { pointerEventsCheck: 0 });
     await userEvent.click(chip, { pointerEventsCheck: 0 });
     await expect(locked).not.toBeChecked();
@@ -159,13 +160,15 @@ export const FocusVisible: Story = {
   render: () => (
     <div className="flex items-center gap-4">
       <Switch aria-label="Bare switch" defaultChecked />
-      <SwitchChip>Hide Ramp</SwitchChip>
+      <SwitchChip>Hide archived</SwitchChip>
     </div>
   ),
   play: async ({ canvasElement }) => {
     await userEvent.tab();
     await userEvent.tab();
-    await expect(within(canvasElement).getByRole("switch", { name: "Hide Ramp" })).toHaveFocus();
+    await expect(
+      within(canvasElement).getByRole("switch", { name: "Hide archived" }),
+    ).toHaveFocus();
   },
 };
 
@@ -176,9 +179,9 @@ export const FieldSetDisabled: Story = {
       <FieldLegend>Export options</FieldLegend>
       <div className="flex flex-wrap items-center gap-3">
         <Switch aria-label="Bare switch" onCheckedChange={args.onCheckedChange} />
-        <SwitchChip onCheckedChange={args.onCheckedChange}>Quantity</SwitchChip>
+        <SwitchChip onCheckedChange={args.onCheckedChange}>Comments</SwitchChip>
         <Field orientation="horizontal">
-          <FieldLabel>Ghosts</FieldLabel>
+          <FieldLabel>Mentions</FieldLabel>
           <Switch onCheckedChange={args.onCheckedChange} />
         </Field>
       </div>
@@ -186,7 +189,7 @@ export const FieldSetDisabled: Story = {
   ),
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    const switches = ["Bare switch", "Quantity", "Ghosts"].map((name) =>
+    const switches = ["Bare switch", "Comments", "Mentions"].map((name) =>
       canvas.getByRole("switch", { name }),
     );
     for (const control of switches) {
@@ -202,7 +205,7 @@ export const FieldSetDisabled: Story = {
       await userEvent.keyboard(" ");
       await expect(control).toHaveAttribute("aria-checked", "false");
     }
-    await userEvent.click(canvas.getByText("Ghosts"));
+    await userEvent.click(canvas.getByText("Mentions"));
     await userEvent.tab();
     await expect(document.body).toHaveFocus();
     await expect(switches[2]).toHaveAttribute("aria-checked", "false");

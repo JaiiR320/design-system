@@ -12,7 +12,7 @@ const meta = {
   render: (args) => (
     <Tabs {...args} className="w-[640px]">
       <div className="flex border-b border-border">
-        <TabsList aria-label="Deck views">
+        <TabsList aria-label="Project views">
           <TabsTrigger value="editor">Editor</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
           <TabsTrigger value="stats">Stats</TabsTrigger>
@@ -40,9 +40,9 @@ export const States: Story = {
   render: () => (
     <Tabs defaultValue="general" className="w-[640px]">
       <div className="flex border-b border-border">
-        <TabsList aria-label="Deck settings">
+        <TabsList aria-label="Project settings">
           <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="categories">Categories</TabsTrigger>
+          <TabsTrigger value="members">Members</TabsTrigger>
           <TabsTrigger value="archived" disabled>
             Archived
           </TabsTrigger>
@@ -56,7 +56,7 @@ export const States: Story = {
 export const Keyboard: Story = {
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("tablist", { name: "Deck views" })).toBeInTheDocument();
+    await expect(canvas.getByRole("tablist", { name: "Project views" })).toBeInTheDocument();
     const editor = canvas.getByRole("tab", { name: "Editor" });
     const history = canvas.getByRole("tab", { name: "History" });
     const stats = canvas.getByRole("tab", { name: "Stats" });
@@ -106,7 +106,7 @@ export const PanelReset: Story = {
   render: () => (
     <Tabs defaultValue="history" className="w-[640px]">
       <div className="flex border-b border-border">
-        <TabsList aria-label="Deck views">
+        <TabsList aria-label="Project views">
           <TabsTrigger value="editor">Editor</TabsTrigger>
           <TabsTrigger value="history">History</TabsTrigger>
         </TabsList>

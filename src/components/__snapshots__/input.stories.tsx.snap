@@ -11,9 +11,9 @@ exports[`Focus Visible 1`] = `
 `;
 
 exports[`Inline Form 1`] = `
-- textbox "Deck name":
+- textbox "Project name":
   - /placeholder: you@example.com
-  - text: Atraxa Superfriends
+  - text: Atlas
 - button "Save"
 `;
 
@@ -31,7 +31,7 @@ exports[`States 1`] = `
   - /placeholder: you@example.com
 - textbox "Filled":
   - /placeholder: you@example.com
-  - text: atraxa@example.com
+  - text: ada@example.com
 - textbox "Read-only":
   - /placeholder: you@example.com
   - text: Read-only value
@@ -48,5 +48,5 @@ exports[`Typing 1`] = `
 - text: Email
 - textbox "Email":
   - /placeholder: you@example.com
-  - text: jace@example.com
+  - text: ada.park@acme.io
 `;

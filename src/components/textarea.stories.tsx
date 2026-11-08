@@ -26,7 +26,7 @@ export const States: Story = {
   args: { rows: 2 },
   render: (args) => (
     <div className="flex flex-col gap-3">
-      <Textarea {...args} aria-label="Filled" defaultValue={"1 Sol Ring\n1 Command Tower"} />
+      <Textarea {...args} aria-label="Filled" defaultValue={"Agenda\nAction items"} />
       <Textarea {...args} aria-label="Invalid" aria-invalid defaultValue="Too short" />
       <Textarea {...args} aria-label="Disabled" disabled defaultValue="Disabled" />
       <Textarea {...args} aria-label="Read-only" readOnly defaultValue="Read-only value" />
@@ -34,7 +34,7 @@ export const States: Story = {
   ),
 };
 
-/** Export modal: read-only, darker surface, brighter text, tall and vertically resizable. */
+/** Export dialog: read-only, darker surface, brighter text, tall and vertically resizable. */
 export const ExportPreview: Story = {
   render: (args) => (
     <Textarea
@@ -42,7 +42,9 @@ export const ExportPreview: Story = {
       aria-label="Export preview"
       readOnly
       className="min-h-80 resize-y bg-background text-strong-foreground"
-      defaultValue={"1 Atraxa, Praetors' Voice\n1 Sol Ring\n1 Arcane Signet\n1 Command Tower"}
+      defaultValue={
+        "# Quarterly report\n\n- Revenue up 12%\n- Two new hires\n- Launch plan approved"
+      }
     />
   ),
 };
@@ -66,8 +68,8 @@ export const Typing: Story = {
     await userEvent.click(canvas.getByText("Description"));
     const textarea = canvas.getByLabelText("Description");
     await expect(textarea).toHaveFocus();
-    await userEvent.type(textarea, "Proliferate");
-    await expect(textarea).toHaveValue("Proliferate");
+    await userEvent.type(textarea, "Launch plan");
+    await expect(textarea).toHaveValue("Launch plan");
     await expect(args.onChange).toHaveBeenCalledTimes(11);
   },
 };

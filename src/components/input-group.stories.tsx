@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => (
     <InputGroup {...args}>
-      <InputGroupInput aria-label="Add card" placeholder="Add card…" />
+      <InputGroupInput aria-label="Add member" placeholder="Add member…" />
       <InputGroupAddon>
         <SearchIcon strokeWidth={1.75} />
       </InputGroupAddon>
@@ -54,7 +54,7 @@ export const Addons: Story = {
         </InputGroupAddon>
       </InputGroup>
       <InputGroup {...args}>
-        <InputGroupInput aria-label="With button" defaultValue="Thrasios" />
+        <InputGroupInput aria-label="With button" defaultValue="Ada Park" />
         <InputGroupAddon align="inline-end">
           <InputGroupButton size="icon-sm" variant="ghost" aria-label="Clear search">
             <XIcon strokeWidth={1.75} />
@@ -65,7 +65,7 @@ export const Addons: Story = {
         <InputGroupAddon align="block-start">
           <InputGroupText>block-start</InputGroupText>
         </InputGroupAddon>
-        <InputGroupTextarea aria-label="Block addons" rows={3} placeholder="Ask the judge…" />
+        <InputGroupTextarea aria-label="Block addons" rows={3} placeholder="Leave a comment…" />
         <InputGroupAddon align="block-end">
           <InputGroupText>block-end</InputGroupText>
           <InputGroupButton variant="default" className="ml-auto">
@@ -100,7 +100,7 @@ export const States: Story = {
         <InputGroupAddon>
           <SearchIcon strokeWidth={1.75} />
         </InputGroupAddon>
-        <InputGroupInput aria-label="Invalid" aria-invalid defaultValue="Not a card" />
+        <InputGroupInput aria-label="Invalid" aria-invalid defaultValue="Not a member" />
       </InputGroup>
       <InputGroup {...args}>
         <InputGroupAddon>
@@ -127,7 +127,7 @@ export const KeyboardFocus: Story = {
       <InputGroupAddon>
         <SearchIcon strokeWidth={1.75} />
       </InputGroupAddon>
-      <InputGroupInput aria-label="Add card" placeholder="Add card…" />
+      <InputGroupInput aria-label="Add member" placeholder="Add member…" />
       <InputGroupAddon align="inline-end">
         <InputGroupButton onClick={onAdd}>Add</InputGroupButton>
       </InputGroupAddon>
@@ -137,7 +137,7 @@ export const KeyboardFocus: Story = {
     onAdd.mockClear();
     const canvas = within(canvasElement);
     await userEvent.tab();
-    await expect(canvas.getByLabelText("Add card")).toHaveFocus();
+    await expect(canvas.getByLabelText("Add member")).toHaveFocus();
     await userEvent.tab();
     const button = canvas.getByRole("button", { name: "Add" });
     await expect(button).toHaveFocus();
@@ -145,7 +145,7 @@ export const KeyboardFocus: Story = {
     await expect(onAdd).toHaveBeenCalledTimes(1);
     // End with the ring on the shell for the screenshot.
     await userEvent.tab({ shift: true });
-    await expect(canvas.getByLabelText("Add card")).toHaveFocus();
+    await expect(canvas.getByLabelText("Add member")).toHaveFocus();
   },
 };
 
@@ -156,16 +156,16 @@ export const AddonFocusesControl: Story = {
       <InputGroupAddon>
         <InputGroupText>https://</InputGroupText>
       </InputGroupAddon>
-      <InputGroupInput aria-label="Background URL" placeholder="example.com/art.jpg" />
+      <InputGroupInput aria-label="Cover URL" placeholder="example.com/cover.png" />
     </InputGroup>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByText("https://"));
-    const input = canvas.getByLabelText("Background URL");
+    const input = canvas.getByLabelText("Cover URL");
     await expect(input).toHaveFocus();
-    await userEvent.type(input, "art");
-    await expect(input).toHaveValue("art");
+    await userEvent.type(input, "cover");
+    await expect(input).toHaveValue("cover");
   },
 };
 
@@ -173,34 +173,35 @@ export const AddonFocusesControl: Story = {
 export const InField: Story = {
   render: (args) => (
     <Field>
-      <FieldLabel>Search cards</FieldLabel>
+      <FieldLabel>Search documents</FieldLabel>
       <InputGroup {...args}>
         <InputGroupAddon>
           <SearchIcon strokeWidth={1.75} />
         </InputGroupAddon>
-        <InputGroupInput placeholder="Add card…" />
+        <InputGroupInput placeholder="Search…" />
       </InputGroup>
     </Field>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByText("Search cards"));
-    await expect(canvas.getByLabelText("Search cards")).toHaveFocus();
+    await userEvent.click(canvas.getByText("Search documents"));
+    await expect(canvas.getByLabelText("Search documents")).toHaveFocus();
   },
 };
 
 const onAddonClick = fn();
 
 /** A consumer onClick still focuses the control; links in an addon keep their own focus. */
-export const AddonClickHandler: Story = {
+export const AddonClickHandlerTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <InputGroup {...args}>
       <InputGroupAddon onClick={onAddonClick}>
         <InputGroupText>https://</InputGroupText>
       </InputGroupAddon>
-      <InputGroupInput aria-label="Art URL" placeholder="example.com/art.jpg" />
+      <InputGroupInput aria-label="Image URL" placeholder="example.com/cover.png" />
       <InputGroupAddon align="inline-end">
-        <a href="#art-url-help" className="text-xs underline">
+        <a href="#image-url-help" className="text-xs underline">
           Help
         </a>
       </InputGroupAddon>
@@ -209,7 +210,7 @@ export const AddonClickHandler: Story = {
   play: async ({ canvasElement }) => {
     onAddonClick.mockClear();
     const canvas = within(canvasElement);
-    const input = canvas.getByLabelText("Art URL");
+    const input = canvas.getByLabelText("Image URL");
     await userEvent.click(canvas.getByText("https://"));
     await expect(onAddonClick).toHaveBeenCalledTimes(1);
     await expect(input).toHaveFocus();

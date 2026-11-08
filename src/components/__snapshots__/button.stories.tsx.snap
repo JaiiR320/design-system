@@ -1,14 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`As Link 1`] = `
-- link "Decks":
+- link "Projects":
   - /url: "#x"
 - link "Current":
-  - /url: "#x"
+  - /url: #x
 - link "Open an issue":
-  - /url: "#x"
+  - /url: #x
 - link "Disabled link" [disabled]:
-  - /url: "#x"
+  - /url: #x
 `;
 
 exports[`As Trigger 1`] = `
@@ -17,7 +17,7 @@ exports[`As Trigger 1`] = `
 `;
 
 exports[`Custom Look 1`] = `
-- button "Over artwork"
+- button "Over image"
 - button "More actions"
 `;
 
@@ -43,8 +43,8 @@ exports[`Keyboard 1`] = `
 - button "Button"
 `;
 
-exports[`Link Keyboard 1`] = `
-- link "Decks":
+exports[`Link Keyboard Test 1`] = `
+- link "Projects":
   - /url: "#link-keyboard"
 - link "Disabled link" [disabled]:
   - /url: "#link-keyboard"
@@ -79,7 +79,7 @@ exports[`Variants 1`] = `
 `;
 
 exports[`With Icon 1`] = `
-- button "New Deck"
+- button "New project"
 - button "Export"
-- button "Export deck list"
+- button "Export report"
 `;

@@ -1,39 +1,39 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`As Link 1`] = `
-- link "Constructed Open folder":
-  - /url: "#constructed"
-  - text: Constructed
+- link "Atlas Open folder":
+  - /url: "#atlas"
+  - text: Atlas
   - paragraph: Open folder
 `;
 
 exports[`Compare Selection 1`] = `
-- group "Snapshots to compare":
-  - button "2 Swap Karn for Birds Nov 7, 2026, 01:00 AM" [pressed]:
-    - text: 2 Swap Karn for Birds
+- group "Versions to compare":
+  - button "2 Revise launch plan Nov 7, 2026, 01:00 AM" [pressed]:
+    - text: 2 Revise launch plan
     - paragraph: Nov 7, 2026, 01:00 AM
-  - button "1 Initial build Nov 7, 2026, 12:59 AM" [pressed]:
-    - text: 1 Initial build
+  - button "1 Initial draft Nov 7, 2026, 12:59 AM" [pressed]:
+    - text: 1 Initial draft
     - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Save #3 Nov 6, 2026, 11:42 PM":
-    - text: "Save #3"
+  - button "Version 3 Nov 6, 2026, 11:42 PM":
+    - text: Version 3
     - paragraph: Nov 6, 2026, 11:42 PM
 `;
 
 exports[`Default 1`] = `
-- text: Initial build
+- text: Initial draft
 - paragraph: Nov 7, 2026, 12:59 AM
-- button "Load"
+- button "Restore"
 `;
 
 exports[`Settings Rows 1`] = `
 - text: Cover image
-- paragraph: Shown on the deck tile.
+- paragraph: Shown on the project card.
 - button "Edit crop"
 - button "Clear"
 - separator
-- text: Constructed
-- paragraph: 0 folders | 1 deck
+- text: Atlas
+- paragraph: 2 folders | 5 documents
 `;
 
 exports[`Variants 1`] = `

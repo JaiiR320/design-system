@@ -24,15 +24,15 @@ export const Default: Story = {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="#decks">Decks</BreadcrumbLink>
+          <BreadcrumbLink href="#projects">Projects</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="#constructed">Constructed</BreadcrumbLink>
+          <BreadcrumbLink href="#atlas">Atlas</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Modern</BreadcrumbPage>
+          <BreadcrumbPage>Reports</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
@@ -40,23 +40,23 @@ export const Default: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole("navigation", { name: "Breadcrumb" })).toBeVisible();
-    const link = canvas.getByRole("link", { name: "Decks" });
-    await expect(link).toHaveAttribute("href", "#decks");
-    await expect(canvas.getByText("Modern")).toHaveAttribute("aria-current", "page");
+    const link = canvas.getByRole("link", { name: "Projects" });
+    await expect(link).toHaveAttribute("href", "#projects");
+    await expect(canvas.getByText("Reports")).toHaveAttribute("aria-current", "page");
   },
 };
 
 const onOpen = fn();
 
-// DeckDiff's folder breadcrumb: every crumb is a navigation button, the current one marked.
+// A folder breadcrumb: every crumb is a navigation button, the current one marked.
 function FolderBreadcrumb({ onNavigate }: { onNavigate: (path: string) => void }) {
   const crumbs = [
-    { path: "", name: "Decks" },
-    { path: "constructed", name: "Constructed" },
-    { path: "constructed/modern", name: "Modern" },
+    { path: "", name: "Projects" },
+    { path: "atlas", name: "Atlas" },
+    { path: "atlas/reports", name: "Reports" },
   ];
   return (
-    <Breadcrumb aria-label="Deck folders">
+    <Breadcrumb aria-label="Project folders">
       <BreadcrumbList>
         {crumbs.map((crumb, index) => {
           const isCurrent = index === crumbs.length - 1;
@@ -83,10 +83,10 @@ export const ButtonCrumbs: Story = {
   play: async ({ canvasElement }) => {
     onOpen.mockClear();
     const canvas = within(canvasElement);
-    await expect(canvas.getByRole("navigation", { name: "Deck folders" })).toBeVisible();
-    const current = canvas.getByRole("button", { name: "Modern" });
+    await expect(canvas.getByRole("navigation", { name: "Project folders" })).toBeVisible();
+    const current = canvas.getByRole("button", { name: "Reports" });
     await expect(current).toHaveAttribute("aria-current", "page");
-    await userEvent.click(canvas.getByRole("button", { name: "Decks" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Projects" }));
     await expect(onOpen).toHaveBeenCalledWith("");
   },
 };
@@ -99,10 +99,10 @@ export const KeyboardFocus: Story = {
     const canvas = within(canvasElement);
     await userEvent.tab();
     await userEvent.tab();
-    const constructed = canvas.getByRole("button", { name: "Constructed" });
-    await expect(constructed).toHaveFocus();
+    const atlas = canvas.getByRole("button", { name: "Atlas" });
+    await expect(atlas).toHaveFocus();
     await userEvent.keyboard("{Enter}");
-    await expect(onOpen).toHaveBeenCalledWith("constructed");
+    await expect(onOpen).toHaveBeenCalledWith("atlas");
   },
 };
 
@@ -111,7 +111,7 @@ export const CustomSeparator: Story = {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="#decks">Decks</BreadcrumbLink>
+          <BreadcrumbLink href="#projects">Projects</BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
           <Slash strokeWidth={1.75} />
@@ -129,7 +129,7 @@ export const Wrapping: Story = {
     <div className="w-64">
       <Breadcrumb>
         <BreadcrumbList>
-          {["Decks", "Constructed", "Modern", "Burn variants"].map((name, index, all) => [
+          {["Projects", "Atlas", "Reports", "Quarterly report drafts"].map((name, index, all) => [
             index > 0 ? <BreadcrumbSeparator key={`${name}-separator`} /> : null,
             <BreadcrumbItem key={name}>
               {index === all.length - 1 ? (

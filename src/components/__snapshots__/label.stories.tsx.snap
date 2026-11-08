@@ -1,13 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- text: Deck name
+- text: Project name
 `;
 
 exports[`With Input 1`] = `
-- text: Deck name
-- textbox "Deck name":
-  - /placeholder: Atraxa Superfriends
+- text: Project name
+- textbox "Project name":
+  - /placeholder: Atlas
 `;
 
 exports[`With Range 1`] = `

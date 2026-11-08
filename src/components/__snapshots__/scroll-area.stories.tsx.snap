@@ -1,195 +1,195 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Both Axes 1`] = `
-- region "Price table":
+- region "Activity table":
   - table:
     - rowgroup:
-      - row "Rule 100.1 Set 1 1.00":
-        - cell "Rule 100.1"
-        - cell "Set 1"
+      - row "Document 1 Version 1 1.00":
+        - cell "Document 1"
+        - cell "Version 1"
         - cell "1.00"
-      - row "Rule 100.2 Set 2 2.00":
-        - cell "Rule 100.2"
-        - cell "Set 2"
+      - row "Document 2 Version 2 2.00":
+        - cell "Document 2"
+        - cell "Version 2"
         - cell "2.00"
-      - row "Rule 100.3 Set 3 3.00":
-        - cell "Rule 100.3"
-        - cell "Set 3"
+      - row "Document 3 Version 3 3.00":
+        - cell "Document 3"
+        - cell "Version 3"
         - cell "3.00"
-      - row "Rule 100.4 Set 4 4.00":
-        - cell "Rule 100.4"
-        - cell "Set 4"
+      - row "Document 4 Version 4 4.00":
+        - cell "Document 4"
+        - cell "Version 4"
         - cell "4.00"
-      - row "Rule 100.5 Set 5 5.00":
-        - cell "Rule 100.5"
-        - cell "Set 5"
+      - row "Document 5 Version 5 5.00":
+        - cell "Document 5"
+        - cell "Version 5"
         - cell "5.00"
-      - row "Rule 100.6 Set 6 6.00":
-        - cell "Rule 100.6"
-        - cell "Set 6"
+      - row "Document 6 Version 6 6.00":
+        - cell "Document 6"
+        - cell "Version 6"
         - cell "6.00"
-      - row "Rule 100.7 Set 7 7.00":
-        - cell "Rule 100.7"
-        - cell "Set 7"
+      - row "Document 7 Version 7 7.00":
+        - cell "Document 7"
+        - cell "Version 7"
         - cell "7.00"
-      - row "Rule 100.8 Set 8 8.00":
-        - cell "Rule 100.8"
-        - cell "Set 8"
+      - row "Document 8 Version 8 8.00":
+        - cell "Document 8"
+        - cell "Version 8"
         - cell "8.00"
-      - row "Rule 100.9 Set 9 9.00":
-        - cell "Rule 100.9"
-        - cell "Set 9"
+      - row "Document 9 Version 9 9.00":
+        - cell "Document 9"
+        - cell "Version 9"
         - cell "9.00"
-      - row "Rule 100.10 Set 10 10.00":
-        - cell "Rule 100.10"
-        - cell "Set 10"
+      - row "Document 10 Version 10 10.00":
+        - cell "Document 10"
+        - cell "Version 10"
         - cell "10.00"
-      - row "Rule 100.11 Set 11 11.00":
-        - cell "Rule 100.11"
-        - cell "Set 11"
+      - row "Document 11 Version 11 11.00":
+        - cell "Document 11"
+        - cell "Version 11"
         - cell "11.00"
-      - row "Rule 100.12 Set 12 12.00":
-        - cell "Rule 100.12"
-        - cell "Set 12"
+      - row "Document 12 Version 12 12.00":
+        - cell "Document 12"
+        - cell "Version 12"
         - cell "12.00"
-      - row "Rule 100.13 Set 13 13.00":
-        - cell "Rule 100.13"
-        - cell "Set 13"
+      - row "Document 13 Version 13 13.00":
+        - cell "Document 13"
+        - cell "Version 13"
         - cell "13.00"
-      - row "Rule 100.14 Set 14 14.00":
-        - cell "Rule 100.14"
-        - cell "Set 14"
+      - row "Document 14 Version 14 14.00":
+        - cell "Document 14"
+        - cell "Version 14"
         - cell "14.00"
-      - row "Rule 100.15 Set 15 15.00":
-        - cell "Rule 100.15"
-        - cell "Set 15"
+      - row "Document 15 Version 15 15.00":
+        - cell "Document 15"
+        - cell "Version 15"
         - cell "15.00"
-      - row "Rule 100.16 Set 16 16.00":
-        - cell "Rule 100.16"
-        - cell "Set 16"
+      - row "Document 16 Version 16 16.00":
+        - cell "Document 16"
+        - cell "Version 16"
         - cell "16.00"
-      - row "Rule 100.17 Set 17 17.00":
-        - cell "Rule 100.17"
-        - cell "Set 17"
+      - row "Document 17 Version 17 17.00":
+        - cell "Document 17"
+        - cell "Version 17"
         - cell "17.00"
-      - row "Rule 100.18 Set 18 18.00":
-        - cell "Rule 100.18"
-        - cell "Set 18"
+      - row "Document 18 Version 18 18.00":
+        - cell "Document 18"
+        - cell "Version 18"
         - cell "18.00"
-      - row "Rule 100.19 Set 19 19.00":
-        - cell "Rule 100.19"
-        - cell "Set 19"
+      - row "Document 19 Version 19 19.00":
+        - cell "Document 19"
+        - cell "Version 19"
         - cell "19.00"
-      - row "Rule 100.20 Set 20 20.00":
-        - cell "Rule 100.20"
-        - cell "Set 20"
+      - row "Document 20 Version 20 20.00":
+        - cell "Document 20"
+        - cell "Version 20"
         - cell "20.00"
-      - row "Rule 100.21 Set 21 21.00":
-        - cell "Rule 100.21"
-        - cell "Set 21"
+      - row "Document 21 Version 21 21.00":
+        - cell "Document 21"
+        - cell "Version 21"
         - cell "21.00"
-      - row "Rule 100.22 Set 22 22.00":
-        - cell "Rule 100.22"
-        - cell "Set 22"
+      - row "Document 22 Version 22 22.00":
+        - cell "Document 22"
+        - cell "Version 22"
         - cell "22.00"
-      - row "Rule 100.23 Set 23 23.00":
-        - cell "Rule 100.23"
-        - cell "Set 23"
+      - row "Document 23 Version 23 23.00":
+        - cell "Document 23"
+        - cell "Version 23"
         - cell "23.00"
-      - row "Rule 100.24 Set 24 24.00":
-        - cell "Rule 100.24"
-        - cell "Set 24"
+      - row "Document 24 Version 24 24.00":
+        - cell "Document 24"
+        - cell "Version 24"
         - cell "24.00"
 `;
 
 exports[`Horizontal 1`] = `
-- region "Search results": Card 1 Card 2 Card 3 Card 4 Card 5 Card 6 Card 7 Card 8 Card 9 Card 10 Card 11 Card 12 Card 13 Card 14
+- region "Search results": File 1 File 2 File 3 File 4 File 5 File 6 File 7 File 8 File 9 File 10 File 11 File 12 File 13 File 14
 `;
 
 exports[`Keyboard Focus 1`] = `
-- region "Rules":
+- region "Documents":
   - list:
-    - listitem: Rule 100.1
-    - listitem: Rule 100.2
-    - listitem: Rule 100.3
-    - listitem: Rule 100.4
-    - listitem: Rule 100.5
-    - listitem: Rule 100.6
-    - listitem: Rule 100.7
-    - listitem: Rule 100.8
-    - listitem: Rule 100.9
-    - listitem: Rule 100.10
-    - listitem: Rule 100.11
-    - listitem: Rule 100.12
-    - listitem: Rule 100.13
-    - listitem: Rule 100.14
-    - listitem: Rule 100.15
-    - listitem: Rule 100.16
-    - listitem: Rule 100.17
-    - listitem: Rule 100.18
-    - listitem: Rule 100.19
-    - listitem: Rule 100.20
-    - listitem: Rule 100.21
-    - listitem: Rule 100.22
-    - listitem: Rule 100.23
-    - listitem: Rule 100.24
+    - listitem: Document 1
+    - listitem: Document 2
+    - listitem: Document 3
+    - listitem: Document 4
+    - listitem: Document 5
+    - listitem: Document 6
+    - listitem: Document 7
+    - listitem: Document 8
+    - listitem: Document 9
+    - listitem: Document 10
+    - listitem: Document 11
+    - listitem: Document 12
+    - listitem: Document 13
+    - listitem: Document 14
+    - listitem: Document 15
+    - listitem: Document 16
+    - listitem: Document 17
+    - listitem: Document 18
+    - listitem: Document 19
+    - listitem: Document 20
+    - listitem: Document 21
+    - listitem: Document 22
+    - listitem: Document 23
+    - listitem: Document 24
 - button "After"
 `;
 
 exports[`Scrolled 1`] = `
-- region "Rules":
+- region "Documents":
   - list:
-    - listitem: Rule 100.1
-    - listitem: Rule 100.2
-    - listitem: Rule 100.3
-    - listitem: Rule 100.4
-    - listitem: Rule 100.5
-    - listitem: Rule 100.6
-    - listitem: Rule 100.7
-    - listitem: Rule 100.8
-    - listitem: Rule 100.9
-    - listitem: Rule 100.10
-    - listitem: Rule 100.11
-    - listitem: Rule 100.12
-    - listitem: Rule 100.13
-    - listitem: Rule 100.14
-    - listitem: Rule 100.15
-    - listitem: Rule 100.16
-    - listitem: Rule 100.17
-    - listitem: Rule 100.18
-    - listitem: Rule 100.19
-    - listitem: Rule 100.20
-    - listitem: Rule 100.21
-    - listitem: Rule 100.22
-    - listitem: Rule 100.23
-    - listitem: Rule 100.24
+    - listitem: Document 1
+    - listitem: Document 2
+    - listitem: Document 3
+    - listitem: Document 4
+    - listitem: Document 5
+    - listitem: Document 6
+    - listitem: Document 7
+    - listitem: Document 8
+    - listitem: Document 9
+    - listitem: Document 10
+    - listitem: Document 11
+    - listitem: Document 12
+    - listitem: Document 13
+    - listitem: Document 14
+    - listitem: Document 15
+    - listitem: Document 16
+    - listitem: Document 17
+    - listitem: Document 18
+    - listitem: Document 19
+    - listitem: Document 20
+    - listitem: Document 21
+    - listitem: Document 22
+    - listitem: Document 23
+    - listitem: Document 24
 `;
 
 exports[`Vertical 1`] = `
-- region "Rules":
+- region "Documents":
   - list:
-    - listitem: Rule 100.1
-    - listitem: Rule 100.2
-    - listitem: Rule 100.3
-    - listitem: Rule 100.4
-    - listitem: Rule 100.5
-    - listitem: Rule 100.6
-    - listitem: Rule 100.7
-    - listitem: Rule 100.8
-    - listitem: Rule 100.9
-    - listitem: Rule 100.10
-    - listitem: Rule 100.11
-    - listitem: Rule 100.12
-    - listitem: Rule 100.13
-    - listitem: Rule 100.14
-    - listitem: Rule 100.15
-    - listitem: Rule 100.16
-    - listitem: Rule 100.17
-    - listitem: Rule 100.18
-    - listitem: Rule 100.19
-    - listitem: Rule 100.20
-    - listitem: Rule 100.21
-    - listitem: Rule 100.22
-    - listitem: Rule 100.23
-    - listitem: Rule 100.24
+    - listitem: Document 1
+    - listitem: Document 2
+    - listitem: Document 3
+    - listitem: Document 4
+    - listitem: Document 5
+    - listitem: Document 6
+    - listitem: Document 7
+    - listitem: Document 8
+    - listitem: Document 9
+    - listitem: Document 10
+    - listitem: Document 11
+    - listitem: Document 12
+    - listitem: Document 13
+    - listitem: Document 14
+    - listitem: Document 15
+    - listitem: Document 16
+    - listitem: Document 17
+    - listitem: Document 18
+    - listitem: Document 19
+    - listitem: Document 20
+    - listitem: Document 21
+    - listitem: Document 22
+    - listitem: Document 23
+    - listitem: Document 24
 `;

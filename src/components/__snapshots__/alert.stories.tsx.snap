@@ -5,18 +5,18 @@ exports[`Default 1`] = `
 `;
 
 exports[`Inline Confirm 1`] = `
-- paragraph: Swap Karn for Birds
+- paragraph: Revise launch plan
 - paragraph: Nov 7, 2026, 01:00 AM
-- button "Load"
+- button "Restore"
 - alert:
-  - text: Loading this snapshot will overwrite your current live deck.
+  - text: Restoring this version will overwrite your current draft.
   - button "Cancel"
-  - button "Save Snapshot"
-  - button "Load Anyways"
+  - button "Save Version"
+  - button "Restore Anyway"
 `;
 
 exports[`Narrow Wrapping 1`] = `
-- text: Delete deck? This will delete the deck and all 3 snapshots.
+- text: Delete project? This will delete the project and all 3 snapshots.
 - button "Cancel"
 - button "Delete"
 - button "Move to Archive"
@@ -31,7 +31,7 @@ exports[`Sizes 1`] = `
 `;
 
 exports[`Tones 1`] = `
-- text: Could not load this deck. Loading this snapshot will overwrite your current live deck. Select two snapshots to compare them. Thanks! Your feedback was sent.
+- text: Could not load this project. Restoring this version will overwrite your current draft. Select two versions to compare them. Thanks! Your feedback was sent.
 `;
 
 exports[`With Title 1`] = `
@@ -39,6 +39,6 @@ exports[`With Title 1`] = `
   - text: Warnings
   - button "Dismiss warnings"
   - list:
-    - listitem: "Line 4: Sol Rng Card not found"
-    - listitem: "Line 9: 2x Mana Crypt Duplicate singleton"
+    - listitem: "Row 4: Ada Prak Person not found"
+    - listitem: "Row 9: Sam Lee Already invited"
 `;

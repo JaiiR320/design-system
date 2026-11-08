@@ -1,22 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Compositions 1`] = `
-- paragraph: No cards
-- paragraph: Drop a category here
+- paragraph: No items
+- paragraph: Drop a folder here
 - paragraph: Feedback sent
-- paragraph: Thanks for helping improve DeckDiff.
+- paragraph: Thanks for helping improve Atlas.
 `;
 
 exports[`Default 1`] = `
 - paragraph: No saves yet
-- paragraph: Save the deck to start its history.
+- paragraph: Save the document to start its history.
 - button "Save"
 - button "Import"
 `;
 
 exports[`Narrow 1`] = `
 - paragraph: Nothing matches the current filters
-- paragraph: Try clearing filters or searching for another card.
+- paragraph: Try clearing filters or searching for another document.
 - button "Clear filters"
 - button "Search"
 `;

@@ -37,7 +37,7 @@ export const States: Story = {
   render: (args) => (
     <div className="flex flex-col gap-3">
       <Input {...args} aria-label="Placeholder" />
-      <Input {...args} aria-label="Filled" defaultValue="atraxa@example.com" />
+      <Input {...args} aria-label="Filled" defaultValue="ada@example.com" />
       <Input {...args} aria-label="Read-only" readOnly defaultValue="Read-only value" />
       <Input {...args} aria-label="Invalid" aria-invalid defaultValue="not-an-email" />
       <Input {...args} aria-label="Disabled" disabled defaultValue="Disabled" />
@@ -73,8 +73,8 @@ export const Typing: Story = {
     await userEvent.click(canvas.getByText("Email"));
     const input = canvas.getByLabelText("Email");
     await expect(input).toHaveFocus();
-    await userEvent.type(input, "jace@example.com");
-    await expect(input).toHaveValue("jace@example.com");
+    await userEvent.type(input, "ada.park@acme.io");
+    await expect(input).toHaveValue("ada.park@acme.io");
     await expect(args.onChange).toHaveBeenCalledTimes(16);
   },
 };
@@ -91,7 +91,7 @@ export const FocusVisible: Story = {
 export const InlineForm: Story = {
   render: (args) => (
     <form className="flex gap-2" onSubmit={(event) => event.preventDefault()}>
-      <Input {...args} inputSize="md" aria-label="Deck name" defaultValue="Atraxa Superfriends" />
+      <Input {...args} inputSize="md" aria-label="Project name" defaultValue="Atlas" />
       <button
         type="submit"
         className="shrink-0 rounded-xl bg-cyan-400 px-3 py-2 text-sm font-medium text-cyan-950"

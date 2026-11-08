@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- tablist "Deck views":
+- tablist "Project views":
   - tab "Editor" [selected]
   - tab "History"
   - tab "Stats"
@@ -9,7 +9,7 @@ exports[`Default 1`] = `
 `;
 
 exports[`Focus Visible 1`] = `
-- tablist "Deck views":
+- tablist "Project views":
   - tab "Editor" [selected]
   - tab "History"
   - tab "Stats"
@@ -17,7 +17,7 @@ exports[`Focus Visible 1`] = `
 `;
 
 exports[`Keyboard 1`] = `
-- tablist "Deck views":
+- tablist "Project views":
   - tab "Editor"
   - tab "History"
   - tab "Stats" [selected]
@@ -25,7 +25,7 @@ exports[`Keyboard 1`] = `
 `;
 
 exports[`Panel Focus Visible 1`] = `
-- tablist "Deck views":
+- tablist "Project views":
   - tab "Editor" [selected]
   - tab "History"
   - tab "Stats"
@@ -33,7 +33,7 @@ exports[`Panel Focus Visible 1`] = `
 `;
 
 exports[`Panel Reset 1`] = `
-- tablist "Deck views":
+- tablist "Project views":
   - tab "Editor"
   - tab "History" [selected]
 - tabpanel "History":
@@ -41,8 +41,8 @@ exports[`Panel Reset 1`] = `
 `;
 
 exports[`States 1`] = `
-- tablist "Deck settings":
+- tablist "Project settings":
   - tab "General" [selected]
-  - tab "Categories"
+  - tab "Members"
   - tab "Archived" [disabled]
 `;

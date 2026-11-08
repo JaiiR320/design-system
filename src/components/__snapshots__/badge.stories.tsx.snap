@@ -9,7 +9,7 @@ exports[`Default 1`] = `
 `;
 
 exports[`Narrow Wrapping 1`] = `
-- text: 3 snapshots 12 cards Commander Sideboard
+- text: 3 snapshots 12 items Shared Archived
 `;
 
 exports[`Render As Link 1`] = `

@@ -12,9 +12,9 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const folders = ["Constructed", "Archive"];
+const folders = ["Shared", "Archive"];
 
-// DeckDiff's "Move to folder" disclosure; all layout comes from the caller.
+// A "Move to folder" disclosure; all layout comes from the caller.
 function MoveToFolder({ defaultOpen = false }: { defaultOpen?: boolean }) {
   return (
     <Collapsible
@@ -95,10 +95,10 @@ export const Keyboard: Story = {
     await expect(trigger).toHaveFocus();
     await userEvent.keyboard("{Enter}");
     await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "true"));
-    await expect(canvas.getByRole("button", { name: "Constructed" })).toBeVisible();
+    await expect(canvas.getByRole("button", { name: "Shared" })).toBeVisible();
     await userEvent.keyboard(" ");
     await waitFor(() => expect(trigger).toHaveAttribute("aria-expanded", "false"));
-    await expect(canvas.queryByRole("button", { name: "Constructed" })).toBeNull();
+    await expect(canvas.queryByRole("button", { name: "Shared" })).toBeNull();
     await expect(trigger).toHaveFocus();
   },
 };

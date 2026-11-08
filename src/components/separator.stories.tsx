@@ -25,7 +25,7 @@ export const Default: Story = {
   },
 };
 
-// EditorHeader's toolbar dividers: margins and height come from the call site.
+// Toolbar dividers: margins and height come from the call site.
 export const Vertical: Story = {
   render: () => (
     <div className="flex items-center text-sm text-secondary-foreground">
@@ -43,12 +43,12 @@ export const Vertical: Story = {
   },
 };
 
-// SaveHistory's collapsed-save caption: two flex-1 separators around text.
+// A history caption: two flex-1 separators around text.
 export const Caption: Story = {
   render: () => (
     <div className="flex items-center gap-3 py-2 text-sm text-muted-foreground">
       <Separator className="flex-1" />
-      <span className="shrink-0">1 unnamed save collapsed</span>
+      <span className="shrink-0">2 older versions hidden</span>
       <Separator className="flex-1" />
     </div>
   ),

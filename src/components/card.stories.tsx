@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "#components/card";
 
-// Plain stand-in for DeckDiff's icon button (Button is a separate module).
+// Plain stand-in for an icon button (Button is a separate module).
 const iconButton =
   "inline-flex size-8 items-center justify-center rounded-lg text-subtle-foreground transition hover:bg-surface hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
@@ -34,19 +34,19 @@ export const Default: Story = {
     <Card {...args} className="w-96 space-y-3">
       <CardHeader>
         <div className="space-y-1">
-          <CardTitle>Deck colors</CardTitle>
-          <CardDescription>Used to clamp flexible mana production stats.</CardDescription>
+          <CardTitle>Notifications</CardTitle>
+          <CardDescription>Choose what Atlas emails you about.</CardDescription>
         </div>
         <CardAction>
-          <button type="button" aria-label="Deck color actions" className={iconButton}>
+          <button type="button" aria-label="Notification actions" className={iconButton}>
             <MoreHorizontal className="size-4" strokeWidth={1.75} />
           </button>
         </CardAction>
       </CardHeader>
       <CardContent className="text-sm text-secondary-foreground">
-        White, blue, black and green are selected.
+        Mentions, comments and shares are on.
       </CardContent>
-      <CardFooter className="text-xs text-muted-foreground">Saved with the deck.</CardFooter>
+      <CardFooter className="text-xs text-muted-foreground">Saved to your profile.</CardFooter>
     </Card>
   ),
 };
@@ -82,30 +82,30 @@ export const Paddings: Story = {
   ),
 };
 
-// Editor shell: a section with a local header band; the band styling is caller-owned.
+// Board column: a section with a local header band; the band styling is caller-owned.
 export const HeaderBand: Story = {
   render: () => (
-    <Card render={<section aria-labelledby="ramp-title" />} className="w-96 overflow-hidden">
+    <Card render={<section aria-labelledby="draft-title" />} className="w-96 overflow-hidden">
       <CardHeader className="items-center border-b bg-surface/80 px-3 py-1.5">
         <CardTitle
-          render={<h2 id="ramp-title" />}
+          render={<h2 id="draft-title" />}
           className="text-xs tracking-label text-subtle-foreground uppercase"
         >
-          Ramp
+          Draft
         </CardTitle>
         <CardAction className="text-xs text-muted-foreground">12</CardAction>
       </CardHeader>
       <CardContent className="flex min-h-32 items-center justify-center text-sm text-muted-foreground">
-        Card stack
+        Documents
       </CardContent>
     </Card>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const region = canvas.getByRole("region", { name: "Ramp" });
+    const region = canvas.getByRole("region", { name: "Draft" });
     await expect(region.tagName).toBe("SECTION");
     await expect(region).toHaveAttribute("data-slot", "card");
-    await expect(canvas.getByRole("heading", { level: 2, name: "Ramp" })).toBeVisible();
+    await expect(canvas.getByRole("heading", { level: 2, name: "Draft" })).toBeVisible();
   },
 };
 
@@ -120,7 +120,7 @@ export const PanelOverrides: Story = {
         <CardDescription className="mt-1">rounded-3xl, 90% surface.</CardDescription>
       </Card>
       <Card padding="md" className="w-72 rounded-2xl bg-card/70 shadow-2xl shadow-black/20">
-        <CardTitle render={<h2 />}>Judge</CardTitle>
+        <CardTitle render={<h2 />}>Feedback</CardTitle>
         <CardDescription className="mt-1">rounded-2xl, 70% surface.</CardDescription>
       </Card>
       <Card variant="panel" padding="md" className="w-72">

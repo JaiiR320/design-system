@@ -9,5 +9,5 @@ exports[`Sizes 1`] = `
 `;
 
 exports[`Status 1`] = `
-- status "Loading printings"
+- status "Loading documents"
 `;

@@ -10,7 +10,7 @@ import {
   EmptyTitle,
 } from "#components/empty";
 
-// Plain stand-in for DeckDiff's bordered button (Button is a separate module).
+// Plain stand-in for a bordered button (Button is a separate module).
 const button =
   "inline-flex h-9 items-center justify-center rounded-lg border border-border px-3 text-sm text-secondary-foreground transition hover:border-border-strong hover:bg-surface hover:text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
@@ -32,7 +32,7 @@ export const Default: Story = {
       </EmptyMedia>
       <EmptyHeader>
         <EmptyTitle>No saves yet</EmptyTitle>
-        <EmptyDescription>Save the deck to start its history.</EmptyDescription>
+        <EmptyDescription>Save the document to start its history.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <button type="button" className={button}>
@@ -63,15 +63,15 @@ export const Variants: Story = {
   ),
 };
 
-// DeckDiff's local compositions: stack, lane, success media. Geometry stays caller-owned.
+// Local compositions: list, drop zone, success media. Geometry stays caller-owned.
 export const Compositions: Story = {
   render: () => (
     <div className="grid w-[56rem] grid-cols-3 items-start gap-4">
       <Empty className="min-h-64 bg-surface/40 px-5 font-semibold">
-        <EmptyTitle>No cards</EmptyTitle>
+        <EmptyTitle>No items</EmptyTitle>
       </Empty>
       <Empty className="min-h-64 gap-3 rounded-xl bg-surface/25 px-4 font-semibold text-faint-foreground">
-        <EmptyTitle className="text-faint-foreground">Drop a category here</EmptyTitle>
+        <EmptyTitle className="text-faint-foreground">Drop a folder here</EmptyTitle>
       </Empty>
       <Empty variant="outline" className="rounded-2xl p-8">
         <EmptyMedia className="size-12 rounded-full bg-info-surface/40 text-primary">
@@ -80,7 +80,7 @@ export const Compositions: Story = {
         <EmptyHeader>
           <EmptyTitle className="text-foreground">Feedback sent</EmptyTitle>
           <EmptyDescription className="text-subtle-foreground">
-            Thanks for helping improve DeckDiff.
+            Thanks for helping improve Atlas.
           </EmptyDescription>
         </EmptyHeader>
       </Empty>
@@ -93,7 +93,7 @@ export const Narrow: Story = {
     <Empty variant="outline" className="w-56 p-4">
       <EmptyHeader>
         <EmptyTitle>Nothing matches the current filters</EmptyTitle>
-        <EmptyDescription>Try clearing filters or searching for another card.</EmptyDescription>
+        <EmptyDescription>Try clearing filters or searching for another document.</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <button type="button" className={button}>
