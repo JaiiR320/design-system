@@ -16,6 +16,11 @@ exports[`As Trigger 1`] = `
 - text: Root
 `;
 
+exports[`Custom Look 1`] = `
+- button "Over artwork"
+- button "More actions"
+`;
+
 exports[`Default 1`] = `
 - button "Button"
 `;
@@ -31,7 +36,6 @@ exports[`Icon Only 1`] = `
 - button "Settings"
 - button "More actions"
 - button "Delete"
-- button "Warning"
 - button "Add"
 `;
 
@@ -60,24 +64,18 @@ exports[`Sizes 1`] = `
 - button "Remove (icon-xs)"
 - button "Settings (icon-sm)"
 - button "Settings (icon)"
-- button "Send feedback (icon-lg)"
+- button "Add (icon-lg)"
 `;
 
 exports[`Variants 1`] = `
 - button "default"
 - button "outline"
 - button "ghost"
-- button "icon-ghost"
 - button "destructive"
 - button "destructive-outline"
 - button "destructive-ghost"
 - button "warning"
-- button "warning-ghost"
-- button "raised"
 - button "link"
-- button "glass"
-- button "Add one"
-- button "More actions"
 `;
 
 exports[`With Icon 1`] = `

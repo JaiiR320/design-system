@@ -7,19 +7,20 @@ import { cn } from "#lib/utils";
 
 /**
  * Size axis on its own so Toggle can reuse it: `cn(toggleBase, toggleVariant, buttonSizeVariants({ size }))`.
- * No default: callers pick the size (Button defaults to `md`). Size radii come last and win.
+ * Sizes only set padding/dimensions; radius belongs to the variant (or the caller's className).
+ * No default: callers pick the size (Button defaults to `md`).
  */
 const buttonSizeVariants = cva("", {
   variants: {
     size: {
-      xs: "rounded-lg px-3 py-1.5",
+      xs: "px-3 py-1.5",
       sm: "px-3 py-2",
       md: "px-4 py-2",
       lg: "px-4 py-3",
-      "icon-xs": "size-5 rounded-md p-0",
+      "icon-xs": "size-5 p-0",
       "icon-sm": "size-7 p-0",
       icon: "p-2.5",
-      "icon-lg": "size-12 rounded-full p-0",
+      "icon-lg": "size-12 p-0",
       none: "p-0",
     },
   },
@@ -38,22 +39,12 @@ const buttonRecipe = cva(
         outline:
           "border border-border text-secondary-foreground hover:border-border-strong hover:bg-surface",
         ghost: "text-subtle-foreground hover:bg-surface hover:text-strong-foreground",
-        "icon-ghost":
-          "rounded-lg text-muted-foreground hover:bg-secondary hover:text-secondary-foreground",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive-hover",
         "destructive-outline":
           "border border-border text-destructive-text hover:border-destructive-border/50 hover:bg-destructive-surface/20",
         "destructive-ghost":
-          "rounded-lg text-destructive-text hover:bg-destructive-surface/30 hover:text-destructive-emphasis",
+          "text-destructive-text hover:bg-destructive-surface/30 hover:text-destructive-emphasis",
         warning: "bg-warning text-warning-foreground hover:bg-warning-hover",
-        // amber-100 hover text has no token; kept literal for parity with IconButton warning.
-        "warning-ghost":
-          "rounded-lg text-warning-text hover:bg-warning-border/30 hover:text-amber-100",
-        glass: "bg-on-image/35 text-on-image-foreground backdrop-blur-sm hover:bg-on-image/50",
-        // The card rail owns the shared glass background/border around these.
-        overlay: "rounded-none text-on-image-foreground hover:bg-on-image-hover",
-        raised:
-          "border border-border-strong bg-secondary text-secondary-foreground shadow-lg shadow-black/40 hover:bg-border-strong hover:text-highlight",
         link: "rounded-none p-0 text-primary underline underline-offset-2 hover:text-primary-hover",
       },
     },
@@ -61,6 +52,8 @@ const buttonRecipe = cva(
   },
 );
 
+// `variant={null}` keeps only the structural, focus and disabled classes, so an app can
+// layer its own look through className without fighting a built-in variant.
 type ButtonVariantProps = VariantProps<typeof buttonRecipe> &
   VariantProps<typeof buttonSizeVariants>;
 

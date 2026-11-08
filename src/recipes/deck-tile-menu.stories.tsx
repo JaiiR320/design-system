@@ -148,12 +148,12 @@ function DeckTile({ deck, onOpenDeck, onAction }: DeckTileProps) {
         <DropdownMenuTrigger
           render={
             <Button
-              variant={hasArt ? "glass" : "icon-ghost"}
+              variant={hasArt ? null : "ghost"}
               size="icon"
               aria-label={`Edit ${deck.name}`}
               className={
                 hasArt
-                  ? "absolute top-5 right-5 z-20 p-2"
+                  ? "absolute top-5 right-5 z-20 bg-black/35 p-2 text-white backdrop-blur-sm hover:bg-black/50"
                   : // Plain tiles reveal the action on hover or when anything in the tile has focus.
                     "absolute top-5 right-5 z-20 p-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 data-popup-open:opacity-100"
               }

@@ -31,7 +31,7 @@ const body = within(document.body);
 
 function HeaderClose() {
   return (
-    <DialogClose render={<Button variant="icon-ghost" size="icon" aria-label="Close" />}>
+    <DialogClose render={<Button variant="ghost" size="icon" aria-label="Close" />}>
       <X className="size-5" strokeWidth={1.75} />
     </DialogClose>
   );

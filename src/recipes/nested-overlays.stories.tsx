@@ -100,15 +100,13 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
               <div className="flex items-center gap-1">
                 <Tooltip>
                   <TooltipTrigger
-                    render={<Button size="icon-sm" variant="icon-ghost" aria-label="Last saved" />}
+                    render={<Button size="icon-sm" variant="ghost" aria-label="Last saved" />}
                   >
                     <Info strokeWidth={1.75} />
                   </TooltipTrigger>
                   <TooltipContent>Saved Nov 7, 2026, 01:00 AM</TooltipContent>
                 </Tooltip>
-                <DialogClose
-                  render={<Button size="icon-sm" variant="icon-ghost" aria-label="Close" />}
-                >
+                <DialogClose render={<Button size="icon-sm" variant="ghost" aria-label="Close" />}>
                   <X strokeWidth={1.75} />
                 </DialogClose>
               </div>
@@ -157,7 +155,7 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
                       render={
                         <Button
                           size="icon-sm"
-                          variant="icon-ghost"
+                          variant="ghost"
                           aria-label="Deepglow Skate actions"
                         />
                       }

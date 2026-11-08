@@ -1,6 +1,6 @@
 import { Collapsible } from "@base-ui/react/collapsible";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Download, Ellipsis, Plus, Settings, Trash2, TriangleAlert, X } from "lucide-react";
+import { Download, Ellipsis, Plus, Settings, Trash2, X } from "lucide-react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
@@ -20,44 +20,50 @@ const variants = [
   "default",
   "outline",
   "ghost",
-  "icon-ghost",
   "destructive",
   "destructive-outline",
   "destructive-ghost",
   "warning",
-  "warning-ghost",
-  "raised",
 ] as const;
 
 export const Default: Story = {};
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex w-[560px] flex-col gap-4">
-      <div className="grid grid-cols-2 gap-3">
-        {variants.map((variant) => (
-          <div key={variant} className="flex items-center gap-3">
-            <Button variant={variant}>{variant}</Button>
-          </div>
-        ))}
-        <div className="flex items-center gap-3">
-          <Button variant="link" size="none">
-            link
-          </Button>
+    <div className="grid w-[560px] grid-cols-2 gap-3">
+      {variants.map((variant) => (
+        <div key={variant} className="flex items-center gap-3">
+          <Button variant={variant}>{variant}</Button>
         </div>
+      ))}
+      <div className="flex items-center gap-3">
+        <Button variant="link" size="none">
+          link
+        </Button>
       </div>
-      {/* Two-tone fill stands in for card artwork (hard stops: smooth gradients dither per machine). */}
-      <div className="flex items-center gap-3 rounded-xl bg-[linear-gradient(to_right,var(--color-cyan-900)_50%,var(--color-amber-800)_50%)] p-4">
-        <Button variant="glass">glass</Button>
-        <div className="flex overflow-hidden rounded-lg border border-on-image-border/20 bg-on-image/60">
-          <Button variant="overlay" size="icon-sm" aria-label="Add one">
-            <Plus strokeWidth={1.75} />
-          </Button>
-          <Button variant="overlay" size="icon-sm" aria-label="More actions">
-            <Ellipsis strokeWidth={1.75} />
-          </Button>
-        </div>
-      </div>
+    </div>
+  ),
+};
+
+/**
+ * App-specific looks: `variant={null}` keeps Button's structure, focus ring and disabled
+ * handling, and the app's own classes supply the look. Here, a translucent control over artwork.
+ */
+export const CustomLook: Story = {
+  render: () => (
+    // Two-tone fill stands in for artwork (hard stops: smooth gradients dither per machine).
+    <div className="flex items-center gap-3 rounded-xl bg-[linear-gradient(to_right,var(--color-cyan-900)_50%,var(--color-amber-800)_50%)] p-4">
+      <Button variant={null} className="bg-black/35 text-white backdrop-blur-sm hover:bg-black/50">
+        Over artwork
+      </Button>
+      <Button
+        variant={null}
+        size="icon"
+        aria-label="More actions"
+        className="bg-black/35 text-white backdrop-blur-sm hover:bg-black/50"
+      >
+        <Ellipsis strokeWidth={1.75} />
+      </Button>
     </div>
   ),
 };
@@ -75,7 +81,7 @@ export const Sizes: Story = {
         </Button>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="icon-ghost" size="icon-xs" aria-label="Remove (icon-xs)">
+        <Button variant="ghost" size="icon-xs" aria-label="Remove (icon-xs)">
           <X className="size-3.5" strokeWidth={1.75} />
         </Button>
         <Button size="icon-sm" aria-label="Settings (icon-sm)">
@@ -84,7 +90,7 @@ export const Sizes: Story = {
         <Button size="icon" aria-label="Settings (icon)">
           <Settings strokeWidth={1.75} />
         </Button>
-        <Button variant="raised" size="icon-lg" aria-label="Send feedback (icon-lg)">
+        <Button variant="outline" size="icon-lg" aria-label="Add (icon-lg)">
           <Plus className="size-5" strokeWidth={1.75} />
         </Button>
       </div>
@@ -98,14 +104,11 @@ export const IconOnly: Story = {
       <Button size="icon" aria-label="Settings">
         <Settings strokeWidth={1.75} />
       </Button>
-      <Button variant="icon-ghost" size="icon" aria-label="More actions">
+      <Button variant="ghost" size="icon" aria-label="More actions">
         <Ellipsis strokeWidth={1.75} />
       </Button>
       <Button variant="destructive-ghost" size="icon" aria-label="Delete">
         <Trash2 strokeWidth={1.75} />
-      </Button>
-      <Button variant="warning-ghost" size="icon" aria-label="Warning">
-        <TriangleAlert strokeWidth={1.75} />
       </Button>
       <Button variant="default" size="icon-sm" aria-label="Add">
         <Plus strokeWidth={1.75} />
@@ -146,7 +149,7 @@ export const Disabled: Story = {
       <Button variant="destructive" disabled onClick={args.onClick}>
         destructive
       </Button>
-      <Button variant="icon-ghost" size="icon" disabled aria-label="Delete" onClick={args.onClick}>
+      <Button variant="ghost" size="icon" disabled aria-label="Delete" onClick={args.onClick}>
         <Trash2 strokeWidth={1.75} />
       </Button>
     </div>

@@ -56,7 +56,7 @@ export const Addons: Story = {
       <InputGroup {...args}>
         <InputGroupInput aria-label="With button" defaultValue="Thrasios" />
         <InputGroupAddon align="inline-end">
-          <InputGroupButton size="icon-sm" variant="icon-ghost" aria-label="Clear search">
+          <InputGroupButton size="icon-sm" variant="ghost" aria-label="Clear search">
             <XIcon strokeWidth={1.75} />
           </InputGroupButton>
         </InputGroupAddon>
