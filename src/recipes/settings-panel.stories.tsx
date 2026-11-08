@@ -225,9 +225,8 @@ function DeckSettings({ onOpenChange }: DeckSettingsProps) {
         Settings
       </DialogTrigger>
       <DialogContent
-        size="settings"
         padding="none"
-        className="flex h-[min(736px,calc(100dvh-48px))] flex-col"
+        className="flex h-[min(736px,calc(100dvh-48px))] max-w-[800px] flex-col"
       >
         <DialogHeader className="px-6 pt-6">
           <div className="space-y-1">

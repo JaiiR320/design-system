@@ -5,32 +5,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { popupLayer } from "#lib/recipes";
 import { cn } from "#lib/utils";
 
-// Overlay and viewport only differ for the full-screen picker layout.
-const dialogOverlayVariants = cva(["fixed inset-0", popupLayer], {
-  variants: {
-    screen: {
-      false: "bg-overlay",
-      // Printing picker keeps its darker blurred scrim.
-      true: "bg-on-image/80 backdrop-blur-sm",
-    },
-  },
-  defaultVariants: { screen: false },
-});
+const dialogOverlayVariants = cva(["fixed inset-0 bg-overlay", popupLayer]);
 
 // Sits above the overlay and receives outside presses; tall popups scroll with it.
-const dialogViewportVariants = cva(
-  ["fixed inset-0 overflow-y-auto overscroll-contain", popupLayer],
-  {
-    variants: {
-      screen: {
-        // safe: a popup taller than the viewport scrolls from its top instead of clipping it.
-        false: "flex items-center-safe justify-center px-6",
-        true: "block px-4 py-5 sm:px-6",
-      },
-    },
-    defaultVariants: { screen: false },
-  },
-);
+// safe: a popup taller than the viewport scrolls from its top instead of clipping it.
+const dialogViewportVariants = cva([
+  "fixed inset-0 flex items-center-safe justify-center overflow-y-auto overscroll-contain px-6",
+  popupLayer,
+]);
 
 const dialogContentVariants = cva(
   "relative w-full rounded-2xl border border-border bg-popover text-popover-foreground shadow-overlay outline-none",
@@ -44,21 +26,12 @@ const dialogContentVariants = cva(
         "2xl": "max-w-2xl",
         "3xl": "max-w-3xl",
         "4xl": "max-w-4xl",
-        settings: "max-w-[800px]",
-        screen: "mx-auto max-w-7xl",
       },
       padding: {
         default: "p-6",
         none: "p-0",
       },
     },
-    // Screen is a bare full-width page over the scrim: no panel chrome.
-    compoundVariants: [
-      {
-        size: "screen",
-        className: "rounded-none border-0 bg-transparent p-0 shadow-none",
-      },
-    ],
     defaultVariants: { size: "md", padding: "default" },
   },
 );
@@ -90,14 +63,15 @@ function DialogClose(props: DialogPrimitive.Close.Props) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
-type DialogOverlayProps = Omit<DialogPrimitive.Backdrop.Props, "className"> &
-  VariantProps<typeof dialogOverlayVariants> & { className?: string };
+type DialogOverlayProps = Omit<DialogPrimitive.Backdrop.Props, "className"> & {
+  className?: string;
+};
 
-function DialogOverlay({ className, screen, ...props }: DialogOverlayProps) {
+function DialogOverlay({ className, ...props }: DialogOverlayProps) {
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
-      className={cn(dialogOverlayVariants({ screen }), className)}
+      className={cn(dialogOverlayVariants(), className)}
       {...props}
     />
   );
@@ -111,7 +85,11 @@ type DialogContentProps = Omit<DialogPrimitive.Popup.Props, "className"> &
     viewportProps?: Omit<DialogPrimitive.Viewport.Props, "className"> & { className?: string };
   };
 
-/** Portal + overlay + scrolling viewport + popup. No built-in close button. */
+/**
+ * Portal + overlay + scrolling viewport + popup. No built-in close button.
+ * Restyle the parts for special layouts (e.g. a chrome-free full-width picker):
+ * `padding="none"` + className on the popup, `overlayProps.className`, `viewportProps.className`.
+ */
 function DialogContent({
   className,
   size,
@@ -123,13 +101,12 @@ function DialogContent({
 }: DialogContentProps) {
   const { className: overlayClassName, ...overlayRest } = overlayProps ?? {};
   const { className: viewportClassName, ...viewportRest } = viewportProps ?? {};
-  const screen = size === "screen";
   return (
     <DialogPortal {...portalProps}>
-      <DialogOverlay screen={screen} className={overlayClassName} {...overlayRest} />
+      <DialogOverlay className={overlayClassName} {...overlayRest} />
       <DialogPrimitive.Viewport
         data-slot="dialog-viewport"
-        className={cn(dialogViewportVariants({ screen }), viewportClassName)}
+        className={cn(dialogViewportVariants(), viewportClassName)}
         {...viewportRest}
       >
         <DialogPrimitive.Popup

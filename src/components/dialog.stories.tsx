@@ -240,10 +240,10 @@ export const LongContent: Story = {
   },
 };
 
-// DeckActionsModal: fixed-height column with a scrolling body under a fixed title.
+// Fixed-height column with a scrolling body under a fixed title; width set via className.
 export const Settings: Story = {
   render: () => (
-    <OpenDialog size="settings" className="flex h-[736px] max-h-[85vh] flex-col">
+    <OpenDialog className="flex h-[736px] max-h-[85vh] max-w-[800px] flex-col">
       <DialogHeader>
         <DialogTitle>Atraxa Superfriends</DialogTitle>
         <HeaderClose />
@@ -283,10 +283,16 @@ const printings = [
   "40K",
 ];
 
-// PrintingPickerModal: bare full-width page over a blurred scrim, scrolling as one.
+// A chrome-free full-width picker over a darker blurred scrim, scrolling as one page:
+// built from the ordinary parts, no special size.
 function PrintingPicker() {
   return (
-    <OpenDialog size="screen">
+    <OpenDialog
+      padding="none"
+      className="mx-auto max-w-7xl rounded-none border-0 bg-transparent shadow-none"
+      overlayProps={{ className: "bg-black/80 backdrop-blur-sm" }}
+      viewportProps={{ className: "block px-4 py-5 sm:px-6" }}
+    >
       <DialogHeader className="mb-5">
         <div className="min-w-0 flex-1">
           <DialogTitle className="text-2xl">Select a printing</DialogTitle>
