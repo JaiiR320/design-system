@@ -96,7 +96,7 @@ function SelectContent({
           data-slot="select-content"
           className={cn(
             popupSurface,
-            "relative flex max-h-(--available-height) w-(--anchor-width) flex-col overflow-hidden p-0",
+            "relative flex max-h-(--available-height) w-max max-w-(--available-width) min-w-(--anchor-width) flex-col overflow-hidden p-0",
             className,
           )}
           {...props}

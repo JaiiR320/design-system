@@ -26,6 +26,14 @@ exports[`Keyboard 1`] = `
   - option "EDHREC rank"
 `;
 
+exports[`Narrow Trigger Long Options 1`] = `
+- combobox "Order by" [expanded]: Set Name
+- listbox:
+  - option "Edition date"
+  - option "Set Name" [selected]
+  - option "Price"
+`;
+
 exports[`Open 1`] = `
 - combobox "Sort cards" [expanded]: Mana value
 - listbox:

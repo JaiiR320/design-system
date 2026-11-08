@@ -317,3 +317,35 @@ export const OpenMobileWidth: Story = {
     );
   },
 };
+
+/** A narrow trigger: the list grows to fit its longest option instead of truncating it. */
+export const NarrowTriggerLongOptions: Story = {
+  render: () => (
+    <Select items={printingOptions} defaultValue="set">
+      <SelectTrigger aria-label="Order by" className="w-28">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {printingOptions.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  ),
+  play: async ({ canvasElement }) => {
+    const trigger = within(canvasElement).getByRole("combobox", { name: "Order by" });
+    await userEvent.click(trigger);
+    const list = await body().findByRole("listbox");
+    const option = within(list).getByRole("option", { name: "Edition date" });
+    const text = option.querySelector<HTMLElement>('[data-slot="select-item-text"]');
+    if (!text) throw new Error("item text missing");
+    await waitFor(() =>
+      expect(list.getBoundingClientRect().width).toBeGreaterThan(
+        trigger.getBoundingClientRect().width,
+      ),
+    );
+    await expect(text.scrollWidth).toBeLessThanOrEqual(text.clientWidth);
+  },
+};
