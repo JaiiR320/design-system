@@ -50,6 +50,28 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 - **Behaviour comes from Base UI.** Focus management, keyboard navigation, dismissal and positioning are not reimplemented.
 - **Layers.** Sticky chrome uses `z-(--z-sticky)`. Every portaled overlay shares `z-(--z-overlay)`, and nested overlays stack in the order they open.
 
+## Choosing a component
+
+| When you need                                    | Use                                                                                                    |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| A form or task that takes over the page          | `Dialog`                                                                                               |
+| A yes/no answer before a risky action            | `AlertDialog`. For a row in a list, confirm inline with an `Alert` in the row (Inline confirm recipe). |
+| Content anchored to a control, page still usable | `Popover`                                                                                              |
+| A short hint on hover or focus                   | `Tooltip`, never the only place for information                                                        |
+| Actions from a button                            | `DropdownMenu`                                                                                         |
+| Actions on right click or long press             | `ContextMenu`, plus another way to reach the same actions                                              |
+| An on/off setting that applies at once           | `Switch`                                                                                               |
+| A pressed state on one button                    | `Toggle`                                                                                               |
+| One value from a few options                     | `ToggleGroup variant="segmented"`; `Select` when there are many                                        |
+| Switching between panels of content              | `Tabs`                                                                                                 |
+| A label, control, description and error together | `Field`; attach icons or buttons to an input with `InputGroup`                                         |
+| A grouped surface                                | `Card`                                                                                                 |
+| A row in a list: media, title, actions           | `Item`                                                                                                 |
+| Nothing to show yet                              | `Empty`                                                                                                |
+| A message about the page or a form               | `Alert`                                                                                                |
+| A short, non-interactive label or count          | `Badge`; use `Toggle` if it's clickable                                                                |
+| Loading with a known layout                      | `Skeleton`; `Spinner` inside a control or for an unknown shape                                         |
+
 ## Theming
 
 Tokens are Tailwind v4 theme variables in one `@theme` block (`src/styles.css`). Override or add tokens in your own `@theme` block **after** importing the system:
