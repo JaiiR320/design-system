@@ -290,6 +290,9 @@ export const SubmenuOpen: Story = {
     trigger.focus();
     await userEvent.keyboard("{Enter}");
     const moveTo = await body.findByRole("menuitem", { name: /Move to folder/ });
+    // Keyboard opening focuses the first item; wait for it so ArrowDown doesn't race it.
+    const rename = body.getByRole("menuitem", { name: "Rename deck" });
+    await waitFor(() => expect(rename).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
     await waitFor(() => expect(moveTo).toHaveFocus());
     await userEvent.keyboard("{ArrowRight}");
@@ -310,8 +313,12 @@ export const SubmenuOpen: Story = {
 
     // Reopen for the capture: menu plus submenu.
     await userEvent.keyboard("{Enter}");
-    await body.findByRole("menu");
-    await userEvent.keyboard("{ArrowDown}{ArrowRight}");
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "Rename deck" })).toHaveFocus());
+    await userEvent.keyboard("{ArrowDown}");
+    await waitFor(() =>
+      expect(body.getByRole("menuitem", { name: /Move to folder/ })).toHaveFocus(),
+    );
+    await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
     await waitFor(() => expect(body.getByRole("menuitem", { name: "Constructed" })).toHaveFocus());
   },
