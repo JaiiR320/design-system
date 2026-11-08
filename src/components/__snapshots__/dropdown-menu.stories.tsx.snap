@@ -4,62 +4,62 @@ exports[`Default 1`] = `
 - button "Actions"
 `;
 
-exports[`In Dialog With Positioner Class 1`] = `
-- dialog "Deck settings":
-  - heading "Deck settings" [level=2]
+exports[`In Dialog With Positioner Class Test 1`] = `
+- dialog "Project settings":
+  - heading "Project settings" [level=2]
   - button "Actions" [expanded]
   - menu "Actions":
-    - menuitem "Move all cards"
+    - menuitem "Move to folder"
     - menuitem "Rename"
     - menuitem "Duplicate"
-    - menuitem "Remove"
+    - menuitem "Delete"
 `;
 
-exports[`Keyboard Navigation 1`] = `
-- button "Ramp actions"
+exports[`Keyboard Navigation Test 1`] = `
+- button "Atlas actions"
 `;
 
-exports[`Open 1`] = `
+exports[`Open Test 1`] = `
 - button "Actions" [expanded]
 - menu "Actions":
-  - group "Category":
-    - menuitem "Move all cards"
+  - group "Document":
+    - menuitem "Move to folder"
     - menuitem "Rename"
   - separator
   - menuitem "Back"
-  - menuitem "Hide category" [disabled]
-  - menuitem "Remove"
-  - menuitem "Remove (disabled)" [disabled]
+  - menuitem "Share" [disabled]
+  - menuitem "Delete"
+  - menuitem "Delete (disabled)" [disabled]
 `;
 
-exports[`Open Submenu 1`] = `
-- button "Deepglow Skate actions" [expanded]
-- menu "Deepglow Skate actions":
-  - menuitem "Use as deck cover"
-  - menuitem "Change printing"
-  - menuitem "Move to" [expanded]
-  - group:
-    - menu "Move to":
-      - menuitem "Land"
-      - menuitem "Artifact"
-      - menuitem "Enchantment"
-      - menuitem "Instant"
-      - menuitem "Sorcery"
-      - menuitem "Planeswalker"
-      - menuitem "Battle"
-      - menuitem "Other"
-      - menuitem "Ramp"
-      - menuitem "Sideboard"
-      - menuitem "Commander"
-`;
-
-exports[`Second Page 1`] = `
-- button "Ramp actions" [expanded]
-- menu "Ramp actions":
-  - group "Move cards to":
-    - menuitem "Land"
-    - menuitem "Artifact"
-    - menuitem "Enchantment"
-    - menuitem "Instant"
+exports[`Second Page Test 1`] = `
+- button "Atlas actions" [expanded]
+- menu "Atlas actions":
+  - group "Move to":
+    - menuitem "Atlas"
+    - menuitem "Borealis"
+    - menuitem "Cobalt"
+    - menuitem "Drafts"
   - menuitem "Back"
+`;
+
+exports[`Submenu Keyboard Test 1`] = `
+- button "Quarterly report actions" [expanded]
+- menu "Quarterly report actions":
+  - menuitem "Rename"
+  - menuitem "Duplicate"
+  - menuitem "Move to folder" [expanded]
+  - group:
+    - menu "Move to folder":
+      - menuitem "Atlas"
+      - menuitem "Borealis"
+      - menuitem "Cobalt"
+      - menuitem "Drafts"
+      - menuitem "Shared"
+      - menuitem "Archived"
+      - menuitem "Personal"
+      - menuitem "Templates"
+      - menuitem "Inbox"
+      - menuitem "Reports"
+      - menuitem "Notes"
 `;

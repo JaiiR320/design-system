@@ -37,17 +37,22 @@ function HeaderClose() {
   );
 }
 
-// CreateDeckModal: title, labelled input with initial focus, Cancel/Create footer.
-function NewDeckDialog({ onOpenChange }: Pick<ComponentProps<typeof Dialog>, "onOpenChange">) {
+// Form dialog: title, labelled input with initial focus, Cancel/Create footer.
+function NewProjectDialog({ onOpenChange }: Pick<ComponentProps<typeof Dialog>, "onOpenChange">) {
   const inputRef = useRef<HTMLInputElement>(null);
   return (
     <Dialog onOpenChange={onOpenChange}>
-      <DialogTrigger render={<Button />}>New Deck</DialogTrigger>
+      <DialogTrigger render={<Button />}>New project</DialogTrigger>
       <DialogContent initialFocus={inputRef}>
-        <DialogTitle>New Deck</DialogTitle>
+        <DialogTitle>New project</DialogTitle>
         <form className="mt-5" onSubmit={(event) => event.preventDefault()}>
-          <Label htmlFor="deck-name">Deck name</Label>
-          <Input ref={inputRef} id="deck-name" placeholder="Enter a deck name" className="mt-2" />
+          <Label htmlFor="project-name">Project name</Label>
+          <Input
+            ref={inputRef}
+            id="project-name"
+            placeholder="Enter a project name"
+            className="mt-2"
+          />
           <DialogFooter>
             <DialogClose render={<Button />}>Cancel</DialogClose>
             <Button type="submit" variant="default">
@@ -61,15 +66,16 @@ function NewDeckDialog({ onOpenChange }: Pick<ComponentProps<typeof Dialog>, "on
 }
 
 export const Default: Story = {
-  render: () => <NewDeckDialog />,
+  render: () => <NewProjectDialog />,
 };
 
-export const Open: Story = {
-  render: () => <NewDeckDialog />,
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <NewProjectDialog />,
   play: async ({ canvasElement }) => {
-    await userEvent.click(within(canvasElement).getByRole("button", { name: "New Deck" }));
-    const dialog = await body.findByRole("dialog", { name: "New Deck" });
-    const input = within(dialog).getByRole("textbox", { name: "Deck name" });
+    await userEvent.click(within(canvasElement).getByRole("button", { name: "New project" }));
+    const dialog = await body.findByRole("dialog", { name: "New project" });
+    const input = within(dialog).getByRole("textbox", { name: "Project name" });
     await waitFor(() => expect(input).toHaveFocus());
     // Focus stays inside: Tab cycles Cancel -> Create -> back to the input.
     await userEvent.tab();
@@ -80,13 +86,14 @@ export const Open: Story = {
   },
 };
 
-export const EscapeCloses: Story = {
+export const EscapeClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { onOpenChange: fn() },
-  render: (args) => <NewDeckDialog onOpenChange={args.onOpenChange} />,
+  render: (args) => <NewProjectDialog onOpenChange={args.onOpenChange} />,
   play: async ({ args, canvasElement }) => {
-    const trigger = within(canvasElement).getByRole("button", { name: "New Deck" });
+    const trigger = within(canvasElement).getByRole("button", { name: "New project" });
     await userEvent.click(trigger);
-    await body.findByRole("dialog", { name: "New Deck" });
+    await body.findByRole("dialog", { name: "New project" });
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
     await expect(args.onOpenChange).toHaveBeenCalledTimes(2);
@@ -98,13 +105,14 @@ export const EscapeCloses: Story = {
   },
 };
 
-export const BackdropCloses: Story = {
+export const BackdropClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { onOpenChange: fn() },
-  render: (args) => <NewDeckDialog onOpenChange={args.onOpenChange} />,
+  render: (args) => <NewProjectDialog onOpenChange={args.onOpenChange} />,
   play: async ({ args, canvasElement }) => {
-    const trigger = within(canvasElement).getByRole("button", { name: "New Deck" });
+    const trigger = within(canvasElement).getByRole("button", { name: "New project" });
     await userEvent.click(trigger);
-    await body.findByRole("dialog", { name: "New Deck" });
+    await body.findByRole("dialog", { name: "New project" });
     const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
     if (!viewport) throw new Error("viewport missing");
     await userEvent.click(viewport);
@@ -114,19 +122,27 @@ export const BackdropCloses: Story = {
   },
 };
 
+type DemoProps = DialogContentProps & {
+  /** Trigger label for the closed docs story; without one the dialog renders open. */
+  trigger?: string;
+};
+
 // Generic dialogs open with focus on the popup itself, not the first button.
-function OpenDialog(props: DialogContentProps) {
+function DemoDialog({ trigger, ...props }: DemoProps) {
   const popupRef = useRef<HTMLDivElement>(null);
   return (
-    <Dialog defaultOpen>
+    <Dialog defaultOpen={!trigger}>
+      {trigger ? <DialogTrigger render={<Button />}>{trigger}</DialogTrigger> : null}
       <DialogContent ref={popupRef} tabIndex={-1} initialFocus={popupRef} {...props} />
     </Dialog>
   );
 }
 
-function SizedDialog({ size }: { size: "sm" | "lg" | "xl" | "2xl" | "3xl" | "4xl" }) {
+type Size = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+
+function SizedDialog({ size, trigger }: { size: Size; trigger?: string }) {
   return (
-    <OpenDialog size={size}>
+    <DemoDialog size={size} trigger={trigger}>
       <DialogTitle>Size {size}</DialogTitle>
       <DialogDescription className="mt-1">
         The panel widens to max-w-{size}; padding and chrome stay the same.
@@ -134,21 +150,50 @@ function SizedDialog({ size }: { size: "sm" | "lg" | "xl" | "2xl" | "3xl" | "4xl
       <DialogFooter>
         <DialogClose render={<Button />}>Close</DialogClose>
       </DialogFooter>
-    </OpenDialog>
+    </DemoDialog>
   );
 }
 
-export const SizeSm: Story = { render: () => <SizedDialog size="sm" /> };
-export const SizeLg: Story = { render: () => <SizedDialog size="lg" /> };
-export const SizeXl: Story = { render: () => <SizedDialog size="xl" /> };
-export const Size2xl: Story = { render: () => <SizedDialog size="2xl" /> };
-export const Size3xl: Story = { render: () => <SizedDialog size="3xl" /> };
-export const Size4xl: Story = { render: () => <SizedDialog size="4xl" /> };
-
-// Feedback-style form footers: end (default), stretch and between.
-export const FooterLayouts: Story = {
+/** One trigger per size. */
+export const Sizes: Story = {
   render: () => (
-    <OpenDialog size="lg">
+    <div className="flex flex-wrap gap-3">
+      {(["sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] as const).map((size) => (
+        <SizedDialog key={size} size={size} trigger={`Size ${size}`} />
+      ))}
+    </div>
+  ),
+};
+
+export const SizeSmTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="sm" />,
+};
+export const SizeLgTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="lg" />,
+};
+export const SizeXlTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="xl" />,
+};
+export const Size2xlTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="2xl" />,
+};
+export const Size3xlTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="3xl" />,
+};
+export const Size4xlTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SizedDialog size="4xl" />,
+};
+
+// Form footers: end (default), stretch and between.
+function FooterLayoutsDialog({ trigger }: { trigger?: string }) {
+  return (
+    <DemoDialog size="lg" trigger={trigger}>
       <DialogHeader>
         <DialogTitle>Footer layouts</DialogTitle>
         <HeaderClose />
@@ -167,37 +212,34 @@ export const FooterLayouts: Story = {
           <Button variant="default">Import</Button>
         </DialogFooter>
       </DialogBody>
-    </OpenDialog>
-  ),
-};
+    </DemoDialog>
+  );
+}
 
-const decklist = [
-  "1 Ajani, Mentor of Heroes",
-  "1 Anguished Unmaking",
-  "1 Arcane Signet",
-  "1 Atraxa, Praetors' Voice",
-  "1 Beast Within",
-  "1 Birds of Paradise",
-  "1 Breeding Pool",
-  "1 Chromatic Lantern",
-  "1 Command Tower",
-  "1 Counterspell",
+const exportText = [
+  "title,project,owner,tag",
+  "Quarterly report,Atlas,Ada Park,Shared",
+  "Design review,Atlas,Sam Lee,Draft",
+  "Launch plan,Borealis,Ada Park,Shared",
+  "Budget notes,Borealis,Sam Lee,Archived",
+  "Hiring plan,Cobalt,Ada Park,Draft",
+  "Roadmap,Cobalt,Sam Lee,Shared",
 ].join("\n");
 
-// ExportDeckModal: padding none, bordered header/footer bands, spaced body.
-export const Divided: Story = {
-  render: () => (
-    <OpenDialog size="2xl" padding="none">
+// Padding none, bordered header/footer bands, spaced body.
+function DividedDialog({ trigger }: { trigger?: string }) {
+  return (
+    <DemoDialog size="2xl" padding="none" trigger={trigger}>
       <DialogHeader className="border-b px-6 py-5">
-        <DialogTitle>Export Deck</DialogTitle>
+        <DialogTitle>Export documents</DialogTitle>
         <HeaderClose />
       </DialogHeader>
       <DialogBody className="space-y-5 px-6 py-5">
-        <DialogDescription>Plain-text decklist, one card per line.</DialogDescription>
+        <DialogDescription>Comma-separated values, one document per line.</DialogDescription>
         <textarea
-          aria-label="Decklist"
+          aria-label="Export"
           readOnly
-          value={decklist}
+          value={exportText}
           className="min-h-60 w-full resize-y rounded-xl border border-input bg-background px-4 py-3 font-mono text-base text-strong-foreground outline-none"
         />
       </DialogBody>
@@ -207,20 +249,20 @@ export const Divided: Story = {
           Copy to Clipboard
         </Button>
       </DialogFooter>
-    </OpenDialog>
-  ),
-};
+    </DemoDialog>
+  );
+}
 
 const paragraphs = Array.from(
   { length: 24 },
   (_, index) =>
-    `Snapshot ${index + 1}: moved two lands to the sideboard and swapped the ramp package for cheaper rocks.`,
+    `Version ${index + 1}: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis.`,
 );
 
 // Taller than the viewport: the viewport scrolls, the page behind does not.
-export const LongContent: Story = {
-  render: () => (
-    <OpenDialog className="my-6">
+function LongContentDialog({ trigger }: { trigger?: string }) {
+  return (
+    <DemoDialog className="my-6" trigger={trigger}>
       <DialogTitle>Change log</DialogTitle>
       <DialogBody className="mt-4 space-y-3 text-sm text-secondary-foreground">
         {paragraphs.map((text) => (
@@ -230,22 +272,16 @@ export const LongContent: Story = {
       <DialogFooter>
         <DialogClose render={<Button />}>Close</DialogClose>
       </DialogFooter>
-    </OpenDialog>
-  ),
-  play: async () => {
-    await body.findByRole("dialog", { name: "Change log" });
-    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
-    if (!viewport) throw new Error("viewport missing");
-    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
-  },
-};
+    </DemoDialog>
+  );
+}
 
 // Fixed-height column with a scrolling body under a fixed title; width set via className.
-export const Settings: Story = {
-  render: () => (
-    <OpenDialog className="flex h-[736px] max-h-[85vh] max-w-[800px] flex-col">
+function ScrollingBodyDialog({ trigger }: { trigger?: string }) {
+  return (
+    <DemoDialog className="flex h-[736px] max-h-[85vh] max-w-[800px] flex-col" trigger={trigger}>
       <DialogHeader>
-        <DialogTitle>Atraxa Superfriends</DialogTitle>
+        <DialogTitle>Atlas activity</DialogTitle>
         <HeaderClose />
       </DialogHeader>
       <DialogBody className="mt-5 flex-1 space-y-3 overflow-y-auto pr-1">
@@ -255,39 +291,21 @@ export const Settings: Story = {
           </div>
         ))}
       </DialogBody>
-    </OpenDialog>
-  ),
-  play: async () => {
-    const dialog = await body.findByRole("dialog", { name: "Atraxa Superfriends" });
-    const scroller = dialog.querySelector<HTMLElement>('[data-slot="dialog-body"]');
-    if (!scroller) throw new Error("body missing");
-    await expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
-  },
-};
+    </DemoDialog>
+  );
+}
 
-const printings = [
-  "SLD",
-  "EOC",
-  "CMM",
-  "SLD",
-  "2XM",
-  "CM2",
-  "C16",
-  "PZ2",
-  "A25",
-  "M19",
-  "M20",
-  "MH1",
-  "C20",
-  "CMR",
-  "40K",
-];
+const templates = Array.from({ length: 15 }, (_, index) => ({
+  name: `Template ${String(index + 1).padStart(2, "0")}`,
+  pages: (index % 4) + 1,
+}));
 
 // A chrome-free full-width picker over a darker blurred scrim, scrolling as one page:
 // built from the ordinary parts, no special size.
-function PrintingPicker() {
+function FullScreenPicker({ trigger }: { trigger?: string }) {
   return (
-    <OpenDialog
+    <DemoDialog
+      trigger={trigger}
       padding="none"
       className="mx-auto max-w-7xl rounded-none border-0 bg-transparent shadow-none"
       overlayProps={{ className: "bg-black/80 backdrop-blur-sm" }}
@@ -295,16 +313,16 @@ function PrintingPicker() {
     >
       <DialogHeader className="mb-5">
         <div className="min-w-0 flex-1">
-          <DialogTitle className="text-2xl">Select a printing</DialogTitle>
+          <DialogTitle className="text-2xl">Choose a template</DialogTitle>
           <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,360px)_170px]">
             <div>
-              <Label htmlFor="printing-filter" className="font-semibold text-strong-foreground">
-                Search printings…
+              <Label htmlFor="template-filter" className="font-semibold text-strong-foreground">
+                Search templates
               </Label>
               <Input
-                id="printing-filter"
+                id="template-filter"
                 inputSize="sm"
-                placeholder="Filter set name"
+                placeholder="Filter by name"
                 className="mt-1"
               />
             </div>
@@ -315,37 +333,84 @@ function PrintingPicker() {
         </DialogClose>
       </DialogHeader>
       <DialogBody className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-        {printings.map((code, index) => (
-          <div key={`${code}-${index}`} className="min-w-0">
-            <div className="aspect-[488/680] rounded-xl bg-surface ring-1 ring-border-strong" />
+        {templates.map(({ name, pages }) => (
+          <div key={name} className="min-w-0">
+            <div className="aspect-[3/4] rounded-xl bg-surface ring-1 ring-border-strong" />
             <div className="mt-2 flex justify-between px-1 text-sm text-strong-foreground">
-              <span className="font-semibold">{code}</span>
-              <span>${(index + 1).toFixed(2)}</span>
+              <span className="font-semibold">{name}</span>
+              <span>{pages === 1 ? "1 page" : `${pages} pages`}</span>
             </div>
           </div>
         ))}
       </DialogBody>
-    </OpenDialog>
+    </DemoDialog>
   );
 }
 
-export const Screen: Story = {
-  render: () => <PrintingPicker />,
+/** One trigger per layout recipe. */
+export const Layouts: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-3">
+      <FooterLayoutsDialog trigger="Footer layouts" />
+      <DividedDialog trigger="Divided" />
+      <LongContentDialog trigger="Long content" />
+      <ScrollingBodyDialog trigger="Scrolling body" />
+      <FullScreenPicker trigger="Full screen" />
+    </div>
+  ),
+};
+
+export const FooterLayoutsTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <FooterLayoutsDialog />,
+};
+
+export const DividedTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DividedDialog />,
+};
+
+export const LongContentTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <LongContentDialog />,
   play: async () => {
-    await body.findByRole("dialog", { name: "Select a printing" });
+    await body.findByRole("dialog", { name: "Change log" });
     const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
     if (!viewport) throw new Error("viewport missing");
     await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
   },
 };
 
-// The printing picker on a real 390x844 phone: two columns, no sideways scroll, viewport scrolls.
-export const ScreenMobile: Story = {
+export const ScrollingBodyTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <ScrollingBodyDialog />,
+  play: async () => {
+    const dialog = await body.findByRole("dialog", { name: "Atlas activity" });
+    const scroller = dialog.querySelector<HTMLElement>('[data-slot="dialog-body"]');
+    if (!scroller) throw new Error("body missing");
+    await expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
+  },
+};
+
+export const FullScreenTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <FullScreenPicker />,
+  play: async () => {
+    await body.findByRole("dialog", { name: "Choose a template" });
+    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
+    if (!viewport) throw new Error("viewport missing");
+    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+  },
+};
+
+// The full-screen picker on a real 390x844 phone: two columns, no sideways scroll, viewport scrolls.
+export const FullScreenMobileTest: Story = {
+  tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
-  render: () => <PrintingPicker />,
+  render: () => <FullScreenPicker />,
   play: async () => {
     await expect(window.innerWidth).toBe(390);
-    const dialog = await body.findByRole("dialog", { name: "Select a printing" });
+    const dialog = await body.findByRole("dialog", { name: "Choose a template" });
     const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
     const grid = dialog.querySelector<HTMLElement>('[data-slot="dialog-body"]');
     if (!viewport || !grid) throw new Error("viewport or body missing");

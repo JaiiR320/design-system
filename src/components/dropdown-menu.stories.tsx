@@ -3,6 +3,7 @@ import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Button } from "#components/button";
 import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
 import {
   DropdownMenu,
@@ -17,24 +18,18 @@ import {
   DropdownMenuTrigger,
 } from "#components/dropdown-menu";
 
-const triggerClass =
-  "inline-flex h-9 items-center gap-2 rounded-lg border border-border bg-surface px-3 text-sm text-secondary-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-const iconTriggerClass =
-  "inline-flex size-7 items-center justify-center rounded-md text-subtle-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-
-const categories = [
-  "Land",
-  "Artifact",
-  "Enchantment",
-  "Instant",
-  "Sorcery",
-  "Planeswalker",
-  "Battle",
-  "Other",
-  "Ramp",
-  "Sideboard",
-  "Commander",
+const folders = [
+  "Atlas",
+  "Borealis",
+  "Cobalt",
+  "Drafts",
+  "Shared",
+  "Archived",
+  "Personal",
+  "Templates",
+  "Inbox",
+  "Reports",
+  "Notes",
 ];
 
 const meta = {
@@ -44,7 +39,7 @@ const meta = {
   // Room around the trigger so the default bottom/end placement shows without collision shifts.
   decorators: [
     (Story) => (
-      <div className="flex h-[640px] w-[1000px] justify-center pt-8">
+      <div className="flex h-[640px] w-[1000px] items-start justify-center pt-8">
         <Story />
       </div>
     ),
@@ -52,19 +47,19 @@ const meta = {
   args: { onOpenChange: fn() },
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger className={triggerClass}>Actions</DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button />}>Actions</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuLabel>Category</DropdownMenuLabel>
-          <DropdownMenuItem>Move all cards</DropdownMenuItem>
+          <DropdownMenuLabel>Document</DropdownMenuLabel>
+          <DropdownMenuItem>Move to folder</DropdownMenuItem>
           <DropdownMenuItem>Rename</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="muted">Back</DropdownMenuItem>
-        <DropdownMenuItem disabled>Hide category</DropdownMenuItem>
-        <DropdownMenuItem variant="destructive">Remove</DropdownMenuItem>
+        <DropdownMenuItem disabled>Share</DropdownMenuItem>
+        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
         <DropdownMenuItem variant="destructive" disabled>
-          Remove (disabled)
+          Delete (disabled)
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -77,31 +72,35 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {};
 
 /** Every item variant plus label, separator and disabled rows. */
-export const Open: Story = {
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("button", { name: "Actions" }));
     const body = within(document.body);
     await waitFor(() => expect(body.getByRole("menu")).toBeVisible());
     await expect(args.onOpenChange).toHaveBeenCalledWith(true, expect.anything());
-    await expect(body.getByRole("group", { name: "Category" })).toBeInTheDocument();
+    await expect(body.getByRole("group", { name: "Document" })).toBeInTheDocument();
   },
 };
 
-/** Card actions menu: narrower content with a Move to submenu (DeckDiff card ⋯ menu). */
-export const OpenSubmenu: Story = {
+/** Item actions menu: narrower content with a Move to folder submenu. */
+export const SubmenuKeyboardTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger className={iconTriggerClass} aria-label="Deepglow Skate actions">
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" size="icon-sm" aria-label="Quarterly report actions" />}
+      >
         <MoreHorizontal className="size-4" strokeWidth={1.75} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-44">
-        <DropdownMenuItem>Use as deck cover</DropdownMenuItem>
-        <DropdownMenuItem>Change printing</DropdownMenuItem>
+        <DropdownMenuItem>Rename</DropdownMenuItem>
+        <DropdownMenuItem>Duplicate</DropdownMenuItem>
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>Move to folder</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            {categories.map((name) => (
+            {folders.map((name) => (
               <DropdownMenuItem key={name}>{name}</DropdownMenuItem>
             ))}
           </DropdownMenuSubContent>
@@ -111,17 +110,17 @@ export const OpenSubmenu: Story = {
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const trigger = canvas.getByRole("button", { name: "Deepglow Skate actions" });
+    const trigger = canvas.getByRole("button", { name: "Quarterly report actions" });
     trigger.focus();
     await userEvent.keyboard("{Enter}");
     const body = within(document.body);
-    const moveTo = await body.findByRole("menuitem", { name: "Move to" });
+    const moveTo = await body.findByRole("menuitem", { name: "Move to folder" });
     // Typeahead lands on the submenu trigger; ArrowRight opens it, ArrowLeft closes it.
     await userEvent.keyboard("m");
     await waitFor(() => expect(moveTo).toHaveFocus());
     await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
-    await waitFor(() => expect(body.getByRole("menuitem", { name: "Land" })).toHaveFocus());
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "Atlas" })).toHaveFocus());
     await userEvent.keyboard("{ArrowLeft}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(1));
     await expect(moveTo).toHaveFocus();
@@ -132,28 +131,29 @@ export const OpenSubmenu: Story = {
   },
 };
 
-const onHide = fn();
+const onArchive = fn();
 
 /** Arrows, Home/End, typeahead, disabled item, Escape focus return and item activation. */
-export const KeyboardNavigation: Story = {
+export const KeyboardNavigationTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <DropdownMenu {...args}>
-      <DropdownMenuTrigger className={triggerClass}>Ramp actions</DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button />}>Atlas actions</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Move all cards</DropdownMenuItem>
+        <DropdownMenuItem>Move to folder</DropdownMenuItem>
         <DropdownMenuItem disabled>Rename</DropdownMenuItem>
-        <DropdownMenuItem onClick={onHide}>Hide category</DropdownMenuItem>
-        <DropdownMenuItem variant="destructive">Remove</DropdownMenuItem>
+        <DropdownMenuItem onClick={onArchive}>Archive</DropdownMenuItem>
+        <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   ),
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const body = within(document.body);
-    const trigger = canvas.getByRole("button", { name: "Ramp actions" });
+    const trigger = canvas.getByRole("button", { name: "Atlas actions" });
     trigger.focus();
     await userEvent.keyboard("{ArrowDown}");
-    const first = await body.findByRole("menuitem", { name: "Move all cards" });
+    const first = await body.findByRole("menuitem", { name: "Move to folder" });
     await waitFor(() => expect(first).toHaveFocus());
     // Base UI keeps disabled items focusable (announced as disabled) but inert.
     await userEvent.keyboard("{ArrowDown}");
@@ -163,42 +163,42 @@ export const KeyboardNavigation: Story = {
     await userEvent.keyboard("{Enter}");
     await expect(body.getByRole("menu")).toBeVisible();
     await userEvent.keyboard("{ArrowDown}");
-    await expect(body.getByRole("menuitem", { name: "Hide category" })).toHaveFocus();
+    await expect(body.getByRole("menuitem", { name: "Archive" })).toHaveFocus();
     await userEvent.keyboard("{End}");
-    await expect(body.getByRole("menuitem", { name: "Remove" })).toHaveFocus();
+    await expect(body.getByRole("menuitem", { name: "Delete" })).toHaveFocus();
     await userEvent.keyboard("{Home}");
     await expect(first).toHaveFocus();
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("menu")).not.toBeInTheDocument());
     await expect(trigger).toHaveFocus();
     await expect(args.onOpenChange).toHaveBeenLastCalledWith(false, expect.anything());
-    // Reopen, typeahead to Hide category and activate it with Enter.
+    // Reopen, typeahead to Archive and activate it with Enter.
     await userEvent.keyboard("{Enter}");
     await body.findByRole("menu");
-    await userEvent.keyboard("h");
-    await waitFor(() =>
-      expect(body.getByRole("menuitem", { name: "Hide category" })).toHaveFocus(),
-    );
+    await userEvent.keyboard("a");
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "Archive" })).toHaveFocus());
     await userEvent.keyboard("{Enter}");
     await waitFor(() => expect(body.queryByRole("menu")).not.toBeInTheDocument());
-    await expect(onHide).toHaveBeenCalledTimes(1);
+    await expect(onArchive).toHaveBeenCalledTimes(1);
     await expect(trigger).toHaveFocus();
   },
 };
 
-function CategoryMenu({ onMove }: { onMove: (name: string) => void }) {
+function ProjectMenu({ onMove }: { onMove: (name: string) => void }) {
   const [moving, setMoving] = useState(false);
   return (
     <DropdownMenu onOpenChange={(open) => !open && setMoving(false)}>
-      <DropdownMenuTrigger className={iconTriggerClass} aria-label="Ramp actions">
+      <DropdownMenuTrigger
+        render={<Button variant="ghost" size="icon-sm" aria-label="Atlas actions" />}
+      >
         <MoreHorizontal className="size-4" strokeWidth={1.75} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {moving ? (
           <>
             <DropdownMenuGroup>
-              <DropdownMenuLabel>Move cards to</DropdownMenuLabel>
-              {categories.slice(0, 4).map((name) => (
+              <DropdownMenuLabel>Move to</DropdownMenuLabel>
+              {folders.slice(0, 4).map((name) => (
                 <DropdownMenuItem key={name} onClick={() => onMove(name)}>
                   {name}
                 </DropdownMenuItem>
@@ -211,12 +211,12 @@ function CategoryMenu({ onMove }: { onMove: (name: string) => void }) {
         ) : (
           <>
             <DropdownMenuItem closeOnClick={false} onClick={() => setMoving(true)}>
-              Move all cards
+              Move to folder
             </DropdownMenuItem>
             <DropdownMenuItem>Rename</DropdownMenuItem>
-            <DropdownMenuItem>Hide category</DropdownMenuItem>
+            <DropdownMenuItem>Archive</DropdownMenuItem>
             <DropdownMenuItem variant="destructive" disabled>
-              Remove
+              Delete
             </DropdownMenuItem>
           </>
         )}
@@ -225,37 +225,37 @@ function CategoryMenu({ onMove }: { onMove: (name: string) => void }) {
   );
 }
 
-/** closeOnClick={false} swaps to a same-width second page (DeckDiff category Move all cards). */
-export const SecondPage: Story = {
-  render: () => <CategoryMenu onMove={fn()} />,
+/** closeOnClick={false} swaps to a same-width second page. */
+export const SecondPageTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <ProjectMenu onMove={fn()} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const body = within(document.body);
-    await userEvent.click(canvas.getByRole("button", { name: "Ramp actions" }));
-    await userEvent.click(await body.findByRole("menuitem", { name: "Move all cards" }));
-    await waitFor(() =>
-      expect(body.getByRole("group", { name: "Move cards to" })).toBeInTheDocument(),
-    );
+    await userEvent.click(canvas.getByRole("button", { name: "Atlas actions" }));
+    await userEvent.click(await body.findByRole("menuitem", { name: "Move to folder" }));
+    await waitFor(() => expect(body.getByRole("group", { name: "Move to" })).toBeInTheDocument());
     await userEvent.click(body.getByRole("menuitem", { name: "Back" }));
-    await expect(await body.findByRole("menuitem", { name: "Move all cards" })).toBeVisible();
-    await userEvent.click(body.getByRole("menuitem", { name: "Move all cards" }));
-    await expect(await body.findByRole("menuitem", { name: "Instant" })).toBeVisible();
+    await expect(await body.findByRole("menuitem", { name: "Move to folder" })).toBeVisible();
+    await userEvent.click(body.getByRole("menuitem", { name: "Move to folder" }));
+    await expect(await body.findByRole("menuitem", { name: "Drafts" })).toBeVisible();
   },
 };
 
 /** A positioner class extends the overlay layer: the menu paints above its Dialog. */
-export const InDialogWithPositionerClass: Story = {
+export const InDialogWithPositionerClassTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <Dialog defaultOpen>
       <DialogContent size="sm">
-        <DialogTitle>Deck settings</DialogTitle>
+        <DialogTitle>Project settings</DialogTitle>
         <DropdownMenu {...args}>
-          <DropdownMenuTrigger className={`mt-4 ${triggerClass}`}>Actions</DropdownMenuTrigger>
+          <DropdownMenuTrigger render={<Button className="mt-4" />}>Actions</DropdownMenuTrigger>
           <DropdownMenuContent align="start" positionerProps={{ className: "mt-1" }}>
-            <DropdownMenuItem>Move all cards</DropdownMenuItem>
+            <DropdownMenuItem>Move to folder</DropdownMenuItem>
             <DropdownMenuItem>Rename</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">Remove</DropdownMenuItem>
+            <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </DialogContent>

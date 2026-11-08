@@ -4,67 +4,83 @@ exports[`Default 1`] = `
 - button "Details"
 `;
 
-exports[`Escape Returns Focus 1`] = `
+exports[`Escape Returns Focus Test 1`] = `
 - button "Details"
 `;
 
-exports[`In Dialog With Positioner Class 1`] = `
-- dialog "Deck settings":
-  - heading "Deck settings" [level=2]
+exports[`In Dialog With Positioner Class Test 1`] = `
+- dialog "Project settings":
+  - heading "Project settings" [level=2]
   - button "Details" [expanded]
-  - dialog "Snapshot":
-    - heading "Snapshot" [level=2]
-    - paragraph: Saved before the last import. Restoring it replaces the current list.
+  - dialog "Quarterly report":
+    - heading "Quarterly report" [level=2]
+    - paragraph: Last edited by Ada Park. Restoring an older version replaces the current one.
 `;
 
-exports[`Open 1`] = `
+exports[`Open Test 1`] = `
 - button "Details" [expanded]
-- dialog "Snapshot":
-  - heading "Snapshot" [level=2]
-  - paragraph: Saved before the last import.
+- dialog "Quarterly report":
+  - heading "Quarterly report" [level=2]
+  - paragraph: Last edited by Ada Park on March 4, 2026.
 `;
 
-exports[`Outside Press Closes 1`] = `
+exports[`Outside Press Closes Test 1`] = `
 - button "Details"
 `;
 
-exports[`Rename Open 1`] = `
-- text: Ramp
-- button "Ramp actions" [expanded]
-- dialog "Rename category":
-  - text: Rename category
-  - textbox "Rename category": Ramp
+exports[`Rename 1`] = `
+- text: Drafts
+- button "Drafts actions"
+`;
+
+exports[`Rename Open Test 1`] = `
+- text: Drafts
+- button "Drafts actions" [expanded]
+- dialog "Rename folder":
+  - text: Rename folder
+  - textbox "Rename folder": Drafts
   - button "Cancel"
   - button "Save"
 `;
 
-exports[`Rename Save 1`] = `
-- text: Ramp
-- button "Ramp actions"
+exports[`Rename Save Test 1`] = `
+- text: Drafts
+- button "Drafts actions"
 `;
 
-exports[`Rename Typing 1`] = `
-- text: Ramp
-- button "Ramp actions" [expanded]
-- dialog "Rename category":
-  - text: Rename category
-  - textbox "Rename category": Mana rocks
+exports[`Rename Typing Test 1`] = `
+- text: Drafts
+- button "Drafts actions" [expanded]
+- dialog "Rename folder":
+  - text: Rename folder
+  - textbox "Rename folder": Shared drafts
   - button "Cancel"
   - button "Save"
 `;
 
-exports[`Search Open 1`] = `
-- textbox "Add card": Th
+exports[`Search 1`] = `
+- textbox "Search documents"
+`;
+
+exports[`Search Test 1`] = `
+- textbox "Search documents": La
 - dialog "Search results":
   - region "Results":
-    - button "Thrasios, Triton Hero"
-    - button "Tymna the Weaver"
-    - button "Thassa's Oracle"
-    - button "Tymna"
-    - button "Toxrill"
+    - button "Launch plan"
+    - button "Launch checklist"
+    - button "Launch budget"
+    - button "Launch retro"
+    - button "Launch FAQ"
 `;
 
 exports[`Sides 1`] = `
+- button "top"
+- button "right"
+- button "bottom"
+- button "left"
+`;
+
+exports[`Sides Test 1`] = `
 - button "top" [expanded]
 - dialog "Side top":
   - heading "Side top" [level=2]

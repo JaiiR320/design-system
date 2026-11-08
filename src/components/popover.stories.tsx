@@ -3,7 +3,10 @@ import { Ellipsis } from "lucide-react";
 import { useRef, useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
+import { Button } from "#components/button";
 import { Dialog, DialogContent, DialogTitle } from "#components/dialog";
+import { Input } from "#components/input";
+import { Label } from "#components/label";
 import {
   Popover,
   PopoverClose,
@@ -13,15 +16,6 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "#components/popover";
-
-// Plain stand-ins for DeckDiff buttons and inputs (those are separate modules).
-const ring =
-  "outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
-const outlineButton = `rounded-lg border border-border px-3 py-1.5 text-sm text-secondary-foreground transition hover:border-border-strong hover:bg-surface ${ring}`;
-const primaryButton = `rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground transition hover:bg-primary-hover ${ring}`;
-const ghostIconButton = `inline-flex size-7 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-surface hover:text-foreground ${ring}`;
-const textInput =
-  "w-full rounded-lg border border-input bg-surface px-3 py-2 text-sm text-foreground outline-none transition placeholder:text-faint-foreground focus:border-ring";
 
 const meta = {
   title: "Primitives/Popover",
@@ -34,11 +28,11 @@ type Story = StoryObj<typeof meta>;
 function BasicPopover() {
   return (
     <Popover>
-      <PopoverTrigger className={`ml-48 ${outlineButton}`}>Details</PopoverTrigger>
+      <PopoverTrigger render={<Button className="ml-48" />}>Details</PopoverTrigger>
       <PopoverContent>
         <PopoverHeader>
-          <PopoverTitle>Snapshot</PopoverTitle>
-          <PopoverDescription>Saved before the last import.</PopoverDescription>
+          <PopoverTitle>Quarterly report</PopoverTitle>
+          <PopoverDescription>Last edited by Ada Park on March 4, 2026.</PopoverDescription>
         </PopoverHeader>
       </PopoverContent>
     </Popover>
@@ -49,20 +43,22 @@ export const Default: Story = {
   render: () => <BasicPopover />,
 };
 
-export const Open: Story = {
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => <BasicPopover />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const trigger = canvas.getByRole("button", { name: "Details" });
     await userEvent.click(trigger);
     const body = within(document.body);
-    const dialog = await body.findByRole("dialog", { name: "Snapshot" });
-    await expect(dialog).toHaveAccessibleDescription("Saved before the last import.");
+    const dialog = await body.findByRole("dialog", { name: "Quarterly report" });
+    await expect(dialog).toHaveAccessibleDescription("Last edited by Ada Park on March 4, 2026.");
     await expect(trigger).toHaveAttribute("aria-expanded", "true");
   },
 };
 
-export const EscapeReturnsFocus: Story = {
+export const EscapeReturnsFocusTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => <BasicPopover />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -70,62 +66,75 @@ export const EscapeReturnsFocus: Story = {
     trigger.focus();
     await userEvent.keyboard("{Enter}");
     const body = within(document.body);
-    await body.findByRole("dialog", { name: "Snapshot" });
+    await body.findByRole("dialog", { name: "Quarterly report" });
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
     await expect(trigger).toHaveFocus();
   },
 };
 
-export const OutsidePressCloses: Story = {
+export const OutsidePressClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => <BasicPopover />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("button", { name: "Details" }));
     const body = within(document.body);
-    await body.findByRole("dialog", { name: "Snapshot" });
+    await body.findByRole("dialog", { name: "Quarterly report" });
     await userEvent.click(document.body);
     await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
   },
 };
 
-export const Sides: Story = {
-  render: () => (
+function SidesGrid({ open }: { open?: boolean }) {
+  return (
     <div className="grid w-[720px] grid-cols-2 place-items-center gap-y-40 py-16">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        <Popover key={side} defaultOpen>
-          <PopoverTrigger className={outlineButton}>{side}</PopoverTrigger>
+        <Popover key={side} defaultOpen={open}>
+          <PopoverTrigger render={<Button />}>{side}</PopoverTrigger>
           <PopoverContent side={side} align="center" className="w-40">
             <PopoverTitle>Side {side}</PopoverTitle>
           </PopoverContent>
         </Popover>
       ))}
     </div>
-  ),
+  );
+}
+
+/** One trigger per side. */
+export const Sides: Story = {
+  render: () => <SidesGrid />,
 };
 
-// CategoryStack's rename: Field + Input + Cancel/Save in the same place as the old menu page.
-function RenameCategory({ onRename }: { onRename: (name: string) => void }) {
+export const SidesTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <SidesGrid open />,
+};
+
+// Inline rename: Label + Input + Cancel/Save anchored to the folder's actions button.
+function RenameFolder({ onRename }: { onRename: (name: string) => void }) {
   const [open, setOpen] = useState(false);
-  const [draft, setDraft] = useState("Ramp");
+  const [draft, setDraft] = useState("Drafts");
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="ml-56 flex w-40 items-center justify-between border-b border-border px-3 py-2">
       <span className="text-sm font-semibold tracking-label text-strong-foreground uppercase">
-        Ramp
+        Drafts
       </span>
       <Popover
         open={open}
         onOpenChange={(next) => {
           setOpen(next);
-          if (next) setDraft("Ramp");
+          if (next) setDraft("Drafts");
         }}
       >
-        <PopoverTrigger aria-label="Ramp actions" className={ghostIconButton}>
+        <PopoverTrigger
+          render={<Button variant="ghost" size="icon-sm" aria-label="Drafts actions" />}
+        >
           <Ellipsis className="size-4" strokeWidth={1.75} />
         </PopoverTrigger>
-        <PopoverContent initialFocus={inputRef} aria-label="Rename category">
+        <PopoverContent initialFocus={inputRef} aria-label="Rename folder">
           <form
             className="space-y-2"
             onSubmit={(event) => {
@@ -134,25 +143,22 @@ function RenameCategory({ onRename }: { onRename: (name: string) => void }) {
               setOpen(false);
             }}
           >
-            <label
-              htmlFor="rename-ramp"
-              className="block text-xs font-medium text-muted-foreground"
-            >
-              Rename category
-            </label>
-            <input
+            <Label htmlFor="rename-folder" className="text-xs text-muted-foreground">
+              Rename folder
+            </Label>
+            <Input
               ref={inputRef}
-              id="rename-ramp"
+              id="rename-folder"
+              inputSize="sm"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               onFocus={(event) => event.target.select()}
-              className={textInput}
             />
             <div className="flex gap-2">
-              <PopoverClose className={`flex-1 ${outlineButton}`}>Cancel</PopoverClose>
-              <button type="submit" className={`flex-1 ${primaryButton}`}>
+              <PopoverClose render={<Button size="sm" className="flex-1" />}>Cancel</PopoverClose>
+              <Button type="submit" variant="default" size="sm" className="flex-1">
                 Save
-              </button>
+              </Button>
             </div>
           </form>
         </PopoverContent>
@@ -161,59 +167,60 @@ function RenameCategory({ onRename }: { onRename: (name: string) => void }) {
   );
 }
 
-export const RenameOpen: Story = {
-  render: () => <RenameCategory onRename={fn()} />,
+export const Rename: Story = {
+  render: () => <RenameFolder onRename={fn()} />,
+};
+
+export const RenameOpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <RenameFolder onRename={fn()} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "Ramp actions" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Drafts actions" }));
     const body = within(document.body);
-    const input = await body.findByLabelText("Rename category", { selector: "input" });
+    const input = await body.findByLabelText("Rename folder", { selector: "input" });
     await waitFor(() => expect(input).toHaveFocus());
   },
 };
 
-export const RenameTyping: Story = {
-  render: () => <RenameCategory onRename={fn()} />,
+export const RenameTypingTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <RenameFolder onRename={fn()} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    await userEvent.click(canvas.getByRole("button", { name: "Ramp actions" }));
+    await userEvent.click(canvas.getByRole("button", { name: "Drafts actions" }));
     const body = within(document.body);
-    const input = await body.findByLabelText("Rename category", { selector: "input" });
+    const input = await body.findByLabelText("Rename folder", { selector: "input" });
     await waitFor(() => expect(input).toHaveFocus());
     // Ordinary letters reach the input: no menu typeahead swallows them.
-    await userEvent.keyboard("Mana rocks");
-    await expect(input).toHaveValue("Mana rocks");
+    await userEvent.keyboard("Shared drafts");
+    await expect(input).toHaveValue("Shared drafts");
   },
 };
 
 const onRename = fn();
 
-export const RenameSave: Story = {
-  render: () => <RenameCategory onRename={onRename} />,
+export const RenameSaveTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <RenameFolder onRename={onRename} />,
   play: async ({ canvasElement }) => {
     onRename.mockClear();
     const canvas = within(canvasElement);
-    const trigger = canvas.getByRole("button", { name: "Ramp actions" });
+    const trigger = canvas.getByRole("button", { name: "Drafts actions" });
     await userEvent.click(trigger);
     const body = within(document.body);
-    const input = await body.findByLabelText("Rename category", { selector: "input" });
+    const input = await body.findByLabelText("Rename folder", { selector: "input" });
     await waitFor(() => expect(input).toHaveFocus());
-    await userEvent.keyboard("Lands{Enter}");
-    await expect(onRename).toHaveBeenCalledWith("Lands");
+    await userEvent.keyboard("Reports{Enter}");
+    await expect(onRename).toHaveBeenCalledWith("Reports");
     await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
     await expect(trigger).toHaveFocus();
   },
 };
 
-const results = [
-  "Thrasios, Triton Hero",
-  "Tymna the Weaver",
-  "Thassa's Oracle",
-  "Tymna",
-  "Toxrill",
-];
+const results = ["Launch plan", "Launch checklist", "Launch budget", "Launch retro", "Launch FAQ"];
 
-// EditorHeader search: programmatic popover anchored to the input wrapper, focus stays in the input.
+// Search-as-you-type: programmatic popover anchored to the input wrapper, focus stays in the input.
 function SearchResults() {
   const anchorRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
@@ -222,15 +229,14 @@ function SearchResults() {
   return (
     <div className="w-[540px]">
       <div ref={anchorRef}>
-        <input
-          aria-label="Add card"
-          placeholder="Add card"
+        <Input
+          aria-label="Search documents"
+          placeholder="Search documents"
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
             setOpen(event.target.value.length > 0);
           }}
-          className={`${textInput} px-4 py-3 text-base`}
         />
       </div>
       <Popover
@@ -251,12 +257,9 @@ function SearchResults() {
         >
           <section aria-label="Results" className="flex gap-3 overflow-x-auto p-4">
             {results.map((name) => (
-              <button
-                key={name}
-                type="button"
-                aria-label={name}
-                className={`aspect-[488/680] w-28 shrink-0 rounded-lg border border-border bg-surface ${ring}`}
-              />
+              <Button key={name} className="h-24 w-28 shrink-0 items-end justify-start text-left">
+                {name}
+              </Button>
             ))}
           </section>
         </PopoverContent>
@@ -265,42 +268,50 @@ function SearchResults() {
   );
 }
 
-export const SearchOpen: Story = {
+/** Type in the input to open the results. */
+export const Search: Story = {
+  parameters: { layout: "padded" },
+  render: () => <SearchResults />,
+};
+
+export const SearchTest: Story = {
+  tags: ["!dev", "!autodocs"],
   parameters: { layout: "padded" },
   render: () => <SearchResults />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const input = canvas.getByRole("textbox", { name: "Add card" });
+    const input = canvas.getByRole("textbox", { name: "Search documents" });
     await userEvent.click(input);
-    await userEvent.keyboard("Th");
+    await userEvent.keyboard("La");
     const body = within(document.body);
     const results = await body.findByRole("region", { name: "Results" });
     // Typing continues uninterrupted: the popup never takes focus.
     await expect(input).toHaveFocus();
-    await expect(input).toHaveValue("Th");
+    await expect(input).toHaveValue("La");
     await userEvent.click(input);
     await expect(results).toBeVisible();
     // Keyboard focus can reach the results.
     await userEvent.tab();
-    await expect(body.getByRole("button", { name: "Thrasios, Triton Hero" })).toHaveFocus();
+    await expect(body.getByRole("button", { name: "Launch plan" })).toHaveFocus();
     // Let the input's blur repaint settle before the snapshot.
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   },
 };
 
 /** A positioner class extends the overlay layer: the popover paints above its Dialog. */
-export const InDialogWithPositionerClass: Story = {
+export const InDialogWithPositionerClassTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => (
     <Dialog defaultOpen>
       <DialogContent size="sm">
-        <DialogTitle>Deck settings</DialogTitle>
+        <DialogTitle>Project settings</DialogTitle>
         <Popover>
-          <PopoverTrigger className={`mt-4 ${outlineButton}`}>Details</PopoverTrigger>
+          <PopoverTrigger render={<Button className="mt-4" />}>Details</PopoverTrigger>
           <PopoverContent align="start" positionerProps={{ className: "mt-1" }}>
             <PopoverHeader>
-              <PopoverTitle>Snapshot</PopoverTitle>
+              <PopoverTitle>Quarterly report</PopoverTitle>
               <PopoverDescription>
-                Saved before the last import. Restoring it replaces the current list.
+                Last edited by Ada Park. Restoring an older version replaces the current one.
               </PopoverDescription>
             </PopoverHeader>
           </PopoverContent>
@@ -311,7 +322,7 @@ export const InDialogWithPositionerClass: Story = {
   play: async () => {
     const body = within(document.body);
     await userEvent.click(await body.findByRole("button", { name: "Details" }));
-    const popup = await body.findByRole("dialog", { name: "Snapshot" });
+    const popup = await body.findByRole("dialog", { name: "Quarterly report" });
     await waitFor(() => expect(popup).toBeVisible());
     const positioner = popup.closest("[data-slot='popover-positioner']");
     await expect(positioner).toHaveClass("mt-1");

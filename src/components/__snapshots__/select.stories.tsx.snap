@@ -1,113 +1,117 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- combobox "Group cards": Categories
+- combobox "Group documents": Project
 `;
 
 exports[`Grouped 1`] = `
-- combobox "Format" [expanded]: Commander
-- listbox:
-  - group "Constructed":
-    - option "Standard"
-    - option "Pioneer"
-    - option "Modern"
-  - group "Eternal":
-    - option "Legacy"
-    - option "Vintage"
-    - option "Commander" [selected]
+- combobox "Location": Launch plan
 `;
 
-exports[`Keyboard 1`] = `
-- combobox "Sort cards" [expanded]: Alphabetical
+exports[`Grouped Test 1`] = `
+- combobox "Location" [expanded]: Launch plan
 - listbox:
-  - option "Mana value"
+  - group "Projects":
+    - option "Atlas"
+    - option "Borealis"
+    - option "Cobalt"
+  - group "Documents":
+    - option "Quarterly report"
+    - option "Design review"
+    - option "Launch plan" [selected]
+`;
+
+exports[`Keyboard Test 1`] = `
+- combobox "Sort documents" [expanded]: Alphabetical
+- listbox:
+  - option "Last modified"
   - option "Alphabetical" [selected]
-  - option "Price" [disabled]
-  - option "EDHREC rank"
+  - option "Owner" [disabled]
+  - option "Date created"
 `;
 
-exports[`Narrow Trigger Long Options 1`] = `
-- combobox "Order by" [expanded]: Set Name
-- listbox:
-  - option "Edition date"
-  - option "Set Name" [selected]
-  - option "Price"
-`;
-
-exports[`Open 1`] = `
-- combobox "Sort cards" [expanded]: Mana value
-- listbox:
-  - option "Mana value" [selected]
-  - option "Alphabetical"
-  - option "Price" [disabled]
-  - option "EDHREC rank"
-`;
-
-exports[`Open Mobile Width 1`] = `
+exports[`Mobile Width Test 1`] = `
 - text: Order by
-- combobox "Order printings by" [expanded]: Edition date
+- combobox "Order documents by" [expanded]: Date created
 - listbox:
-  - option "Edition date" [selected]
-  - option "Set Name"
-  - option "Price"
+  - option "Date created" [selected]
+  - option "Title"
+  - option "Size"
 `;
 
-exports[`Scrolling 1`] = `
-- combobox "Set" [expanded]: Set 01
+exports[`Narrow Trigger Test 1`] = `
+- combobox "Order by" [expanded]: Title
 - listbox:
-  - option "Set 01" [selected]
-  - option "Set 02"
-  - option "Set 03"
-  - option "Set 04"
-  - option "Set 05"
-  - option "Set 06"
-  - option "Set 07"
-  - option "Set 08"
-  - option "Set 09"
-  - option "Set 10"
-  - option "Set 11"
-  - option "Set 12"
-  - option "Set 13"
-  - option "Set 14"
-  - option "Set 15"
-  - option "Set 16"
-  - option "Set 17"
-  - option "Set 18"
-  - option "Set 19"
-  - option "Set 20"
-  - option "Set 21"
-  - option "Set 22"
-  - option "Set 23"
-  - option "Set 24"
-  - option "Set 25"
-  - option "Set 26"
-  - option "Set 27"
-  - option "Set 28"
-  - option "Set 29"
-  - option "Set 30"
-  - option "Set 31"
-  - option "Set 32"
-  - option "Set 33"
-  - option "Set 34"
-  - option "Set 35"
-  - option "Set 36"
-  - option "Set 37"
-  - option "Set 38"
-  - option "Set 39"
-  - option "Set 40"
+  - option "Date created"
+  - option "Title" [selected]
+  - option "Size"
 `;
 
-exports[`Selected 1`] = `
-- combobox "Sort cards": EDHREC rank
+exports[`Open Test 1`] = `
+- combobox "Sort documents" [expanded]: Last modified
+- listbox:
+  - option "Last modified" [selected]
+  - option "Alphabetical"
+  - option "Owner" [disabled]
+  - option "Date created"
+`;
+
+exports[`Scrolling Test 1`] = `
+- combobox "Folder" [expanded]: Folder 01
+- listbox:
+  - option "Folder 01" [selected]
+  - option "Folder 02"
+  - option "Folder 03"
+  - option "Folder 04"
+  - option "Folder 05"
+  - option "Folder 06"
+  - option "Folder 07"
+  - option "Folder 08"
+  - option "Folder 09"
+  - option "Folder 10"
+  - option "Folder 11"
+  - option "Folder 12"
+  - option "Folder 13"
+  - option "Folder 14"
+  - option "Folder 15"
+  - option "Folder 16"
+  - option "Folder 17"
+  - option "Folder 18"
+  - option "Folder 19"
+  - option "Folder 20"
+  - option "Folder 21"
+  - option "Folder 22"
+  - option "Folder 23"
+  - option "Folder 24"
+  - option "Folder 25"
+  - option "Folder 26"
+  - option "Folder 27"
+  - option "Folder 28"
+  - option "Folder 29"
+  - option "Folder 30"
+  - option "Folder 31"
+  - option "Folder 32"
+  - option "Folder 33"
+  - option "Folder 34"
+  - option "Folder 35"
+  - option "Folder 36"
+  - option "Folder 37"
+  - option "Folder 38"
+  - option "Folder 39"
+  - option "Folder 40"
+`;
+
+exports[`Selected Test 1`] = `
+- combobox "Sort documents": Date created
 `;
 
 exports[`States 1`] = `
-- combobox "Group cards": Categories
-- combobox "Sort cards": Mana value
+- combobox "Group documents": Project
+- combobox "Sort documents": Last modified
 - text: Order by
-- combobox "Order printings by": Edition date
+- combobox "Order documents by": Date created
 - combobox "Placeholder": Choose a sort
 - combobox "Disabled" [disabled]: Alphabetical
-- combobox "Invalid": Price
-- combobox "A very long option": EDHREC rank, then alphabetical
+- combobox "Invalid": Owner
+- combobox "A very long option": Date created, then alphabetical
 `;

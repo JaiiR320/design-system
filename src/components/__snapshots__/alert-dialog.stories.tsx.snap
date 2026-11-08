@@ -1,85 +1,90 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Action Fails 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
-  - alert: Couldn't delete the deck. Try again.
+exports[`Action Fails Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed. This can't be undone.
+  - alert: Couldn't delete the project. Try again.
   - button "Cancel"
   - button "Delete"
 `;
 
-exports[`Action Succeeds 1`] = `
-- button "Delete deck"
+exports[`Action Succeeds Test 1`] = `
+- button "Delete project"
 `;
 
-exports[`Cancel Closes 1`] = `
-- button "Delete deck"
+exports[`Cancel Closes Test 1`] = `
+- button "Delete project"
 `;
 
-exports[`Cancel Custom Render 1`] = `
+exports[`Cancel Custom Render Test 1`] = `
 
 `;
 
 exports[`Default 1`] = `
-- button "Delete deck"
+- button "Delete project"
 `;
 
-exports[`Escape Closes 1`] = `
-- button "Delete deck"
+exports[`Escape Closes Test 1`] = `
+- button "Delete project"
 `;
 
-exports[`Explicit Initial Focus 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
+exports[`Explicit Initial Focus Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
   - paragraph: This can't be undone.
   - button "Delete"
   - button "Cancel"
 `;
 
-exports[`Nested In Dialog Dims 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+exports[`Nested In Dialog Dims Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed. This can't be undone.
   - button "Cancel"
   - button "Delete"
 `;
 
-exports[`Open 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+exports[`Open Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed. This can't be undone.
   - button "Cancel"
   - button "Delete"
 `;
 
-exports[`Outside Press Stays Open 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+exports[`Outside Press Stays Open Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed. This can't be undone.
   - button "Cancel"
   - button "Delete"
 `;
 
-exports[`Pending 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed. This can't be undone.
+exports[`Pending Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed. This can't be undone.
   - button "Cancel"
   - button "Deleting…" [disabled]
 `;
 
-exports[`Small 1`] = `
+exports[`Sizes 1`] = `
+- button "Delete project"
+- button "Discard changes"
+`;
+
+exports[`Small Test 1`] = `
 - alertdialog "Discard changes?":
   - heading "Discard changes?" [level=2]
-  - paragraph: Unsaved edits to this deck are lost.
+  - paragraph: Unsaved edits to this document are lost.
   - button "Keep editing"
   - button "Discard"
 `;
 
-exports[`Viewport Ref Keeps Cancel Focus 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
+exports[`Viewport Ref Keeps Cancel Focus Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
   - paragraph: This can't be undone.
   - button "Delete"
   - button "Cancel"

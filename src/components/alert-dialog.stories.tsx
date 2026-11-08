@@ -27,7 +27,7 @@ type Story = StoryObj<typeof meta>;
 const body = within(document.body);
 
 // Caller owns open state: close on success, stay open with an error on failure.
-function DeleteDeck({ onDelete }: { onDelete: () => Promise<void> }) {
+function DeleteProject({ onDelete }: { onDelete: () => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +39,7 @@ function DeleteDeck({ onDelete }: { onDelete: () => Promise<void> }) {
       await onDelete();
       setOpen(false);
     } catch {
-      setError("Couldn't delete the deck. Try again.");
+      setError("Couldn't delete the project. Try again.");
     } finally {
       setPending(false);
     }
@@ -54,13 +54,13 @@ function DeleteDeck({ onDelete }: { onDelete: () => Promise<void> }) {
       }}
     >
       <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
-        Delete deck
+        Delete project
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Atraxa Superfriends?</AlertDialogTitle>
+          <AlertDialogTitle>Delete Atlas?</AlertDialogTitle>
           <AlertDialogDescription>
-            The deck and its 3 snapshots are removed. This can't be undone.
+            The project and its 3 documents are removed. This can't be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         {error ? (
@@ -82,22 +82,23 @@ function DeleteDeck({ onDelete }: { onDelete: () => Promise<void> }) {
 const succeed = () => Promise.resolve();
 
 async function openAlert(canvasElement: HTMLElement) {
-  const trigger = within(canvasElement).getByRole("button", { name: "Delete deck" });
+  const trigger = within(canvasElement).getByRole("button", { name: "Delete project" });
   await userEvent.click(trigger);
-  const dialog = await body.findByRole("alertdialog", { name: "Delete Atraxa Superfriends?" });
+  const dialog = await body.findByRole("alertdialog", { name: "Delete Atlas?" });
   return { trigger, dialog };
 }
 
 export const Default: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+  render: () => <DeleteProject onDelete={succeed} />,
 };
 
-export const Open: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
     await expect(dialog).toHaveAccessibleDescription(
-      "The deck and its 3 snapshots are removed. This can't be undone.",
+      "The project and its 3 documents are removed. This can't be undone.",
     );
     await waitFor(() =>
       expect(within(dialog).getByRole("button", { name: "Cancel" })).toHaveFocus(),
@@ -105,8 +106,9 @@ export const Open: Story = {
   },
 };
 
-export const OutsidePressStaysOpen: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+export const OutsidePressStaysOpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     await openAlert(canvasElement);
     const viewport = document.querySelector<HTMLElement>('[data-slot="alert-dialog-viewport"]');
@@ -122,8 +124,9 @@ export const OutsidePressStaysOpen: Story = {
   },
 };
 
-export const EscapeCloses: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+export const EscapeClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     const { trigger } = await openAlert(canvasElement);
     await userEvent.keyboard("{Escape}");
@@ -132,8 +135,9 @@ export const EscapeCloses: Story = {
   },
 };
 
-export const CancelCloses: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+export const CancelClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     const { trigger, dialog } = await openAlert(canvasElement);
     await userEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
@@ -142,8 +146,9 @@ export const CancelCloses: Story = {
   },
 };
 
-export const ActionSucceeds: Story = {
-  render: () => <DeleteDeck onDelete={succeed} />,
+export const ActionSucceedsTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
     await userEvent.click(within(dialog).getByRole("button", { name: "Delete" }));
@@ -151,13 +156,14 @@ export const ActionSucceeds: Story = {
   },
 };
 
-export const ActionFails: Story = {
-  render: () => <DeleteDeck onDelete={() => Promise.reject(new Error("offline"))} />,
+export const ActionFailsTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={() => Promise.reject(new Error("offline"))} />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
     await userEvent.click(within(dialog).getByRole("button", { name: "Delete" }));
     await expect(await within(dialog).findByRole("alert")).toHaveTextContent(
-      "Couldn't delete the deck. Try again.",
+      "Couldn't delete the project. Try again.",
     );
     await expect(dialog).toBeInTheDocument();
     await expect(within(dialog).getByRole("button", { name: "Delete" })).toBeEnabled();
@@ -165,8 +171,9 @@ export const ActionFails: Story = {
 };
 
 // Pending: Action disabled and busy while the request runs.
-export const Pending: Story = {
-  render: () => <DeleteDeck onDelete={() => new Promise<void>(() => {})} />,
+export const PendingTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DeleteProject onDelete={() => new Promise<void>(() => {})} />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
     await userEvent.click(within(dialog).getByRole("button", { name: "Delete" }));
@@ -176,14 +183,15 @@ export const Pending: Story = {
   },
 };
 
-// Small size with a stretched footer.
-export const Small: Story = {
-  render: () => (
-    <AlertDialog defaultOpen>
+// Small size with a stretched footer. Without a trigger it renders open.
+function DiscardChanges({ trigger }: { trigger?: string }) {
+  return (
+    <AlertDialog defaultOpen={!trigger}>
+      {trigger ? <AlertDialogTrigger render={<Button />}>{trigger}</AlertDialogTrigger> : null}
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogTitle>Discard changes?</AlertDialogTitle>
-          <AlertDialogDescription>Unsaved edits to this deck are lost.</AlertDialogDescription>
+          <AlertDialogDescription>Unsaved edits to this document are lost.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter layout="stretch">
           <AlertDialogCancel>Keep editing</AlertDialogCancel>
@@ -191,7 +199,22 @@ export const Small: Story = {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
+  );
+}
+
+/** One trigger per size: md (default) and sm with a stretched footer. */
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex gap-3">
+      <DeleteProject onDelete={succeed} />
+      <DiscardChanges trigger="Discard changes" />
+    </div>
   ),
+};
+
+export const SmallTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <DiscardChanges />,
 };
 
 // Action first in the footer, with the caller holding the viewport ref.
@@ -202,14 +225,14 @@ function ActionFirst({ focusAction = false }: { focusAction?: boolean }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
-        Delete deck
+        Delete project
       </AlertDialogTrigger>
       <AlertDialogContent
         viewportProps={{ ref: viewportRef }}
         initialFocus={focusAction ? actionRef : undefined}
       >
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Atraxa Superfriends?</AlertDialogTitle>
+          <AlertDialogTitle>Delete Atlas?</AlertDialogTitle>
           <AlertDialogDescription>This can't be undone.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -222,7 +245,8 @@ function ActionFirst({ focusAction = false }: { focusAction?: boolean }) {
 }
 
 // A caller's viewport ref is filled and Cancel still gets initial focus.
-export const ViewportRefKeepsCancelFocus: Story = {
+export const ViewportRefKeepsCancelFocusTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => <ActionFirst />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
@@ -236,7 +260,8 @@ export const ViewportRefKeepsCancelFocus: Story = {
 };
 
 // An explicit initialFocus stays authoritative.
-export const ExplicitInitialFocus: Story = {
+export const ExplicitInitialFocusTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => <ActionFirst focusAction />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
@@ -250,14 +275,15 @@ const cancelRef: { current: HTMLButtonElement | null } = { current: null };
 const onCancelClick = fn();
 
 // A custom render keeps Cancel's recipe, caller className and size, ref and click handler.
-export const CancelCustomRender: Story = {
+export const CancelCustomRenderTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { onOpenChange: fn() },
   render: (args) => (
     <AlertDialog defaultOpen onOpenChange={args.onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Discard changes?</AlertDialogTitle>
-          <AlertDialogDescription>Unsaved edits to this deck are lost.</AlertDialogDescription>
+          <AlertDialogDescription>Unsaved edits to this document are lost.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
@@ -291,22 +317,23 @@ export const CancelCustomRender: Story = {
 };
 
 // A confirm opened from inside a Dialog dims the parent dialog too.
-export const NestedInDialogDims: Story = {
+export const NestedInDialogDimsTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => (
     <Dialog defaultOpen>
       {/* Larger than the alert so the dimmed parent shows around it. */}
       <DialogContent size="2xl" className="min-h-96">
-        <DialogTitle>Atraxa Superfriends</DialogTitle>
+        <DialogTitle>Atlas</DialogTitle>
         <div className="mt-5">
-          <DeleteDeck onDelete={succeed} />
+          <DeleteProject onDelete={succeed} />
         </div>
       </DialogContent>
     </Dialog>
   ),
   play: async () => {
-    const parent = await body.findByRole("dialog", { name: "Atraxa Superfriends" });
-    await userEvent.click(within(parent).getByRole("button", { name: "Delete deck" }));
-    await body.findByRole("alertdialog", { name: "Delete Atraxa Superfriends?" });
+    const parent = await body.findByRole("dialog", { name: "Atlas" });
+    await userEvent.click(within(parent).getByRole("button", { name: "Delete project" }));
+    await body.findByRole("alertdialog", { name: "Delete Atlas?" });
     const overlay = document.querySelector<HTMLElement>('[data-slot="alert-dialog-overlay"]');
     if (!overlay) throw new Error("nested alert overlay not rendered");
     await expect(getComputedStyle(overlay).backgroundColor).not.toBe("rgba(0, 0, 0, 0)");

@@ -7,29 +7,42 @@ exports[`Default 1`] = `
 exports[`Disabled Reason 1`] = `
 - group "Redo":
   - button "Redo" [disabled]
+- text: Nothing to redo
+`;
+
+exports[`Disabled Reason Test 1`] = `
+- group "Redo":
+  - button "Redo" [disabled]
 - text: Nothing to redo Nothing to redo
 `;
 
-exports[`Escape Closes 1`] = `
+exports[`Escape Closes Test 1`] = `
 - button "Undo"
 `;
 
-exports[`Keyboard Focus 1`] = `
+exports[`Keyboard Focus Test 1`] = `
 - button "Undo"
 - text: Undo
 `;
 
-exports[`Long Text 1`] = `
+exports[`Long Text Test 1`] = `
 - button "Sort direction"
 - text: Sort direction toggles between ascending and descending order for the current grouping
 `;
 
-exports[`Open 1`] = `
+exports[`Open Test 1`] = `
 - button "Undo"
 - text: Undo
 `;
 
 exports[`Sides 1`] = `
+- button "Tooltip top"
+- button "Tooltip right"
+- button "Tooltip bottom"
+- button "Tooltip left"
+`;
+
+exports[`Sides Test 1`] = `
 - button "Tooltip top"
 - button "Tooltip right"
 - button "Tooltip bottom"

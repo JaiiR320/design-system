@@ -1,28 +1,28 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Backdrop Closes 1`] = `
-- button "New Deck"
+exports[`Backdrop Closes Test 1`] = `
+- button "New project"
 `;
 
 exports[`Default 1`] = `
-- button "New Deck"
+- button "New project"
 `;
 
-exports[`Divided 1`] = `
-- dialog "Export Deck":
-  - heading "Export Deck" [level=2]
+exports[`Divided Test 1`] = `
+- dialog "Export documents":
+  - heading "Export documents" [level=2]
   - button "Close"
-  - paragraph: Plain-text decklist, one card per line.
-  - textbox "Decklist": 1 Ajani, Mentor of Heroes 1 Anguished Unmaking 1 Arcane Signet 1 Atraxa, Praetors' Voice 1 Beast Within 1 Birds of Paradise 1 Breeding Pool 1 Chromatic Lantern 1 Command Tower 1 Counterspell
+  - paragraph: Comma-separated values, one document per line.
+  - textbox "Export": title,project,owner,tag Quarterly report,Atlas,Ada Park,Shared Design review,Atlas,Sam Lee,Draft Launch plan,Borealis,Ada Park,Shared Budget notes,Borealis,Sam Lee,Archived Hiring plan,Cobalt,Ada Park,Draft Roadmap,Cobalt,Sam Lee,Shared
   - button "Cancel"
   - button "Copy to Clipboard"
 `;
 
-exports[`Escape Closes 1`] = `
-- button "New Deck"
+exports[`Escape Closes Test 1`] = `
+- button "New project"
 `;
 
-exports[`Footer Layouts 1`] = `
+exports[`Footer Layouts Test 1`] = `
 - dialog "Footer layouts":
   - heading "Footer layouts" [level=2]
   - button "Close"
@@ -34,134 +34,152 @@ exports[`Footer Layouts 1`] = `
   - button "Import"
 `;
 
-exports[`Long Content 1`] = `
+exports[`Full Screen Mobile Test 1`] = `
+- dialog "Choose a template":
+  - heading "Choose a template" [level=2]
+  - text: Search templates
+  - textbox "Search templates":
+    - /placeholder: Filter by name
+  - button "Close"
+  - text: Template 01 1 page Template 02 2 pages Template 03 3 pages Template 04 4 pages Template 05 1 page Template 06 2 pages Template 07 3 pages Template 08 4 pages Template 09 1 page Template 10 2 pages Template 11 3 pages Template 12 4 pages Template 13 1 page Template 14 2 pages Template 15 3 pages
+`;
+
+exports[`Full Screen Test 1`] = `
+- dialog "Choose a template":
+  - heading "Choose a template" [level=2]
+  - text: Search templates
+  - textbox "Search templates":
+    - /placeholder: Filter by name
+  - button "Close"
+  - text: Template 01 1 page Template 02 2 pages Template 03 3 pages Template 04 4 pages Template 05 1 page Template 06 2 pages Template 07 3 pages Template 08 4 pages Template 09 1 page Template 10 2 pages Template 11 3 pages Template 12 4 pages Template 13 1 page Template 14 2 pages Template 15 3 pages
+`;
+
+exports[`Layouts 1`] = `
+- button "Footer layouts"
+- button "Divided"
+- button "Long content"
+- button "Scrolling body"
+- button "Full screen"
+`;
+
+exports[`Long Content Test 1`] = `
 - dialog "Change log":
   - heading "Change log" [level=2]
-  - paragraph: "Snapshot 1: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 2: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 3: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 4: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 5: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 6: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 7: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 8: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 9: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 10: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 11: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 12: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 13: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 14: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 15: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 16: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 17: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 18: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 19: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 20: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 21: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 22: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 23: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 24: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
+  - paragraph: "Version 1: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 2: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 3: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 4: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 5: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 6: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 7: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 8: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 9: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 10: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 11: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 12: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 13: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 14: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 15: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 16: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 17: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 18: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 19: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 20: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 21: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 22: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 23: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 24: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
   - button "Close"
 `;
 
-exports[`Open 1`] = `
-- dialog "New Deck":
-  - heading "New Deck" [level=2]
-  - text: Deck name
-  - textbox "Deck name":
-    - /placeholder: Enter a deck name
+exports[`Open Test 1`] = `
+- dialog "New project":
+  - heading "New project" [level=2]
+  - text: Project name
+  - textbox "Project name":
+    - /placeholder: Enter a project name
   - button "Cancel"
   - button "Create"
 `;
 
-exports[`Screen 1`] = `
-- dialog "Select a printing":
-  - heading "Select a printing" [level=2]
-  - text: Search printings…
-  - textbox "Search printings…":
-    - /placeholder: Filter set name
+exports[`Scrolling Body Test 1`] = `
+- dialog "Atlas activity":
+  - heading "Atlas activity" [level=2]
   - button "Close"
-  - text: SLD $1.00 EOC $2.00 CMM $3.00 SLD $4.00 2XM $5.00 CM2 $6.00 C16 $7.00 PZ2 $8.00 A25 $9.00 M19 $10.00 M20 $11.00 MH1 $12.00 C20 $13.00 CMR $14.00 40K $15.00
+  - paragraph: "Version 1: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 2: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 3: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 4: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 5: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 6: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 7: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 8: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 9: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 10: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 11: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 12: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 13: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 14: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 15: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 16: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 17: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 18: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 19: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 20: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 21: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 22: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 23: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
+  - paragraph: "Version 24: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis."
 `;
 
-exports[`Screen Mobile 1`] = `
-- dialog "Select a printing":
-  - heading "Select a printing" [level=2]
-  - text: Search printings…
-  - textbox "Search printings…":
-    - /placeholder: Filter set name
-  - button "Close"
-  - text: SLD $1.00 EOC $2.00 CMM $3.00 SLD $4.00 2XM $5.00 CM2 $6.00 C16 $7.00 PZ2 $8.00 A25 $9.00 M19 $10.00 M20 $11.00 MH1 $12.00 C20 $13.00 CMR $14.00 40K $15.00
-`;
-
-exports[`Settings 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - button "Close"
-  - paragraph: "Snapshot 1: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 2: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 3: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 4: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 5: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 6: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 7: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 8: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 9: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 10: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 11: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 12: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 13: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 14: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 15: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 16: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 17: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 18: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 19: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 20: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 21: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 22: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 23: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-  - paragraph: "Snapshot 24: moved two lands to the sideboard and swapped the ramp package for cheaper rocks."
-`;
-
-exports[`Size 2 Xl 1`] = `
+exports[`Size 2 Xl Test 1`] = `
 - dialog "Size 2xl":
   - heading "Size 2xl" [level=2]
   - paragraph: The panel widens to max-w-2xl; padding and chrome stay the same.
   - button "Close"
 `;
 
-exports[`Size 3 Xl 1`] = `
+exports[`Size 3 Xl Test 1`] = `
 - dialog "Size 3xl":
   - heading "Size 3xl" [level=2]
   - paragraph: The panel widens to max-w-3xl; padding and chrome stay the same.
   - button "Close"
 `;
 
-exports[`Size 4 Xl 1`] = `
+exports[`Size 4 Xl Test 1`] = `
 - dialog "Size 4xl":
   - heading "Size 4xl" [level=2]
   - paragraph: The panel widens to max-w-4xl; padding and chrome stay the same.
   - button "Close"
 `;
 
-exports[`Size Lg 1`] = `
+exports[`Size Lg Test 1`] = `
 - dialog "Size lg":
   - heading "Size lg" [level=2]
   - paragraph: The panel widens to max-w-lg; padding and chrome stay the same.
   - button "Close"
 `;
 
-exports[`Size Sm 1`] = `
+exports[`Size Sm Test 1`] = `
 - dialog "Size sm":
   - heading "Size sm" [level=2]
   - paragraph: The panel widens to max-w-sm; padding and chrome stay the same.
   - button "Close"
 `;
 
-exports[`Size Xl 1`] = `
+exports[`Size Xl Test 1`] = `
 - dialog "Size xl":
   - heading "Size xl" [level=2]
   - paragraph: The panel widens to max-w-xl; padding and chrome stay the same.
   - button "Close"
+`;
+
+exports[`Sizes 1`] = `
+- button "Size sm"
+- button "Size md"
+- button "Size lg"
+- button "Size xl"
+- button "Size 2xl"
+- button "Size 3xl"
+- button "Size 4xl"
 `;

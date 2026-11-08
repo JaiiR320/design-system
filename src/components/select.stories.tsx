@@ -13,22 +13,22 @@ import {
 } from "#components/select";
 
 const groupOptions = [
-  { value: "categories", label: "Categories" },
-  { value: "type", label: "Type" },
-  { value: "manaValue", label: "Mana value" },
+  { value: "project", label: "Project" },
+  { value: "owner", label: "Owner" },
+  { value: "tag", label: "Tag" },
 ];
 
 const sortOptions = [
-  { value: "manaValue", label: "Mana value" },
+  { value: "modified", label: "Last modified" },
   { value: "alphabetical", label: "Alphabetical" },
-  { value: "price", label: "Price" },
-  { value: "edhrecRank", label: "EDHREC rank" },
+  { value: "owner", label: "Owner" },
+  { value: "created", label: "Date created" },
 ];
 
-const printingOptions = [
-  { value: "date", label: "Edition date" },
-  { value: "set", label: "Set Name" },
-  { value: "price", label: "Price" },
+const orderOptions = [
+  { value: "date", label: "Date created" },
+  { value: "title", label: "Title" },
+  { value: "size", label: "Size" },
 ];
 
 const meta = {
@@ -44,8 +44,8 @@ const body = () => within(document.body);
 
 export const Default: Story = {
   render: (args) => (
-    <Select items={groupOptions} defaultValue="categories" onValueChange={args.onValueChange}>
-      <SelectTrigger aria-label="Group cards" className="w-40">
+    <Select items={groupOptions} defaultValue="project" onValueChange={args.onValueChange}>
+      <SelectTrigger aria-label="Group documents" className="w-40">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
@@ -59,26 +59,26 @@ export const Default: Story = {
   ),
 };
 
-/** Closed triggers at DeckDiff's call-site widths, plus placeholder, disabled and invalid. */
+/** Closed triggers at typical toolbar widths, plus placeholder, disabled and invalid. */
 export const States: Story = {
   render: () => (
     <div className="grid w-[480px] gap-4">
       <div className="flex items-center gap-2">
-        <Select items={groupOptions} defaultValue="categories">
-          <SelectTrigger aria-label="Group cards" className="w-40">
+        <Select items={groupOptions} defaultValue="project">
+          <SelectTrigger aria-label="Group documents" className="w-40">
             <SelectValue />
           </SelectTrigger>
         </Select>
-        <Select items={sortOptions} defaultValue="manaValue">
-          <SelectTrigger aria-label="Sort cards" className="w-44">
+        <Select items={sortOptions} defaultValue="modified">
+          <SelectTrigger aria-label="Sort documents" className="w-44">
             <SelectValue />
           </SelectTrigger>
         </Select>
       </div>
       <div>
         <span className="text-sm font-semibold text-strong-foreground">Order by</span>
-        <Select items={printingOptions} defaultValue="date">
-          <SelectTrigger aria-label="Order printings by" className="mt-1">
+        <Select items={orderOptions} defaultValue="date">
+          <SelectTrigger aria-label="Order documents by" className="mt-1">
             <SelectValue />
           </SelectTrigger>
         </Select>
@@ -93,14 +93,14 @@ export const States: Story = {
           <SelectValue />
         </SelectTrigger>
       </Select>
-      <Select items={sortOptions} defaultValue="price">
+      <Select items={sortOptions} defaultValue="owner">
         <SelectTrigger aria-label="Invalid" aria-invalid>
           <SelectValue />
         </SelectTrigger>
       </Select>
-      <Select items={sortOptions} defaultValue="edhrecRank">
+      <Select items={sortOptions} defaultValue="created">
         <SelectTrigger aria-label="A very long option" className="w-40">
-          <SelectValue>{() => "EDHREC rank, then alphabetical"}</SelectValue>
+          <SelectValue>{() => "Date created, then alphabetical"}</SelectValue>
         </SelectTrigger>
       </Select>
     </div>
@@ -109,13 +109,13 @@ export const States: Story = {
 
 function SortSelect({ onValueChange }: { onValueChange?: (value: string | null) => void }) {
   return (
-    <Select items={sortOptions} defaultValue="manaValue" onValueChange={onValueChange}>
-      <SelectTrigger aria-label="Sort cards" className="w-44">
+    <Select items={sortOptions} defaultValue="modified" onValueChange={onValueChange}>
+      <SelectTrigger aria-label="Sort documents" className="w-44">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
         {sortOptions.map((option) => (
-          <SelectItem key={option.value} value={option.value} disabled={option.value === "price"}>
+          <SelectItem key={option.value} value={option.value} disabled={option.value === "owner"}>
             {option.label}
           </SelectItem>
         ))}
@@ -124,38 +124,41 @@ function SortSelect({ onValueChange }: { onValueChange?: (value: string | null) 
   );
 }
 
-export const Open: Story = {
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => <SortSelect onValueChange={args.onValueChange} />,
   play: async ({ canvas }) => {
-    const trigger = canvas.getByRole("combobox", { name: "Sort cards" });
+    const trigger = canvas.getByRole("combobox", { name: "Sort documents" });
     await userEvent.click(trigger);
     const listbox = await body().findByRole("listbox");
     await expect(listbox).toBeVisible();
-    await expect(body().getByRole("option", { name: "Mana value" })).toHaveAttribute(
+    await expect(body().getByRole("option", { name: "Last modified" })).toHaveAttribute(
       "aria-selected",
       "true",
     );
-    await expect(body().getByRole("option", { name: "Price" })).toHaveAttribute("data-disabled");
+    await expect(body().getByRole("option", { name: "Owner" })).toHaveAttribute("data-disabled");
   },
 };
 
-export const Selected: Story = {
+export const SelectedTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => <SortSelect onValueChange={args.onValueChange} />,
   play: async ({ canvas, args }) => {
-    const trigger = canvas.getByRole("combobox", { name: "Sort cards" });
+    const trigger = canvas.getByRole("combobox", { name: "Sort documents" });
     await userEvent.click(trigger);
-    await userEvent.click(await body().findByRole("option", { name: "EDHREC rank" }));
+    await userEvent.click(await body().findByRole("option", { name: "Date created" }));
     await waitFor(() => expect(body().queryByRole("listbox")).toBeNull());
-    await expect(args.onValueChange).toHaveBeenCalledWith("edhrecRank", expect.anything());
-    await expect(trigger).toHaveTextContent("EDHREC rank");
+    await expect(args.onValueChange).toHaveBeenCalledWith("created", expect.anything());
+    await expect(trigger).toHaveTextContent("Date created");
   },
 };
 
 /** Enter/Space open, Escape returns focus, Home/End/arrows, disabled row not selectable, typeahead, Enter selects. */
-export const Keyboard: Story = {
+export const KeyboardTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => <SortSelect onValueChange={args.onValueChange} />,
   play: async ({ canvas, args }) => {
-    const trigger = canvas.getByRole("combobox", { name: "Sort cards" });
+    const trigger = canvas.getByRole("combobox", { name: "Sort documents" });
     // Compare by name so a failure reports which row is highlighted instead.
     const expectHighlighted = (name: string) =>
       waitFor(() =>
@@ -167,29 +170,29 @@ export const Keyboard: Story = {
 
     await userEvent.keyboard("{Enter}");
     await body().findByRole("listbox");
-    await expectHighlighted("Mana value");
+    await expectHighlighted("Last modified");
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body().queryByRole("listbox")).toBeNull());
     await expect(trigger).toHaveFocus();
 
     await userEvent.keyboard(" ");
     await body().findByRole("listbox");
-    await expectHighlighted("Mana value");
+    await expectHighlighted("Last modified");
     await userEvent.keyboard("{End}");
-    await expectHighlighted("EDHREC rank");
+    await expectHighlighted("Date created");
     await userEvent.keyboard("{Home}");
-    await expectHighlighted("Mana value");
+    await expectHighlighted("Last modified");
     await userEvent.keyboard("{ArrowDown}");
     await expectHighlighted("Alphabetical");
     // Base UI 1.9 keeps disabled rows in arrow navigation (screen readers can reach them)
     // but Enter on one selects nothing and the popup stays open.
     await userEvent.keyboard("{ArrowDown}");
-    await expectHighlighted("Price");
+    await expectHighlighted("Owner");
     await userEvent.keyboard("{Enter}");
     await expect(body().getByRole("listbox")).toBeVisible();
     await expect(args.onValueChange).not.toHaveBeenCalled();
     await userEvent.keyboard("{ArrowDown}");
-    await expectHighlighted("EDHREC rank");
+    await expectHighlighted("Date created");
     await userEvent.keyboard("a");
     await expectHighlighted("Alphabetical");
     await userEvent.keyboard("{Enter}");
@@ -203,34 +206,34 @@ export const Keyboard: Story = {
     await body().findByRole("listbox");
     await expectHighlighted("Alphabetical");
     await userEvent.keyboard("{End}");
-    await expectHighlighted("EDHREC rank");
+    await expectHighlighted("Date created");
   },
 };
 
-const formats = {
-  constructed: [
-    { value: "standard", label: "Standard" },
-    { value: "pioneer", label: "Pioneer" },
-    { value: "modern", label: "Modern" },
+const locations = {
+  projects: [
+    { value: "atlas", label: "Atlas" },
+    { value: "borealis", label: "Borealis" },
+    { value: "cobalt", label: "Cobalt" },
   ],
-  eternal: [
-    { value: "legacy", label: "Legacy" },
-    { value: "vintage", label: "Vintage" },
-    { value: "commander", label: "Commander" },
+  documents: [
+    { value: "report", label: "Quarterly report" },
+    { value: "review", label: "Design review" },
+    { value: "launch", label: "Launch plan" },
   ],
 };
-const formatItems = [...formats.constructed, ...formats.eternal];
+const locationItems = [...locations.projects, ...locations.documents];
 
-export const Grouped: Story = {
-  render: () => (
-    <Select items={formatItems} defaultValue="commander">
-      <SelectTrigger aria-label="Format" className="w-56">
+function GroupedSelect() {
+  return (
+    <Select items={locationItems} defaultValue="launch">
+      <SelectTrigger aria-label="Location" className="w-56">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Constructed</SelectLabel>
-          {formats.constructed.map((option) => (
+          <SelectLabel>Projects</SelectLabel>
+          {locations.projects.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -238,8 +241,8 @@ export const Grouped: Story = {
         </SelectGroup>
         <SelectSeparator />
         <SelectGroup>
-          <SelectLabel>Eternal</SelectLabel>
-          {formats.eternal.map((option) => (
+          <SelectLabel>Documents</SelectLabel>
+          {locations.documents.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -247,28 +250,38 @@ export const Grouped: Story = {
         </SelectGroup>
       </SelectContent>
     </Select>
-  ),
+  );
+}
+
+export const Grouped: Story = {
+  render: () => <GroupedSelect />,
+};
+
+export const GroupedTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: () => <GroupedSelect />,
   play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole("combobox", { name: "Format" }));
-    await expect(await body().findByRole("group", { name: "Eternal" })).toBeVisible();
+    await userEvent.click(canvas.getByRole("combobox", { name: "Location" }));
+    await expect(await body().findByRole("group", { name: "Documents" })).toBeVisible();
   },
 };
 
-const sets = Array.from({ length: 40 }, (_, index) => ({
-  value: `set-${index + 1}`,
-  label: `Set ${String(index + 1).padStart(2, "0")}`,
+const folders = Array.from({ length: 40 }, (_, index) => ({
+  value: `folder-${index + 1}`,
+  label: `Folder ${String(index + 1).padStart(2, "0")}`,
 }));
 
 /** A long list scrolls inside the popup, capped at the space below the trigger. */
-export const Scrolling: Story = {
+export const ScrollingTest: Story = {
+  tags: ["!dev", "!autodocs"],
   parameters: { layout: "padded" },
   render: () => (
-    <Select items={sets} defaultValue="set-1">
-      <SelectTrigger aria-label="Set" className="w-44">
+    <Select items={folders} defaultValue="folder-1">
+      <SelectTrigger aria-label="Folder" className="w-44">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {sets.map((option) => (
+        {folders.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
@@ -277,24 +290,25 @@ export const Scrolling: Story = {
     </Select>
   ),
   play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole("combobox", { name: "Set" }));
+    await userEvent.click(canvas.getByRole("combobox", { name: "Folder" }));
     const listbox = await body().findByRole("listbox");
     await waitFor(() => expect(listbox.scrollHeight).toBeGreaterThan(listbox.clientHeight));
   },
 };
 
-/** Full-width trigger at phone width (the printing picker): the popup matches the trigger. */
-export const OpenMobileWidth: Story = {
+/** Full-width trigger at phone width: the popup matches the trigger. */
+export const MobileWidthTest: Story = {
+  tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
   render: (args) => (
     <div>
       <span className="text-sm font-semibold text-strong-foreground">Order by</span>
-      <Select items={printingOptions} defaultValue="date" onValueChange={args.onValueChange}>
-        <SelectTrigger aria-label="Order printings by" className="mt-1">
+      <Select items={orderOptions} defaultValue="date" onValueChange={args.onValueChange}>
+        <SelectTrigger aria-label="Order documents by" className="mt-1">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {printingOptions.map((option) => (
+          {orderOptions.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -304,7 +318,7 @@ export const OpenMobileWidth: Story = {
     </div>
   ),
   play: async ({ canvas }) => {
-    const trigger = canvas.getByRole("combobox", { name: "Order printings by" });
+    const trigger = canvas.getByRole("combobox", { name: "Order documents by" });
     await userEvent.click(trigger);
     const listbox = await body().findByRole("listbox");
     const popup = listbox.closest("[data-slot='select-content']");
@@ -319,14 +333,15 @@ export const OpenMobileWidth: Story = {
 };
 
 /** A narrow trigger: the list grows to fit its longest option instead of truncating it. */
-export const NarrowTriggerLongOptions: Story = {
+export const NarrowTriggerTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: () => (
-    <Select items={printingOptions} defaultValue="set">
+    <Select items={orderOptions} defaultValue="title">
       <SelectTrigger aria-label="Order by" className="w-28">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {printingOptions.map((option) => (
+        {orderOptions.map((option) => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>
@@ -338,7 +353,7 @@ export const NarrowTriggerLongOptions: Story = {
     const trigger = within(canvasElement).getByRole("combobox", { name: "Order by" });
     await userEvent.click(trigger);
     const list = await body().findByRole("listbox");
-    const option = within(list).getByRole("option", { name: "Edition date" });
+    const option = within(list).getByRole("option", { name: "Date created" });
     const text = option.querySelector<HTMLElement>('[data-slot="select-item-text"]');
     if (!text) throw new Error("item text missing");
     await waitFor(() =>

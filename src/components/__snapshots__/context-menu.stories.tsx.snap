@@ -1,41 +1,41 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- text: Right-click empty lane space
+- text: Right-click empty board space
 `;
 
-exports[`In Dialog With Positioner Class 1`] = `
+exports[`In Dialog With Positioner Class Test 1`] = `
 - menu:
-  - menuitem "New category"
-  - menuitem "Paste cards"
-  - menuitem "Collapse lane"
-  - menuitem "Rename lane"
-  - menuitem "Remove lane"
+  - menuitem "New document"
+  - menuitem "Paste"
+  - menuitem "Collapse all"
+  - menuitem "Refresh"
+  - menuitem "Archive all"
 `;
 
-exports[`Open Submenu 1`] = `
+exports[`Right Click Test 1`] = `
 - menu:
-  - group "Lane 1":
-    - menuitem "New category"
-    - menuitem "Paste cards" [disabled]
+  - group "Atlas board":
+    - menuitem "New document"
+    - menuitem "Paste" [disabled]
   - separator
-  - menuitem "Sort lane by" [expanded]
+  - menuitem "Sort by"
+  - menuitem "Collapse all"
+  - menuitem "Archive all"
+`;
+
+exports[`Submenu Test 1`] = `
+- menu:
+  - group "Atlas board":
+    - menuitem "New document"
+    - menuitem "Paste" [disabled]
+  - separator
+  - menuitem "Sort by" [expanded]
   - group:
-    - menu "Sort lane by":
-      - menuitem "Mana value"
+    - menu "Sort by":
       - menuitem "Name"
-      - menuitem "Price"
-  - menuitem "Collapse lane"
-  - menuitem "Remove lane"
-`;
-
-exports[`Right Click 1`] = `
-- menu:
-  - group "Lane 1":
-    - menuitem "New category"
-    - menuitem "Paste cards" [disabled]
-  - separator
-  - menuitem "Sort lane by"
-  - menuitem "Collapse lane"
-  - menuitem "Remove lane"
+      - menuitem "Date modified"
+      - menuitem "Owner"
+  - menuitem "Collapse all"
+  - menuitem "Archive all"
 `;

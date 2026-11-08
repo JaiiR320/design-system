@@ -15,7 +15,7 @@ import {
   ContextMenuTrigger,
 } from "#components/context-menu";
 
-const onNewCategory = fn();
+const onNewDocument = fn();
 
 const meta = {
   title: "Primitives/ContextMenu",
@@ -25,28 +25,28 @@ const meta = {
   render: (args) => (
     <ContextMenu {...args}>
       <ContextMenuTrigger
-        aria-label="Lane 1"
+        aria-label="Atlas board"
         className="flex h-80 w-[640px] items-center justify-center rounded-xl border border-dashed border-border-strong text-sm text-muted-foreground"
       >
-        Right-click empty lane space
+        Right-click empty board space
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuGroup>
-          <ContextMenuLabel>Lane 1</ContextMenuLabel>
-          <ContextMenuItem onClick={onNewCategory}>New category</ContextMenuItem>
-          <ContextMenuItem disabled>Paste cards</ContextMenuItem>
+          <ContextMenuLabel>Atlas board</ContextMenuLabel>
+          <ContextMenuItem onClick={onNewDocument}>New document</ContextMenuItem>
+          <ContextMenuItem disabled>Paste</ContextMenuItem>
         </ContextMenuGroup>
         <ContextMenuSeparator />
         <ContextMenuSub>
-          <ContextMenuSubTrigger>Sort lane by</ContextMenuSubTrigger>
+          <ContextMenuSubTrigger>Sort by</ContextMenuSubTrigger>
           <ContextMenuSubContent>
-            <ContextMenuItem>Mana value</ContextMenuItem>
             <ContextMenuItem>Name</ContextMenuItem>
-            <ContextMenuItem>Price</ContextMenuItem>
+            <ContextMenuItem>Date modified</ContextMenuItem>
+            <ContextMenuItem>Owner</ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
-        <ContextMenuItem variant="muted">Collapse lane</ContextMenuItem>
-        <ContextMenuItem variant="destructive">Remove lane</ContextMenuItem>
+        <ContextMenuItem variant="muted">Collapse all</ContextMenuItem>
+        <ContextMenuItem variant="destructive">Archive all</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   ),
@@ -68,51 +68,53 @@ async function rightClick(target: HTMLElement) {
 }
 
 /** Real right click opens the menu at the pointer; arrows move, Escape closes. */
-export const RightClick: Story = {
+export const RightClickTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const body = within(document.body);
-    await rightClick(canvas.getByLabelText("Lane 1"));
+    await rightClick(canvas.getByLabelText("Atlas board"));
     await waitFor(() => expect(body.getByRole("menu")).toBeVisible());
     await expect(args.onOpenChange).toHaveBeenCalledWith(true, expect.anything());
-    await expect(body.getByRole("group", { name: "Lane 1" })).toBeInTheDocument();
+    await expect(body.getByRole("group", { name: "Atlas board" })).toBeInTheDocument();
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("menu")).not.toBeInTheDocument());
 
-    // Reopen and choose an item with the keyboard; disabled Paste cards is focusable but inert.
-    await rightClick(canvas.getByLabelText("Lane 1"));
+    // Reopen and choose an item with the keyboard; disabled Paste is focusable but inert.
+    await rightClick(canvas.getByLabelText("Atlas board"));
     const menu = await body.findByRole("menu");
     // Base UI focuses the popup after opening; navigating before that would race it.
     await waitFor(() => expect(menu).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
-    await waitFor(() => expect(body.getByRole("menuitem", { name: "New category" })).toHaveFocus());
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "New document" })).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
-    await expect(body.getByRole("menuitem", { name: "Paste cards" })).toHaveFocus();
+    await expect(body.getByRole("menuitem", { name: "Paste" })).toHaveFocus();
     await userEvent.keyboard("{ArrowUp}{Enter}");
     await waitFor(() => expect(body.queryByRole("menu")).not.toBeInTheDocument());
-    await expect(onNewCategory).toHaveBeenCalledTimes(1);
+    await expect(onNewDocument).toHaveBeenCalledTimes(1);
 
     // Leave it open for the snapshot.
-    await rightClick(canvas.getByLabelText("Lane 1"));
+    await rightClick(canvas.getByLabelText("Atlas board"));
     await waitFor(() => expect(body.getByRole("menu")).toBeVisible());
   },
 };
 
 /** Submenu opens with ArrowRight and on hover. */
-export const OpenSubmenu: Story = {
+export const SubmenuTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const body = within(document.body);
-    await rightClick(canvas.getByLabelText("Lane 1"));
-    const sortBy = await body.findByRole("menuitem", { name: "Sort lane by" });
+    await rightClick(canvas.getByLabelText("Atlas board"));
+    const sortBy = await body.findByRole("menuitem", { name: "Sort by" });
     // Let the menu take its opening focus before typing, or typeahead races it.
     await waitFor(() => expect(body.getByRole("menu")).toHaveFocus());
     await userEvent.keyboard("s");
     await waitFor(() => expect(sortBy).toHaveFocus());
     await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
-    await waitFor(() => expect(body.getByRole("menuitem", { name: "Mana value" })).toHaveFocus());
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "Name" })).toHaveFocus());
     await userEvent.keyboard("{ArrowLeft}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(1));
     await userEvent.hover(sortBy);
@@ -121,24 +123,25 @@ export const OpenSubmenu: Story = {
 };
 
 /** A positioner class extends the overlay layer: the menu paints above its Dialog. */
-export const InDialogWithPositionerClass: Story = {
+export const InDialogWithPositionerClassTest: Story = {
+  tags: ["!dev", "!autodocs"],
   render: (args) => (
     <Dialog defaultOpen>
       <DialogContent size="sm">
-        <DialogTitle>Deck settings</DialogTitle>
+        <DialogTitle>Project settings</DialogTitle>
         <ContextMenu {...args}>
           <ContextMenuTrigger
-            aria-label="Lane 1"
+            aria-label="Atlas board"
             className="mt-4 flex h-24 items-center justify-center rounded-xl border border-dashed border-border-strong text-sm text-muted-foreground"
           >
-            Right-click empty lane space
+            Right-click empty board space
           </ContextMenuTrigger>
           <ContextMenuContent positionerProps={{ className: "ml-1" }}>
-            <ContextMenuItem>New category</ContextMenuItem>
-            <ContextMenuItem>Paste cards</ContextMenuItem>
-            <ContextMenuItem>Collapse lane</ContextMenuItem>
-            <ContextMenuItem>Rename lane</ContextMenuItem>
-            <ContextMenuItem variant="destructive">Remove lane</ContextMenuItem>
+            <ContextMenuItem>New document</ContextMenuItem>
+            <ContextMenuItem>Paste</ContextMenuItem>
+            <ContextMenuItem>Collapse all</ContextMenuItem>
+            <ContextMenuItem>Refresh</ContextMenuItem>
+            <ContextMenuItem variant="destructive">Archive all</ContextMenuItem>
           </ContextMenuContent>
         </ContextMenu>
       </DialogContent>
@@ -146,7 +149,7 @@ export const InDialogWithPositionerClass: Story = {
   ),
   play: async () => {
     const body = within(document.body);
-    await rightClick(await body.findByLabelText("Lane 1"));
+    await rightClick(await body.findByLabelText("Atlas board"));
     const menu = await body.findByRole("menu");
     await waitFor(() => expect(menu).toBeVisible());
     const positioner = menu.closest("[data-slot='context-menu-positioner']");
