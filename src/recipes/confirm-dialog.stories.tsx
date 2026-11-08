@@ -78,7 +78,7 @@ function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           {error ? (
-            <Alert role="alert" tone="danger" size="sm" className="mt-4">
+            <Alert role="alert" tone="destructive" size="sm" className="mt-4">
               {error}
             </Alert>
           ) : null}

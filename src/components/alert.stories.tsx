@@ -10,7 +10,7 @@ import { cn } from "#lib/utils";
 const meta = {
   title: "Primitives/Alert",
   component: Alert,
-  args: { children: "Invalid email or password." },
+  args: { children: "Changes are saved automatically." },
   decorators: [
     (Story) => (
       <div className="w-[480px]">
@@ -38,7 +38,7 @@ export const Default: Story = {};
 export const Tones: Story = {
   render: () => (
     <div className="grid gap-3">
-      <Alert tone="danger">Could not load this deck.</Alert>
+      <Alert tone="destructive">Could not load this deck.</Alert>
       <Alert tone="warning">Loading this snapshot will overwrite your current live deck.</Alert>
       <Alert tone="info">Select two snapshots to compare them.</Alert>
       <Alert tone="success">Thanks! Your feedback was sent.</Alert>
@@ -92,7 +92,11 @@ export const WithTitle: Story = {
 };
 
 export const RenderAsParagraph: Story = {
-  render: () => <Alert render={<p />}>Could not reach the server.</Alert>,
+  render: () => (
+    <Alert tone="destructive" render={<p />}>
+      Could not reach the server.
+    </Alert>
+  ),
   play: async ({ canvasElement }) => {
     const alert = canvasElement.querySelector("[data-slot=alert]");
     await expect(alert?.tagName).toBe("P");
@@ -183,7 +187,7 @@ export const NarrowWrapping: Story = {
     ),
   ],
   render: () => (
-    <Alert tone="danger" size="panel">
+    <Alert tone="destructive" size="panel">
       <AlertTitle>Delete deck?</AlertTitle>
       <AlertDescription className="mt-1">
         This will delete the deck and all 3 snapshots.

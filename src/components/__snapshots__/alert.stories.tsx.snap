@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Default 1`] = `
-- text: Invalid email or password.
+- text: Changes are saved automatically.
 `;
 
 exports[`Inline Confirm 1`] = `

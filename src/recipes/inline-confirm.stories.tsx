@@ -56,7 +56,7 @@ function ConfirmAlert({
   return (
     <Alert
       role="alert"
-      tone={load ? "warning" : "danger"}
+      tone={load ? "warning" : "destructive"}
       className="basis-full"
       aria-label={load ? `Confirm load ${label}` : `Confirm delete ${label}`}
     >

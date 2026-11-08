@@ -9,7 +9,7 @@ import { cn } from "#lib/utils";
 const alertVariants = cva("border text-sm", {
   variants: {
     tone: {
-      danger:
+      destructive:
         "border-destructive-border/50 bg-destructive-surface/30 text-destructive-muted-foreground",
       warning: "border-warning-border/60 bg-warning-surface/20 text-warning-muted-foreground",
       info: "border-info-border/50 bg-info-surface/20 text-info-text",
@@ -21,7 +21,7 @@ const alertVariants = cva("border text-sm", {
       panel: "rounded-xl p-4",
     },
   },
-  defaultVariants: { tone: "danger", size: "default" },
+  defaultVariants: { tone: "info", size: "default" },
 });
 
 type AlertProps = useRender.ComponentProps<"div"> & VariantProps<typeof alertVariants>;
