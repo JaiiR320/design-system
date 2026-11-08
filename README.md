@@ -59,6 +59,7 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 - **Dialogs opened from state:** pass `finalFocus` when the element that opened the dialog may be gone by the time it closes.
 - **Popover anchored to an input:** focus stays in the input, so handle Escape on the input itself.
 - **Disabled menu items stay focusable** (`aria-disabled`), as Base UI intends. Clicking them does nothing.
+- **Server rendering with Vite 8 + Nitro:** Base UI imports the CommonJS `use-sync-external-store` shim. The production server build leaves the shim's `require("react")` as a runtime require, which loads a second React and breaks SSR with an invalid hook call ([nitrojs/nitro#4171](https://github.com/nitrojs/nitro/issues/4171)). Until the Nitro fix ships, alias `use-sync-external-store/shim` and `use-sync-external-store/shim/with-selector` to an ESM module that re-exports React's `useSyncExternalStore`. DeckDiff's `apps/web/src/lib/syncExternalStore.ts` is one.
 
 ## Develop
 
