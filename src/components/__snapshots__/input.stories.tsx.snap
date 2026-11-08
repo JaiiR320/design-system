@@ -18,12 +18,12 @@ exports[`Inline Form 1`] = `
 `;
 
 exports[`Sizes 1`] = `
-- textbox "Extra small":
-  - /placeholder: "xs: printing filter"
 - textbox "Small":
-  - /placeholder: "sm: inline rename"
+  - /placeholder: "sm: compact"
 - textbox "Medium":
-  - /placeholder: "md: default form field"
+  - /placeholder: "md: default"
+- textbox "Large":
+  - /placeholder: "lg: roomy form field"
 `;
 
 exports[`States 1`] = `

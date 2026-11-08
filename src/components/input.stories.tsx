@@ -8,7 +8,7 @@ const meta = {
   title: "Primitives/Input",
   component: Input,
   args: { placeholder: "you@example.com", "aria-label": "Email" },
-  argTypes: { inputSize: { control: "inline-radio", options: ["xs", "sm", "md"] } },
+  argTypes: { inputSize: { control: "inline-radio", options: ["sm", "md", "lg"] } },
   decorators: [
     (Story) => (
       <div className="w-[480px]">
@@ -26,9 +26,9 @@ export const Default: Story = {};
 export const Sizes: Story = {
   render: (args) => (
     <div className="flex flex-col gap-3">
-      <Input {...args} inputSize="xs" aria-label="Extra small" placeholder="xs: printing filter" />
-      <Input {...args} inputSize="sm" aria-label="Small" placeholder="sm: inline rename" />
-      <Input {...args} inputSize="md" aria-label="Medium" placeholder="md: default form field" />
+      <Input {...args} inputSize="sm" aria-label="Small" placeholder="sm: compact" />
+      <Input {...args} inputSize="md" aria-label="Medium" placeholder="md: default" />
+      <Input {...args} inputSize="lg" aria-label="Large" placeholder="lg: roomy form field" />
     </div>
   ),
 };
@@ -91,7 +91,7 @@ export const FocusVisible: Story = {
 export const InlineForm: Story = {
   render: (args) => (
     <form className="flex gap-2" onSubmit={(event) => event.preventDefault()}>
-      <Input {...args} inputSize="sm" aria-label="Deck name" defaultValue="Atraxa Superfriends" />
+      <Input {...args} inputSize="md" aria-label="Deck name" defaultValue="Atraxa Superfriends" />
       <button
         type="submit"
         className="shrink-0 rounded-xl bg-cyan-400 px-3 py-2 text-sm font-medium text-cyan-950"

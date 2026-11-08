@@ -49,7 +49,7 @@ export const LabelSizes: Story = {
       </Field>
       <Field {...args}>
         <FieldLabel size="sm">sm label</FieldLabel>
-        <Input inputSize="xs" placeholder="Compact filter" />
+        <Input inputSize="sm" placeholder="Compact filter" />
       </Field>
     </FieldGroup>
   ),
@@ -60,11 +60,11 @@ export const Orientations: Story = {
     <FieldGroup>
       <Field {...args} orientation="vertical">
         <FieldLabel>Vertical</FieldLabel>
-        <Input inputSize="sm" placeholder="Label above" />
+        <Input inputSize="md" placeholder="Label above" />
       </Field>
       <Field {...args} orientation="horizontal">
         <FieldLabel>Horizontal</FieldLabel>
-        <Input inputSize="sm" className="w-48" placeholder="Label beside" />
+        <Input inputSize="md" className="w-48" placeholder="Label beside" />
       </Field>
     </FieldGroup>
   ),
@@ -205,11 +205,11 @@ export const LegendSizes: Story = {
     <FieldGroup>
       <FieldSet>
         <FieldLegend size="md">md legend</FieldLegend>
-        <Input inputSize="sm" aria-label="md legend control" />
+        <Input inputSize="md" aria-label="Legend control" />
       </FieldSet>
       <FieldSet>
         <FieldLegend size="sm">sm legend</FieldLegend>
-        <Input inputSize="sm" aria-label="sm legend control" />
+        <Input inputSize="md" aria-label="Small legend control" />
       </FieldSet>
     </FieldGroup>
   ),

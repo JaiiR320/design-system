@@ -77,11 +77,11 @@ exports[`Keyboard Focus 1`] = `
 
 exports[`Sizes 1`] = `
 - group:
-  - textbox "xs"
-- group:
   - textbox "sm"
 - group:
   - textbox "md"
+- group:
+  - textbox "lg"
 `;
 
 exports[`States 1`] = `

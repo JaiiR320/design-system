@@ -303,7 +303,7 @@ function PrintingPicker() {
               </Label>
               <Input
                 id="printing-filter"
-                inputSize="xs"
+                inputSize="sm"
                 placeholder="Filter set name"
                 className="mt-1"
               />

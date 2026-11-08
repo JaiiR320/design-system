@@ -81,7 +81,7 @@ export const Addons: Story = {
 export const Sizes: Story = {
   render: (args) => (
     <div className="flex flex-col gap-3">
-      {(["xs", "sm", "md"] as const).map((inputSize) => (
+      {(["sm", "md", "lg"] as const).map((inputSize) => (
         <InputGroup {...args} key={inputSize}>
           <InputGroupAddon>
             <SearchIcon strokeWidth={1.75} />

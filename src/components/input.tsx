@@ -11,10 +11,11 @@ const inputVariants = cva(
   {
     variants: {
       // Named inputSize so native `size` stays the numeric HTML attribute.
+      // Heights line up with Button: sm/md are as tall as Button sm/md, lg as Button lg.
       inputSize: {
-        xs: "rounded-lg px-3 py-2",
-        sm: "px-4 py-2",
-        md: "px-4 py-3",
+        sm: "px-3 py-2",
+        md: "px-4 py-2",
+        lg: "px-4 py-3",
       },
     },
     defaultVariants: { inputSize: "md" },

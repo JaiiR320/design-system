@@ -46,10 +46,10 @@ exports[`Label Sizes 1`] = `
 exports[`Legend Sizes 1`] = `
 - group "md legend":
   - text: md legend
-  - textbox "md legend control"
+  - textbox "Legend control"
 - group "sm legend":
   - text: sm legend
-  - textbox "sm legend control"
+  - textbox "Small legend control"
 `;
 
 exports[`Orientations 1`] = `

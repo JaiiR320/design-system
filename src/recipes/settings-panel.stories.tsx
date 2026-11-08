@@ -62,7 +62,7 @@ function GeneralPanel() {
         <Field>
           <FieldLabel>Deck name</FieldLabel>
           <div className="flex gap-2">
-            <Input inputSize="sm" defaultValue="Atraxa Superfriends" />
+            <Input inputSize="md" defaultValue="Atraxa Superfriends" />
             <Button size="sm">Save</Button>
           </div>
           <FieldDescription>Shown on the deck tile and in exports.</FieldDescription>
@@ -161,7 +161,7 @@ function CategoriesPanel() {
       >
         <Field className="flex-1">
           <FieldLabel className="sr-only">New category</FieldLabel>
-          <Input inputSize="sm" placeholder="New category" value={draft} onValueChange={setDraft} />
+          <Input inputSize="md" placeholder="New category" value={draft} onValueChange={setDraft} />
         </Field>
         <Button type="submit" variant="default" size="sm">
           <Plus strokeWidth={1.75} />
