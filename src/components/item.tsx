@@ -16,7 +16,7 @@ const itemVariants = cva(
     variants: {
       variant: {
         outline:
-          "rounded-xl border border-border bg-background [&:is(a,button)]:hover:border-border-strong data-pressed:border-ring data-pressed:bg-info-surface/20 data-selected:border-ring data-selected:bg-info-surface/20",
+          "rounded-xl border border-border bg-background [&:is(a,button)]:hover:border-border-strong data-pressed:border-selected-border data-pressed:bg-selected data-selected:border-selected-border data-selected:bg-selected",
         muted: "rounded-xl border border-border bg-muted",
         plain: "border-0 bg-transparent",
       },
