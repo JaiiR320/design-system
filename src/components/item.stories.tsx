@@ -37,10 +37,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // A history row: title + timestamp on the left, Load on the right.
-// text-base: DeckDiff's history titles are 16px/24px; the description stays text-sm.
 export const Default: Story = {
   render: (args) => (
-    <Item {...args} className="text-base">
+    <Item {...args}>
       <ItemContent>
         <ItemTitle>Initial build</ItemTitle>
         <ItemDescription>Nov 7, 2026, 12:59 AM</ItemDescription>
@@ -167,7 +166,7 @@ function hoverBackgrounds(element: Element) {
 }
 
 // History compare mode: each row is one Toggle (aria-pressed), never a nested button.
-// As in DeckDiff: 16px/24px titles (text-base) and a border-only hover on unselected rows,
+// As in DeckDiff: titles inherit 16px/24px and unselected rows hover with the border only,
 // so Toggle's off-state hover fill is overridden on the row.
 export const CompareSelection: Story = {
   render: () => {
@@ -180,7 +179,7 @@ export const CompareSelection: Story = {
             return (
               <Item
                 key={save.id}
-                className="text-base not-data-pressed:hover:bg-background"
+                className="not-data-pressed:hover:bg-background"
                 render={
                   <Toggle
                     pressed={order > 0}

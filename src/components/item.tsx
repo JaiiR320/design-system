@@ -11,7 +11,7 @@ import { cn } from "#lib/utils";
 // font-normal resets the weight a rendered Toggle/Button would otherwise pass to the description.
 // Selected rows: `data-selected` on plain rows, `data-pressed` when rendered as a Toggle.
 const itemVariants = cva(
-  `flex w-full items-center justify-between gap-3 text-left text-sm font-normal transition motion-reduce:transition-none ${focusRing}`,
+  `flex w-full items-center justify-between gap-3 text-left transition motion-reduce:transition-none ${focusRing}`,
   {
     variants: {
       variant: {

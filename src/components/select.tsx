@@ -34,9 +34,10 @@ function SelectTrigger({
       {...props}
     >
       {children}
+      {/* right-[11px]: 12px from the outer edge once the 1px border is counted. */}
       <SelectPrimitive.Icon
         data-slot="select-icon"
-        className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 text-subtle-foreground"
+        className="pointer-events-none absolute top-1/2 right-[11px] flex -translate-y-1/2 text-subtle-foreground"
       >
         <ChevronDownIcon className="size-4" strokeWidth={1.75} />
       </SelectPrimitive.Icon>
