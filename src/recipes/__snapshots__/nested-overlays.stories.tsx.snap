@@ -1,177 +1,177 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Confirm Delete 1`] = `
-- button "Deck options"
+exports[`Confirm Delete Test 1`] = `
+- button "Project options"
 `;
 
 exports[`Default 1`] = `
-- button "Deck options"
+- button "Project options"
 `;
 
-exports[`Dialog Open 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Dialog Open Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions"
-  - button "Delete deck"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions"
+  - button "Delete project"
   - button "Done"
 `;
 
-exports[`Edge Of Viewport 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Edge Of Viewport Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions" [expanded]
-  - menu "Deepglow Skate actions":
-    - menuitem "Use as deck cover"
-    - menuitem "Change printing"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions" [expanded]
+  - menu "Quarterly report actions":
+    - menuitem "Rename"
+    - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
     - group:
       - menu "Move to":
-        - menuitem "Commander"
-        - menuitem "Ramp"
-        - menuitem "Sideboard"
-        - menuitem "Planeswalker"
+        - menuitem "Reports"
+        - menuitem "Designs"
+        - menuitem "Plans"
+        - menuitem "Archived"
     - separator
-    - menuitem "Remove"
-  - button "Delete deck"
+    - menuitem "Delete"
+  - button "Delete project"
   - button "Done"
 `;
 
-exports[`Escape Closes Top Layer First 1`] = `
-- button "Deck options"
+exports[`Escape Closes Top Layer First Test 1`] = `
+- button "Project options"
 `;
 
-exports[`Mobile 390 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Mobile Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions" [expanded]
-  - menu "Deepglow Skate actions":
-    - menuitem "Use as deck cover"
-    - menuitem "Change printing"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions" [expanded]
+  - menu "Quarterly report actions":
+    - menuitem "Rename"
+    - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
     - group:
       - menu "Move to":
-        - menuitem "Commander"
-        - menuitem "Ramp"
-        - menuitem "Sideboard"
-        - menuitem "Planeswalker"
+        - menuitem "Reports"
+        - menuitem "Designs"
+        - menuitem "Plans"
+        - menuitem "Archived"
     - separator
-    - menuitem "Remove"
-  - button "Delete deck"
+    - menuitem "Delete"
+  - button "Delete project"
   - button "Done"
 `;
 
-exports[`Move To Category 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Move To Folder Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions"
-  - button "Delete deck"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions"
+  - button "Delete project"
   - button "Done"
 `;
 
-exports[`Nested Alert Dialog 1`] = `
-- alertdialog "Delete Atraxa Superfriends?":
-  - heading "Delete Atraxa Superfriends?" [level=2]
-  - paragraph: The deck and its 3 snapshots are removed for good.
+exports[`Nested Alert Dialog Test 1`] = `
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: The project and its 3 documents are removed for good.
   - button "Cancel"
   - button "Delete"
 `;
 
-exports[`Popover And Tooltip 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Popover And Tooltip Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42" [expanded]
-  - dialog "Price":
-    - heading "Price" [level=2]
-    - paragraph: Cheapest printing, Nov 7, 2026.
-  - button "Deepglow Skate actions"
-  - button "Delete deck"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared" [expanded]
+  - dialog "Sharing":
+    - heading "Sharing" [level=2]
+    - paragraph: Ada Park and Sam Lee can edit.
+  - button "Quarterly report actions"
+  - button "Delete project"
   - button "Done"
 - text: Saved Nov 7, 2026, 01:00 AM
 `;
 
-exports[`Select Open 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Select Open Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards" [expanded]: Type
+  - text: Sort documents
+  - combobox "Sort documents" [expanded]: Owner
   - listbox:
-    - option "Categories"
-    - option "Type" [selected]
-    - option "Mana value"
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions"
-  - button "Delete deck"
+    - option "Name"
+    - option "Last edited"
+    - option "Owner" [selected]
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions"
+  - button "Delete project"
   - button "Done"
 `;
 
-exports[`Submenu Open 1`] = `
-- dialog "Atraxa Superfriends":
-  - heading "Atraxa Superfriends" [level=2]
-  - paragraph: Deck options
+exports[`Submenu Open Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
   - button "Last saved"
   - button "Close"
-  - text: Group cards
-  - combobox "Group cards": Categories
-  - text: Deepglow Skate
-  - paragraph: Ramp
-  - button "$0.42"
-  - button "Deepglow Skate actions" [expanded]
-  - menu "Deepglow Skate actions":
-    - menuitem "Use as deck cover"
-    - menuitem "Change printing"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions" [expanded]
+  - menu "Quarterly report actions":
+    - menuitem "Rename"
+    - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
     - group:
       - menu "Move to":
-        - menuitem "Commander"
-        - menuitem "Ramp"
-        - menuitem "Sideboard"
-        - menuitem "Planeswalker"
+        - menuitem "Reports"
+        - menuitem "Designs"
+        - menuitem "Plans"
+        - menuitem "Archived"
     - separator
-    - menuitem "Remove"
-  - button "Delete deck"
+    - menuitem "Delete"
+  - button "Delete project"
   - button "Done"
 `;

@@ -34,7 +34,7 @@ type ConfirmProps = { onConfirm: () => Promise<void> };
  * Plain composition, no promise-based confirm service: the caller owns open, pending and error
  * state, closes on success and stays open with an error on failure.
  */
-function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
+function DeleteDocumentConfirm({ onConfirm }: ConfirmProps) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +48,7 @@ function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
       setOpen(false);
       setDeleted(true);
     } catch {
-      setError("Couldn't delete the deck. Check your connection and try again.");
+      setError("Couldn't delete the document. Check your connection and try again.");
     } finally {
       setPending(false);
     }
@@ -67,14 +67,14 @@ function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
       >
         <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
           <Trash2 strokeWidth={1.75} />
-          Delete deck
+          Delete document
         </AlertDialogTrigger>
         {/* Base UI skips nested backdrops by default; forceRender dims a parent dialog too. */}
         <AlertDialogContent overlayProps={{ forceRender: true }}>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Atraxa Superfriends?</AlertDialogTitle>
+            <AlertDialogTitle>Delete Launch plan?</AlertDialogTitle>
             <AlertDialogDescription>
-              This will delete the deck and all 3 snapshots. This can't be undone.
+              This will delete the document and all 3 versions. This can't be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           {error ? (
@@ -92,7 +92,7 @@ function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
       </AlertDialog>
       {deleted ? (
         <p role="status" className="text-sm text-muted-foreground">
-          Atraxa Superfriends deleted.
+          Launch plan deleted.
         </p>
       ) : null}
     </div>
@@ -101,9 +101,9 @@ function DeleteDeckConfirm({ onConfirm }: ConfirmProps) {
 
 const meta = {
   title: "Recipes/ConfirmDialog",
-  component: DeleteDeckConfirm,
+  component: DeleteDocumentConfirm,
   args: { onConfirm: fn(() => Promise.resolve()) },
-} satisfies Meta<typeof DeleteDeckConfirm>;
+} satisfies Meta<typeof DeleteDocumentConfirm>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -111,14 +111,17 @@ type Story = StoryObj<typeof meta>;
 const body = within(document.body);
 
 async function openConfirm(canvasElement: HTMLElement) {
-  await userEvent.click(within(canvasElement).getByRole("button", { name: "Delete deck" }));
-  return body.findByRole("alertdialog", { name: "Delete Atraxa Superfriends?" });
+  await userEvent.click(within(canvasElement).getByRole("button", { name: "Delete document" }));
+  return body.findByRole("alertdialog", { name: "Delete Launch plan?" });
 }
 
-/** Closed. Escape dismisses the open confirm and returns focus to the trigger. */
-export const Default: Story = {
+export const Default: Story = {};
+
+/** Escape dismisses the open confirm and returns focus to the trigger. */
+export const EscapeClosesTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement, args }) => {
-    const trigger = within(canvasElement).getByRole("button", { name: "Delete deck" });
+    const trigger = within(canvasElement).getByRole("button", { name: "Delete document" });
     await openConfirm(canvasElement);
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("alertdialog")).not.toBeInTheDocument());
@@ -127,13 +130,13 @@ export const Default: Story = {
     trigger.blur();
   },
 };
-
 /** Title and description label the dialog; the safe Cancel gets focus first. */
-export const Open: Story = {
+export const OpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const dialog = await openConfirm(canvasElement);
     await expect(dialog).toHaveAccessibleDescription(
-      "This will delete the deck and all 3 snapshots. This can't be undone.",
+      "This will delete the document and all 3 versions. This can't be undone.",
     );
     await waitFor(() =>
       expect(within(dialog).getByRole("button", { name: "Cancel" })).toHaveFocus(),
@@ -143,7 +146,8 @@ export const Open: Story = {
 };
 
 /** While the request runs, both actions are disabled and Escape cannot dismiss the dialog. */
-export const Pending: Story = {
+export const PendingTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { onConfirm: fn(() => new Promise<void>(() => {})) },
   play: async ({ canvasElement, args }) => {
     const dialog = within(await openConfirm(canvasElement));
@@ -159,12 +163,15 @@ export const Pending: Story = {
 };
 
 /** A failed request keeps the dialog open with an announced error and a retry. */
-export const Failed: Story = {
+export const FailedTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { onConfirm: fn(() => Promise.reject(new Error("offline"))) },
   play: async ({ canvasElement, args }) => {
     const dialog = within(await openConfirm(canvasElement));
     await userEvent.click(dialog.getByRole("button", { name: "Delete" }));
-    await expect(await dialog.findByRole("alert")).toHaveTextContent("Couldn't delete the deck");
+    await expect(await dialog.findByRole("alert")).toHaveTextContent(
+      "Couldn't delete the document",
+    );
     await expect(dialog.getByRole("button", { name: "Try again" })).toBeEnabled();
     await expect(dialog.getByRole("button", { name: "Cancel" })).toBeEnabled();
     await expect(args.onConfirm).toHaveBeenCalledTimes(1);
@@ -172,45 +179,46 @@ export const Failed: Story = {
 };
 
 /** Success closes the dialog, returns focus to the trigger and reports the result. */
-export const Confirmed: Story = {
+export const ConfirmedTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const dialog = within(await openConfirm(canvasElement));
     await userEvent.click(dialog.getByRole("button", { name: "Delete" }));
     await waitFor(() => expect(body.queryByRole("alertdialog")).not.toBeInTheDocument());
     await expect(args.onConfirm).toHaveBeenCalledTimes(1);
-    await expect(canvas.getByRole("status")).toHaveTextContent("Atraxa Superfriends deleted.");
-    const trigger = canvas.getByRole("button", { name: "Delete deck" });
+    await expect(canvas.getByRole("status")).toHaveTextContent("Launch plan deleted.");
+    const trigger = canvas.getByRole("button", { name: "Delete document" });
     await waitFor(() => expect(trigger).toHaveFocus());
     trigger.blur();
   },
 };
 
-/** The confirm opened from a deck actions dialog stacks above it; Escape closes only the top. */
-export const FromDeckActions: Story = {
+/** Closed: a document details dialog whose danger zone hosts the same confirm. */
+export const NestedInDialog: Story = {
   render: (args) => (
     <Dialog>
-      <DialogTrigger render={<Button />}>Deck actions</DialogTrigger>
+      <DialogTrigger render={<Button />}>Document details</DialogTrigger>
       <DialogContent size="2xl">
         <DialogHeader>
-          <DialogTitle className="text-lg">Atraxa Superfriends</DialogTitle>
+          <DialogTitle className="text-lg">Launch plan</DialogTitle>
         </DialogHeader>
         <DialogBody className="mt-5">
           <ItemGroup>
             <Item>
               <ItemContent>
-                <ItemTitle>Export deck list</ItemTitle>
-                <ItemDescription className="text-xs">Copy as text or download.</ItemDescription>
+                <ItemTitle>Export</ItemTitle>
+                <ItemDescription className="text-xs">Download as PDF or Markdown.</ItemDescription>
               </ItemContent>
             </Item>
             <Item variant="muted">
               <ItemContent>
                 <ItemTitle>Danger zone</ItemTitle>
                 <ItemDescription className="text-xs">
-                  Remove the deck and its history.
+                  Remove the document and its history.
                 </ItemDescription>
               </ItemContent>
-              <DeleteDeckConfirm onConfirm={args.onConfirm} />
+              <DeleteDocumentConfirm onConfirm={args.onConfirm} />
             </Item>
           </ItemGroup>
         </DialogBody>
@@ -220,24 +228,30 @@ export const FromDeckActions: Story = {
       </DialogContent>
     </Dialog>
   ),
+};
+
+/** The confirm opened from the details dialog stacks above it; Escape closes only the top. */
+export const NestedInDialogTest: Story = {
+  tags: ["!dev", "!autodocs"],
+  render: NestedInDialog.render,
   play: async ({ canvasElement }) => {
-    await userEvent.click(within(canvasElement).getByRole("button", { name: "Deck actions" }));
-    const actions = await body.findByRole("dialog", { name: "Atraxa Superfriends" });
-    const deleteDeck = within(actions).getByRole("button", { name: "Delete deck" });
-    await userEvent.click(deleteDeck);
+    await userEvent.click(within(canvasElement).getByRole("button", { name: "Document details" }));
+    const details = await body.findByRole("dialog", { name: "Launch plan" });
+    const deleteDocument = within(details).getByRole("button", { name: "Delete document" });
+    await userEvent.click(deleteDocument);
     const confirm = await body.findByRole("alertdialog");
     // One z layer; the later portal paints above: the confirm follows the dialog, outside it.
-    await expect(actions).not.toContainElement(confirm);
+    await expect(details).not.toContainElement(confirm);
     await expect(
-      actions.compareDocumentPosition(confirm) & Node.DOCUMENT_POSITION_FOLLOWING,
+      details.compareDocumentPosition(confirm) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("alertdialog")).not.toBeInTheDocument());
-    await expect(actions).toBeVisible();
-    await expect(deleteDeck).toHaveFocus();
+    await expect(details).toBeVisible();
+    await expect(deleteDocument).toHaveFocus();
 
-    // Reopen for the capture: confirm stacked over the actions dialog.
+    // Reopen for the capture: confirm stacked over the details dialog.
     await userEvent.keyboard("{Enter}");
     await waitFor(() =>
       expect(

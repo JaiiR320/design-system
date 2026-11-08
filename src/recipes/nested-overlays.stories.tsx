@@ -60,21 +60,21 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "#compo
 // portaled last and paints on top. Escape closes only the top layer, and focus walks back
 // down the stack to each layer's trigger.
 
-const groupOptions = [
-  { value: "categories", label: "Categories" },
-  { value: "type", label: "Type" },
-  { value: "manaValue", label: "Mana value" },
+const sortOptions = [
+  { value: "name", label: "Name" },
+  { value: "edited", label: "Last edited" },
+  { value: "owner", label: "Owner" },
 ];
 
-const categories = ["Commander", "Ramp", "Sideboard", "Planeswalker"];
+const folders = ["Reports", "Designs", "Plans", "Archived"];
 
-type DeckOptionsProps = {
+type ProjectOptionsProps = {
   placement?: "center" | "edge";
-  onMove: (category: string) => void;
+  onMove: (folder: string) => void;
   onDelete: () => void;
 };
 
-function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProps) {
+function ProjectOptions({ placement = "center", onMove, onDelete }: ProjectOptionsProps) {
   const popupRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
@@ -84,7 +84,7 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
     <TooltipProvider>
       <div className={edge ? "flex w-[1168px] justify-end" : undefined}>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger render={<Button />}>Deck options</DialogTrigger>
+          <DialogTrigger render={<Button />}>Project options</DialogTrigger>
           <DialogContent
             ref={popupRef}
             tabIndex={-1}
@@ -94,8 +94,8 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
           >
             <DialogHeader>
               <div>
-                <DialogTitle>Atraxa Superfriends</DialogTitle>
-                <DialogDescription className="mt-1">Deck options</DialogDescription>
+                <DialogTitle>Atlas</DialogTitle>
+                <DialogDescription className="mt-1">Project options</DialogDescription>
               </div>
               <div className="flex items-center gap-1">
                 <Tooltip>
@@ -114,13 +114,13 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
 
             <DialogBody className="mt-5 space-y-4">
               <div className="flex items-center justify-between gap-4">
-                <span className="text-sm text-secondary-foreground">Group cards</span>
-                <Select items={groupOptions} defaultValue="categories">
-                  <SelectTrigger aria-label="Group cards" className="w-40">
+                <span className="text-sm text-secondary-foreground">Sort documents</span>
+                <Select items={sortOptions} defaultValue="name">
+                  <SelectTrigger aria-label="Sort documents" className="w-40">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {groupOptions.map((option) => (
+                    {sortOptions.map((option) => (
                       <SelectItem key={option.value} value={option.value}>
                         {option.label}
                       </SelectItem>
@@ -132,21 +132,21 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
               <Item size="sm">
                 <ItemMedia
                   aria-hidden="true"
-                  className="h-10 w-7 rounded-sm border border-border bg-linear-160 from-sky-500 to-indigo-900"
+                  className="h-8 w-8 rounded-sm border border-border bg-sky-700"
                 />
                 <ItemContent>
-                  <ItemTitle>Deepglow Skate</ItemTitle>
-                  <ItemDescription className="mt-0">Ramp</ItemDescription>
+                  <ItemTitle>Quarterly report</ItemTitle>
+                  <ItemDescription className="mt-0">Reports</ItemDescription>
                 </ItemContent>
                 <ItemActions className="gap-1">
                   <Popover>
                     <PopoverTrigger render={<Button size="xs" variant="ghost" />}>
-                      $0.42
+                      Shared
                     </PopoverTrigger>
                     <PopoverContent>
                       <PopoverHeader>
-                        <PopoverTitle>Price</PopoverTitle>
-                        <PopoverDescription>Cheapest printing, Nov 7, 2026.</PopoverDescription>
+                        <PopoverTitle>Sharing</PopoverTitle>
+                        <PopoverDescription>Ada Park and Sam Lee can edit.</PopoverDescription>
                       </PopoverHeader>
                     </PopoverContent>
                   </Popover>
@@ -156,27 +156,27 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
                         <Button
                           size="icon-sm"
                           variant="ghost"
-                          aria-label="Deepglow Skate actions"
+                          aria-label="Quarterly report actions"
                         />
                       }
                     >
                       <Ellipsis strokeWidth={1.75} />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>Use as deck cover</DropdownMenuItem>
-                      <DropdownMenuItem>Change printing</DropdownMenuItem>
+                      <DropdownMenuItem>Rename</DropdownMenuItem>
+                      <DropdownMenuItem>Duplicate</DropdownMenuItem>
                       <DropdownMenuSub>
                         <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
                         <DropdownMenuSubContent>
-                          {categories.map((category) => (
-                            <DropdownMenuItem key={category} onClick={() => onMove(category)}>
-                              {category}
+                          {folders.map((folder) => (
+                            <DropdownMenuItem key={folder} onClick={() => onMove(folder)}>
+                              {folder}
                             </DropdownMenuItem>
                           ))}
                         </DropdownMenuSubContent>
                       </DropdownMenuSub>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem variant="destructive">Remove</DropdownMenuItem>
+                      <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </ItemActions>
@@ -186,14 +186,14 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
             <DialogFooter layout="between">
               <AlertDialog open={confirming} onOpenChange={setConfirming}>
                 <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
-                  Delete deck
+                  Delete project
                 </AlertDialogTrigger>
                 {/* Base UI skips a nested dialog's backdrop by default; force it to dim the dialog below. */}
                 <AlertDialogContent size="sm" overlayProps={{ forceRender: true }}>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Atraxa Superfriends?</AlertDialogTitle>
+                    <AlertDialogTitle>Delete Atlas?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      The deck and its 3 snapshots are removed for good.
+                      The project and its 3 documents are removed for good.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -221,10 +221,10 @@ function DeckOptions({ placement = "center", onMove, onDelete }: DeckOptionsProp
 
 const meta = {
   title: "Recipes/NestedOverlays",
-  component: DeckOptions,
+  component: ProjectOptions,
   parameters: { layout: "padded" },
   args: { onMove: fn(), onDelete: fn() },
-} satisfies Meta<typeof DeckOptions>;
+} satisfies Meta<typeof ProjectOptions>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -246,14 +246,14 @@ async function expectAbove(top: HTMLElement, below: HTMLElement) {
 }
 
 async function openDialog(canvasElement: HTMLElement) {
-  const trigger = within(canvasElement).getByRole("button", { name: "Deck options" });
+  const trigger = within(canvasElement).getByRole("button", { name: "Project options" });
   await userEvent.click(trigger);
-  const dialog = await body.findByRole("dialog", { name: "Atraxa Superfriends" });
+  const dialog = await body.findByRole("dialog", { name: "Atlas" });
   return { trigger, dialog };
 }
 
 async function openSubmenu(dialog: HTMLElement) {
-  const menuTrigger = within(dialog).getByRole("button", { name: "Deepglow Skate actions" });
+  const menuTrigger = within(dialog).getByRole("button", { name: "Quarterly report actions" });
   await userEvent.click(menuTrigger);
   const menu = await body.findByRole("menu");
   await userEvent.click(within(menu).getByRole("menuitem", { name: "Move to" }));
@@ -264,18 +264,20 @@ async function openSubmenu(dialog: HTMLElement) {
 
 export const Default: Story = {};
 
-export const DialogOpen: Story = {
+export const DialogOpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
-    await expect(dialog).toHaveAccessibleDescription("Deck options");
+    await expect(dialog).toHaveAccessibleDescription("Project options");
     await expect(dialog).toHaveFocus();
   },
 };
 
-export const SelectOpen: Story = {
+export const SelectOpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
-    const trigger = within(dialog).getByRole("combobox", { name: "Group cards" });
+    const trigger = within(dialog).getByRole("combobox", { name: "Sort documents" });
     await userEvent.click(trigger);
     const listbox = await body.findByRole("listbox");
     await expectAbove(listbox, dialog);
@@ -286,18 +288,19 @@ export const SelectOpen: Story = {
     await expect(trigger).toHaveFocus();
     // Pick a value, then reopen to show the selection.
     await userEvent.click(trigger);
-    await userEvent.click(await body.findByRole("option", { name: "Type" }));
-    await waitFor(() => expect(trigger).toHaveTextContent("Type"));
+    await userEvent.click(await body.findByRole("option", { name: "Owner" }));
+    await waitFor(() => expect(trigger).toHaveTextContent("Owner"));
     await expect(dialog).toBeVisible();
     await userEvent.click(trigger);
-    await expect(await body.findByRole("option", { name: "Type" })).toHaveAttribute(
+    await expect(await body.findByRole("option", { name: "Owner" })).toHaveAttribute(
       "aria-selected",
       "true",
     );
   },
 };
 
-export const SubmenuOpen: Story = {
+export const SubmenuOpenTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
     const { menu, submenu } = await openSubmenu(dialog);
@@ -313,12 +316,13 @@ export const SubmenuOpen: Story = {
   },
 };
 
-export const MoveToCategory: Story = {
+export const MoveToFolderTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ args, canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
     const { menuTrigger, submenu } = await openSubmenu(dialog);
-    await userEvent.click(within(submenu).getByRole("menuitem", { name: "Sideboard" }));
-    await expect(args.onMove).toHaveBeenCalledWith("Sideboard");
+    await userEvent.click(within(submenu).getByRole("menuitem", { name: "Archived" }));
+    await expect(args.onMove).toHaveBeenCalledWith("Archived");
     // The whole menu tree closes; the dialog stays.
     await waitFor(() => expect(body.queryByRole("menu")).toBeNull());
     await expect(dialog).toBeVisible();
@@ -326,7 +330,8 @@ export const MoveToCategory: Story = {
   },
 };
 
-export const EscapeClosesTopLayerFirst: Story = {
+export const EscapeClosesTopLayerFirstTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { trigger, dialog } = await openDialog(canvasElement);
     const { menuTrigger } = await openSubmenu(dialog);
@@ -353,21 +358,22 @@ export const EscapeClosesTopLayerFirst: Story = {
   },
 };
 
-export const PopoverAndTooltip: Story = {
+export const PopoverAndTooltipTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
-    const priceTrigger = within(dialog).getByRole("button", { name: "$0.42" });
-    await userEvent.click(priceTrigger);
-    const popover = await body.findByRole("dialog", { name: "Price" });
+    const sharingTrigger = within(dialog).getByRole("button", { name: "Shared" });
+    await userEvent.click(sharingTrigger);
+    const popover = await body.findByRole("dialog", { name: "Sharing" });
     await expectAbove(popover, dialog);
     await userEvent.keyboard("{Escape}");
-    await waitFor(() => expect(body.queryByRole("dialog", { name: "Price" })).toBeNull());
+    await waitFor(() => expect(body.queryByRole("dialog", { name: "Sharing" })).toBeNull());
     await expect(dialog).toBeVisible();
-    await expect(priceTrigger).toHaveFocus();
+    await expect(sharingTrigger).toHaveFocus();
 
     // Both open at once: the tooltip, opened last, paints over the popover.
-    await userEvent.click(priceTrigger);
-    const reopened = await body.findByRole("dialog", { name: "Price" });
+    await userEvent.click(sharingTrigger);
+    const reopened = await body.findByRole("dialog", { name: "Sharing" });
     await userEvent.hover(within(dialog).getByRole("button", { name: "Last saved" }));
     const tooltip = await waitFor(() => {
       const element = document.querySelector<HTMLElement>("[data-slot=tooltip-content]");
@@ -382,12 +388,13 @@ export const PopoverAndTooltip: Story = {
   },
 };
 
-export const NestedAlertDialog: Story = {
+export const NestedAlertDialogTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
-    const deleteTrigger = within(dialog).getByRole("button", { name: "Delete deck" });
+    const deleteTrigger = within(dialog).getByRole("button", { name: "Delete project" });
     await userEvent.click(deleteTrigger);
-    const alert = await body.findByRole("alertdialog", { name: "Delete Atraxa Superfriends?" });
+    const alert = await body.findByRole("alertdialog", { name: "Delete Atlas?" });
     await expectAbove(alert, dialog);
     await expect(within(alert).getByRole("button", { name: "Cancel" })).toHaveFocus();
     // Escape closes the alert dialog only; focus returns to its trigger inside the dialog.
@@ -401,10 +408,11 @@ export const NestedAlertDialog: Story = {
   },
 };
 
-export const ConfirmDelete: Story = {
+export const ConfirmDeleteTest: Story = {
+  tags: ["!dev", "!autodocs"],
   play: async ({ args, canvasElement }) => {
     const { trigger, dialog } = await openDialog(canvasElement);
-    await userEvent.click(within(dialog).getByRole("button", { name: "Delete deck" }));
+    await userEvent.click(within(dialog).getByRole("button", { name: "Delete project" }));
     const alert = await body.findByRole("alertdialog");
     await userEvent.click(within(alert).getByRole("button", { name: "Delete" }));
     await expect(args.onDelete).toHaveBeenCalledOnce();
@@ -415,7 +423,8 @@ export const ConfirmDelete: Story = {
 };
 
 /** Dialog pinned to the right edge: the submenu has no room on the right and flips left. */
-export const EdgeOfViewport: Story = {
+export const EdgeOfViewportTest: Story = {
+  tags: ["!dev", "!autodocs"],
   args: { placement: "edge" },
   play: async ({ canvasElement }) => {
     const { dialog } = await openDialog(canvasElement);
@@ -432,7 +441,8 @@ export const EdgeOfViewport: Story = {
 };
 
 /** Phone width: the dialog fills the screen and the submenu stays on screen. */
-export const Mobile390: Story = {
+export const MobileTest: Story = {
+  tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
   play: async ({ canvasElement }) => {
     await expect(window.innerWidth).toBe(390);

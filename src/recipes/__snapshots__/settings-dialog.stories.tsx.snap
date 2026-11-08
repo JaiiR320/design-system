@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- button "Settings"
+`;
+
+exports[`Escape Closes Test 1`] = `
+- button "Settings"
+`;
+
+exports[`Folders Tab Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project settings
+  - tablist:
+    - tab "General"
+    - tab "Folders" [selected]
+  - tabpanel "Folders":
+    - text: New folder
+    - textbox "New folder"
+    - button "Add"
+    - text: Reports
+    - paragraph: 12 documents
+    - switch "Hide Reports" [checked]: Hide
+    - switch "Share Reports" [checked]: Shared
+    - button "Rename Reports": Rename
+    - button "Remove Reports" [disabled]: Remove
+    - text: Designs
+    - paragraph: 7 documents
+    - switch "Hide Designs": Hide
+    - switch "Share Designs" [checked]: Shared
+    - button "Rename Designs": Rename
+    - button "Remove Designs" [disabled]: Remove
+    - text: Plans
+    - paragraph: 4 documents
+    - switch "Hide Plans": Hide
+    - switch "Share Plans" [checked]: Shared
+    - button "Rename Plans": Rename
+    - button "Remove Plans" [disabled]: Remove
+    - text: Research
+    - paragraph: 5 documents
+    - switch "Hide Research": Hide
+    - switch "Share Research": Shared
+    - button "Rename Research": Rename
+    - button "Remove Research" [disabled]: Remove
+    - text: Meetings
+    - paragraph: 9 documents
+    - switch "Hide Meetings": Hide
+    - switch "Share Meetings" [checked]: Shared
+    - button "Rename Meetings": Rename
+    - button "Remove Meetings" [disabled]: Remove
+    - text: Scratch
+    - paragraph: 1 document
+    - switch "Hide Scratch" [checked]: Hide
+    - switch "Share Scratch": Shared
+    - button "Rename Scratch": Rename
+    - button "Remove Scratch" [disabled]: Remove
+    - text: Drafts
+    - paragraph: 0 documents
+    - switch "Hide Drafts": Hide
+    - switch "Share Drafts" [checked]: Shared
+    - button "Rename Drafts": Rename
+    - button "Remove Drafts": Remove
+  - button "Close"
+`;
+
+exports[`General Tab Test 1`] = `
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project settings
+  - tablist:
+    - tab "General" [selected]
+    - tab "Folders"
+  - tabpanel "General":
+    - text: Project name
+    - textbox "Project name": Atlas
+    - button "Save"
+    - paragraph: Shown in the sidebar and in exports.
+    - text: Label colors
+    - paragraph: Colors offered when tagging a document.
+    - group "Label colors":
+      - button "Amber" [pressed]
+      - button "Sky" [pressed]
+      - button "Slate"
+      - button "Red" [pressed]
+      - button "Emerald" [pressed]
+    - text: Text size
+    - paragraph: Scale of document previews.
+    - slider "Text size": "140"
+    - status: 140%
+    - text: Show archived
+    - paragraph: Keep archived documents in the list, dimmed.
+    - switch "Show archived": "Off"
+  - button "Close"
+`;

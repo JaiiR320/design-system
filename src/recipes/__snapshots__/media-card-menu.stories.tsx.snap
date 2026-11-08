@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- img "Atlas cover"
+- heading "Atlas" [level=3]
+- paragraph: 3 documents
+- link "Open Atlas":
+  - /url: "#project-atlas"
+- button "Atlas actions"
+- img "Borealis cover"
+- heading "Borealis" [level=3]
+- paragraph: 1 document
+- link "Open Borealis":
+  - /url: "#project-borealis"
+- button "Borealis actions"
+- heading "Cobalt" [level=3]
+- paragraph: 0 documents
+- link "Open Cobalt":
+  - /url: "#project-cobalt"
+- button "Cobalt actions"
+`;
+
+exports[`Focus Reveal Test 1`] = `
+- img "Atlas cover"
+- heading "Atlas" [level=3]
+- paragraph: 3 documents
+- link "Open Atlas":
+  - /url: "#project-atlas"
+- button "Atlas actions"
+- img "Borealis cover"
+- heading "Borealis" [level=3]
+- paragraph: 1 document
+- link "Open Borealis":
+  - /url: "#project-borealis"
+- button "Borealis actions"
+- heading "Cobalt" [level=3]
+- paragraph: 0 documents
+- link "Open Cobalt":
+  - /url: "#project-cobalt"
+- button "Cobalt actions"
+`;
+
+exports[`Menu Open Test 1`] = `
+- img "Atlas cover"
+- heading "Atlas" [level=3]
+- paragraph: 3 documents
+- link "Open Atlas":
+  - /url: "#project-atlas"
+- button "Atlas actions" [expanded]
+- menu "Atlas actions":
+  - menuitem "Rename"
+  - menuitem "Move to folder Root"
+  - menuitem "Duplicate"
+  - menuitem "Export"
+  - menuitem "Change cover"
+  - menuitem "Remove cover"
+  - separator
+  - menuitem "Delete"
+- img "Borealis cover"
+- heading "Borealis" [level=3]
+- paragraph: 1 document
+- link "Open Borealis":
+  - /url: "#project-borealis"
+- button "Borealis actions"
+- heading "Cobalt" [level=3]
+- paragraph: 0 documents
+- link "Open Cobalt":
+  - /url: "#project-cobalt"
+- button "Cobalt actions"
+`;
+
+exports[`Move To Folder Test 1`] = `
+- img "Atlas cover"
+- heading "Atlas" [level=3]
+- paragraph: 3 documents · Archived
+- link "Open Atlas":
+  - /url: "#project-atlas"
+- button "Atlas actions"
+- img "Borealis cover"
+- heading "Borealis" [level=3]
+- paragraph: 1 document
+- link "Open Borealis":
+  - /url: "#project-borealis"
+- button "Borealis actions"
+- heading "Cobalt" [level=3]
+- paragraph: 0 documents
+- link "Open Cobalt":
+  - /url: "#project-cobalt"
+- button "Cobalt actions"
+`;
+
+exports[`Submenu Keyboard Test 1`] = `
+- img "Atlas cover"
+- heading "Atlas" [level=3]
+- paragraph: 3 documents
+- link "Open Atlas":
+  - /url: "#project-atlas"
+- button "Atlas actions"
+- img "Borealis cover"
+- heading "Borealis" [level=3]
+- paragraph: 1 document
+- link "Open Borealis":
+  - /url: "#project-borealis"
+- button "Borealis actions" [expanded]
+- menu "Borealis actions":
+  - menuitem "Rename"
+  - menuitem "Move to folder Root" [expanded]
+  - group:
+    - menu "Move to folder Root":
+      - menuitem "Root" [disabled]
+      - menuitem "Shared"
+      - menuitem "Archived"
+  - menuitem "Duplicate"
+  - menuitem "Export"
+  - menuitem "Change cover"
+  - menuitem "Remove cover"
+  - separator
+  - menuitem "Delete"
+- heading "Cobalt" [level=3]
+- paragraph: 0 documents
+- link "Open Cobalt":
+  - /url: "#project-cobalt"
+- button "Cobalt actions"
+`;

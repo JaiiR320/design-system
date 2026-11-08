@@ -1,0 +1,134 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Click Result Adds Test 1`] = `
+- textbox "Add document"
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Default 1`] = `
+- textbox "Add document"
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Drag Hides Popup Test 1`] = `
+- textbox "Add document": re
+- dialog "Search results":
+  - region "Results":
+    - button "Add Quarterly report": Quarterly report Report
+    - button "Add Design review": Design review Slides
+    - button "Add Release notes": Release notes Doc
+    - button "Add Research summary": Research summary Report
+    - button "Add Retro notes": Retro notes Doc
+    - button "Add Recruiting plan": Recruiting plan Sheet
+    - button "Add Press kit": Press kit Folder
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Drop Adds To Folder Test 1`] = `
+- textbox "Add document"
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Escape Keeps Focus Test 1`] = `
+- textbox "Add document": re
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Narrows While Typing Test 1`] = `
+- textbox "Add document": Launch
+- dialog "Search results":
+  - region "Results":
+    - button "Add Launch plan": Launch plan Doc
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;
+
+exports[`Results Open Test 1`] = `
+- textbox "Add document": re
+- dialog "Search results":
+  - region "Results":
+    - button "Add Quarterly report": Quarterly report Report
+    - button "Add Design review": Design review Slides
+    - button "Add Release notes": Release notes Doc
+    - button "Add Research summary": Research summary Report
+    - button "Add Retro notes": Retro notes Doc
+    - button "Add Recruiting plan": Recruiting plan Sheet
+    - button "Add Press kit": Press kit Folder
+- region "Reports folder":
+  - heading "Reports" [level=3]
+  - paragraph: Empty folder
+- region "Designs folder":
+  - heading "Designs" [level=3]
+  - paragraph: Empty folder
+- region "Plans folder":
+  - heading "Plans" [level=3]
+  - paragraph: Empty folder
+- region "Notes folder":
+  - heading "Notes" [level=3]
+  - paragraph: Empty folder
+`;

@@ -1,118 +1,118 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Cancel Restores Load 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
+exports[`Cancel Returns Focus Test 1`] = `
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
   - button "Compare"
   - separator
-  - text: 1 unnamed save collapsed
+  - text: 1 autosave collapsed
   - separator
-  - text: Swap Karn for Birds
+  - text: Tighten launch timeline
   - paragraph: Nov 7, 2026, 01:00 AM
-  - button "Delete Swap Karn for Birds"
-  - button "Load Swap Karn for Birds": Load
-  - text: Initial build
+  - button "Delete Tighten launch timeline"
+  - button "Restore Tighten launch timeline": Restore
+  - text: First draft
   - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Delete Initial build"
-  - button "Load Initial build": Load
+  - button "Delete First draft"
+  - button "Restore First draft": Restore
 `;
 
 exports[`Default 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
   - button "Compare"
   - separator
-  - text: 1 unnamed save collapsed
+  - text: 1 autosave collapsed
   - separator
-  - text: Swap Karn for Birds
+  - text: Tighten launch timeline
   - paragraph: Nov 7, 2026, 01:00 AM
-  - button "Delete Swap Karn for Birds"
-  - button "Load Swap Karn for Birds": Load
-  - text: Initial build
+  - button "Delete Tighten launch timeline"
+  - button "Restore Tighten launch timeline": Restore
+  - text: First draft
   - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Delete Initial build"
-  - button "Load Initial build": Load
+  - button "Delete First draft"
+  - button "Restore First draft": Restore
 `;
 
-exports[`Delete Confirm Revealed 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
+exports[`Delete Confirm Test 1`] = `
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
   - button "Compare"
   - separator
-  - text: 1 unnamed save collapsed
+  - text: 1 autosave collapsed
   - separator
-  - text: Swap Karn for Birds
+  - text: Tighten launch timeline
   - paragraph: Nov 7, 2026, 01:00 AM
-  - button "Delete Swap Karn for Birds"
-  - button "Load Swap Karn for Birds": Load
-  - text: Initial build
+  - button "Delete Tighten launch timeline"
+  - button "Restore Tighten launch timeline": Restore
+  - text: First draft
   - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Delete Initial build" [expanded]
-  - button "Load Initial build": Load
-  - alert "Confirm delete Initial build":
-    - text: Deleting "Initial build" cannot be undone.
+  - button "Delete First draft" [expanded]
+  - button "Restore First draft": Restore
+  - alert "Confirm delete First draft":
+    - text: Deleting "First draft" cannot be undone.
     - button "Cancel"
-    - button "Delete Snapshot"
+    - button "Delete version"
 `;
 
-exports[`Load Anyways 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
+exports[`Restore Confirm Test 1`] = `
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
   - button "Compare"
   - separator
-  - text: 1 unnamed save collapsed
+  - text: 1 autosave collapsed
   - separator
-  - text: Swap Karn for Birds
+  - text: Tighten launch timeline
   - paragraph: Nov 7, 2026, 01:00 AM
-  - button "Delete Swap Karn for Birds"
-  - button "Load Swap Karn for Birds": Load
-  - text: Initial build
-  - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Delete Initial build"
-  - button "Load Initial build": Load
-`;
-
-exports[`Load Confirm Revealed 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
-  - button "Compare"
-  - separator
-  - text: 1 unnamed save collapsed
-  - separator
-  - text: Swap Karn for Birds
-  - paragraph: Nov 7, 2026, 01:00 AM
-  - button "Delete Swap Karn for Birds"
-  - button "Load Swap Karn for Birds" [expanded]: Load
-  - alert "Confirm load Swap Karn for Birds":
-    - text: Loading this snapshot will overwrite your current live deck.
+  - button "Delete Tighten launch timeline"
+  - button "Restore Tighten launch timeline" [expanded]: Restore
+  - alert "Confirm restore Tighten launch timeline":
+    - text: Restoring this version will overwrite the current document.
     - button "Cancel"
-    - button "Save Snapshot"
-    - button "Load Anyways"
-  - text: Initial build
+    - button "Save current"
+    - button "Restore"
+  - text: First draft
   - paragraph: Nov 7, 2026, 12:59 AM
-  - button "Delete Initial build"
-  - button "Load Initial build": Load
+  - button "Delete First draft"
+  - button "Restore First draft": Restore
 `;
 
-exports[`Selection Mode 1`] = `
-- region "Snapshot history":
-  - heading "Snapshot History" [level=2]
-  - paragraph: 2 snapshots
-  - button "Exit Compare" [pressed]
-  - button "Compare Selected"
+exports[`Restore Test 1`] = `
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
+  - button "Compare"
   - separator
-  - text: 1 unnamed save collapsed
+  - text: 1 autosave collapsed
   - separator
-  - group "Snapshots to compare":
-    - button "2 Swap Karn for Birds Nov 7, 2026, 01:00 AM" [pressed]:
-      - text: 2 Swap Karn for Birds
+  - text: Tighten launch timeline
+  - paragraph: Nov 7, 2026, 01:00 AM
+  - button "Delete Tighten launch timeline"
+  - button "Restore Tighten launch timeline": Restore
+  - text: First draft
+  - paragraph: Nov 7, 2026, 12:59 AM
+  - button "Delete First draft"
+  - button "Restore First draft": Restore
+`;
+
+exports[`Selection Mode Test 1`] = `
+- region "Version history":
+  - heading "Version history" [level=2]
+  - paragraph: Launch plan, 2 versions
+  - button "Exit compare" [pressed]
+  - button "Compare selected"
+  - separator
+  - text: 1 autosave collapsed
+  - separator
+  - group "Versions to compare":
+    - button "2 Tighten launch timeline Nov 7, 2026, 01:00 AM" [pressed]:
+      - text: 2 Tighten launch timeline
       - paragraph: Nov 7, 2026, 01:00 AM
-    - button "1 Initial build Nov 7, 2026, 12:59 AM" [pressed]:
-      - text: 1 Initial build
+    - button "1 First draft Nov 7, 2026, 12:59 AM" [pressed]:
+      - text: 1 First draft
       - paragraph: Nov 7, 2026, 12:59 AM
 `;
