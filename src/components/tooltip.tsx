@@ -21,6 +21,8 @@ type TooltipContentProps = Omit<TooltipPrimitive.Popup.Props, "className"> &
     "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding" | "anchor"
   > & {
     className?: string;
+    portalProps?: TooltipPrimitive.Portal.Props;
+    positionerProps?: Omit<TooltipPrimitive.Positioner.Props, "className"> & { className?: string };
   };
 
 function TooltipContent({
@@ -31,10 +33,13 @@ function TooltipContent({
   alignOffset = 0,
   collisionPadding = 8,
   anchor,
+  portalProps,
+  positionerProps,
   ...props
 }: TooltipContentProps) {
+  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <TooltipPrimitive.Portal data-slot="tooltip-portal">
+    <TooltipPrimitive.Portal data-slot="tooltip-portal" {...portalProps}>
       <TooltipPrimitive.Positioner
         data-slot="tooltip-positioner"
         side={side}
@@ -43,7 +48,8 @@ function TooltipContent({
         alignOffset={alignOffset}
         collisionPadding={collisionPadding}
         anchor={anchor}
-        className={popupLayer}
+        className={cn(popupLayer, positionerClassName)}
+        {...restPositionerProps}
       >
         <TooltipPrimitive.Popup
           data-slot="tooltip-content"
