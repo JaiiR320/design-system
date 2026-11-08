@@ -14,6 +14,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+// App-owned look layered on Badge with variant={null}: a numbered step marker.
+const stepLook =
+  "flex size-6 items-center justify-center rounded-full bg-secondary p-0 text-xs font-semibold text-muted-foreground data-selected:bg-primary data-selected:text-primary-foreground";
+
 const rowLabel = "w-20 text-xs text-muted-foreground";
 
 export const Variants: Story = {
@@ -25,35 +29,24 @@ export const Variants: Story = {
         <Badge>1 snapshot</Badge>
       </div>
       <div className="flex items-center gap-4">
-        <span className={rowLabel}>order</span>
-        <Badge variant="order" />
-        <Badge variant="order" data-selected="">
-          1
-        </Badge>
-        <Badge variant="order" data-selected="">
-          2
-        </Badge>
-      </div>
-      <div className="flex items-center gap-4">
-        <span className={rowLabel}>selected</span>
-        <Badge variant="selected" className="w-48">
-          Current
-        </Badge>
-      </div>
-      <div className="flex items-center gap-4">
         <span className={rowLabel}>outline</span>
-        <Badge variant="outline">Drop to move here</Badge>
+        <Badge variant="outline">Draft</Badge>
+        <Badge variant="outline">12 items</Badge>
       </div>
     </div>
   ),
 };
 
-// The printing ribbon is positioned locally over a card image placeholder.
-export const SelectedRibbon: Story = {
+/** App-specific looks: `variant={null}` plus the app's own classes, here numbered step markers. */
+export const CustomLook: Story = {
   render: () => (
-    <div className="relative h-64 w-44 rounded-xl border border-border-strong bg-secondary">
-      <Badge variant="selected" className="absolute inset-x-3 top-3 z-10">
-        Current
+    <div className="flex items-center gap-4">
+      <Badge variant={null} className={stepLook} />
+      <Badge variant={null} className={stepLook} data-selected="">
+        1
+      </Badge>
+      <Badge variant={null} className={stepLook} data-selected="">
+        2
       </Badge>
     </div>
   ),

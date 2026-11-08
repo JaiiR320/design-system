@@ -1,5 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Custom Look 1`] = `
+- text: 1 2
+`;
+
 exports[`Default 1`] = `
 - text: 3 snapshots
 `;
@@ -13,10 +17,6 @@ exports[`Render As Link 1`] = `
   - /url: "#history"
 `;
 
-exports[`Selected Ribbon 1`] = `
-- text: Current
-`;
-
 exports[`Variants 1`] = `
-- text: neutral 3 snapshots 1 snapshot order 1 2 selected Current outline Drop to move here
+- text: neutral 3 snapshots 1 snapshot outline Draft 12 items
 `;

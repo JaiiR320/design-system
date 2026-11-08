@@ -205,7 +205,11 @@ function SnapshotHistory(props: HistoryProps) {
               >
                 <div className="flex items-center gap-3">
                   <ItemMedia>
-                    <Badge variant="order" data-selected={order > 0 ? "" : undefined}>
+                    <Badge
+                      variant={null}
+                      className={stepLook}
+                      data-selected={order > 0 ? "" : undefined}
+                    >
                       {order > 0 ? order : ""}
                     </Badge>
                   </ItemMedia>
@@ -241,6 +245,10 @@ const meta = {
   parameters: { layout: "padded" },
   args: { onLoad: fn(), onSaveSnapshot: fn(), onDelete: fn() },
 } satisfies Meta<typeof SnapshotHistory>;
+
+// App-owned look layered on Badge with variant={null}: a numbered step marker.
+const stepLook =
+  "flex size-6 items-center justify-center rounded-full bg-secondary p-0 text-xs font-semibold text-muted-foreground data-selected:bg-primary data-selected:text-primary-foreground";
 
 export default meta;
 type Story = StoryObj<typeof meta>;
