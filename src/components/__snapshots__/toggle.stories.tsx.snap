@@ -1,5 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`Custom Look Keyboard 1`] = `
+- button "Blue" [pressed]
+`;
+
 exports[`Deck Colors 1`] = `
 - group "Deck colors":
   - button "Remove White" [pressed]
@@ -23,10 +27,6 @@ exports[`Disabled Stable 1`] = `
 
 exports[`Keyboard 1`] = `
 - button "Show prices"
-`;
-
-exports[`Round Keyboard 1`] = `
-- button "Blue" [pressed]
 `;
 
 exports[`Sizes 1`] = `
@@ -54,7 +54,7 @@ exports[`Variants 1`] = `
 - button "Sign in"
 - button "Sign in" [pressed]
 - button "Sign in" [disabled]
-- text: round
+- text: custom look (variant=null)
 - button "Add Blue"
 - button "Remove Blue" [pressed]
 - button "Blue unavailable" [disabled]

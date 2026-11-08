@@ -79,13 +79,14 @@ function GeneralPanel() {
         <ItemActions>
           <ToggleGroup
             aria-labelledby="deck-colors-title"
-            variant="round"
+            variant={null}
+            className="flex shrink-0 gap-2"
             multiple
             value={deckColors}
             onValueChange={setDeckColors}
           >
             {colors.map(({ label, dot }) => (
-              <ToggleGroupItem key={label} value={label} aria-label={label}>
+              <ToggleGroupItem key={label} value={label} aria-label={label} className={swatchLook}>
                 <span aria-hidden className={`size-7 rounded-full ${dot}`} />
               </ToggleGroupItem>
             ))}
@@ -262,6 +263,10 @@ const meta = {
   component: DeckSettings,
   args: { onOpenChange: fn() },
 } satisfies Meta<typeof DeckSettings>;
+
+// App-owned look layered on Toggle with variant={null}: a color swatch that lights up when pressed.
+const swatchLook =
+  "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-white/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-[0_0_18px_rgb(34_211_238/0.14)]";
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -13,6 +13,10 @@ const meta = {
   args: { children: "Show prices", onPressedChange: fn() },
 } satisfies Meta<typeof Toggle>;
 
+// App-owned look layered on Toggle with variant={null}: a color swatch that lights up when pressed.
+const swatchLook =
+  "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-white/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-[0_0_18px_rgb(34_211_238/0.14)]";
+
 export default meta;
 type Story = StoryObj<typeof meta>;
 
@@ -37,13 +41,13 @@ export const Variants: Story = {
       </Toggle>
 
       <span>accent</span>
-      <Toggle variant="accent" aria-label="Bold off">
+      <Toggle variant="accent" size="icon-sm" aria-label="Bold off">
         <Bold strokeWidth={1.75} />
       </Toggle>
-      <Toggle variant="accent" aria-label="Bold on" defaultPressed>
+      <Toggle variant="accent" size="icon-sm" aria-label="Bold on" defaultPressed>
         <Bold strokeWidth={1.75} />
       </Toggle>
-      <Toggle variant="accent" aria-label="Bold disabled" disabled>
+      <Toggle variant="accent" size="icon-sm" aria-label="Bold disabled" disabled>
         <Bold strokeWidth={1.75} />
       </Toggle>
 
@@ -56,14 +60,14 @@ export const Variants: Story = {
         Sign in
       </Toggle>
 
-      <span>round</span>
-      <Toggle variant="round" aria-label="Add Blue">
+      <span>custom look (variant=null)</span>
+      <Toggle variant={null} className={swatchLook} aria-label="Add Blue">
         <ColorDot />
       </Toggle>
-      <Toggle variant="round" aria-label="Remove Blue" defaultPressed>
+      <Toggle variant={null} className={swatchLook} aria-label="Remove Blue" defaultPressed>
         <ColorDot />
       </Toggle>
-      <Toggle variant="round" aria-label="Blue unavailable" disabled>
+      <Toggle variant={null} className={swatchLook} aria-label="Blue unavailable" disabled>
         <ColorDot />
       </Toggle>
     </div>
@@ -144,7 +148,8 @@ export const DeckColors: Story = {
             return (
               <Toggle
                 key={label}
-                variant="round"
+                variant={null}
+                className={swatchLook}
                 aria-label={`${isSelected ? "Remove" : "Add"} ${label}`}
                 pressed={isSelected}
                 onPressedChange={(pressed) =>
@@ -173,6 +178,7 @@ export const DiffToggle: Story = {
       return (
         <Toggle
           variant="accent"
+          size="icon-sm"
           className="relative"
           aria-label={label}
           title={label}
@@ -218,9 +224,14 @@ export const DisabledStable: Story = {
   },
 };
 
-export const RoundKeyboard: Story = {
+export const CustomLookKeyboard: Story = {
   render: (args) => (
-    <Toggle variant="round" aria-label="Blue" onPressedChange={args.onPressedChange}>
+    <Toggle
+      variant={null}
+      className={swatchLook}
+      aria-label="Blue"
+      onPressedChange={args.onPressedChange}
+    >
       <ColorDot />
     </Toggle>
   ),

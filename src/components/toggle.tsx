@@ -17,8 +17,6 @@ const toggleCva = cva(
           "rounded-md border border-border bg-surface text-secondary-foreground not-data-pressed:hover:bg-secondary data-pressed:border-ring/70 data-pressed:bg-ring/15 data-pressed:text-info-text",
         segmented:
           "rounded-xl text-subtle-foreground not-data-pressed:hover:text-strong-foreground data-pressed:bg-primary data-pressed:text-primary-foreground",
-        round:
-          "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-on-image-border/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-glow",
       },
     },
   },
@@ -29,22 +27,23 @@ type ToggleSize = NonNullable<VariantProps<typeof buttonSizeVariants>["size"]>;
 
 const defaultSizes: Record<ToggleVariant, ToggleSize> = {
   outline: "sm",
-  accent: "icon-sm",
+  accent: "sm",
   segmented: "md",
-  round: "none",
 };
 
-/** Toggle classes; when size is omitted it follows the variant (outline sm, accent icon-sm, segmented md, round none). */
+/**
+ * Toggle classes. When size is omitted it follows the variant (segmented md, others sm).
+ * `variant={null}` keeps only structure, focus and disabled classes (no size either unless
+ * given) so an app can supply its own look through className.
+ */
 function toggleVariants({
   variant = "outline",
   size,
   className,
 }: { variant?: ToggleVariant | null; size?: ToggleSize | null; className?: string } = {}) {
-  const resolved = variant ?? "outline";
-  // Button's size axis comes after the variant, so size radii win over the variant's.
   return cn(
-    toggleCva({ variant: resolved }),
-    buttonSizeVariants({ size: size ?? defaultSizes[resolved] }),
+    toggleCva({ variant }),
+    buttonSizeVariants({ size: size ?? (variant ? defaultSizes[variant] : null) }),
     className,
   );
 }

@@ -12,6 +12,10 @@ const meta = {
   args: { "aria-label": "Text style", onValueChange: fn() },
 } satisfies Meta<typeof ToggleGroup>;
 
+// App-owned look layered on Toggle with variant={null}: a color swatch that lights up when pressed.
+const swatchLook =
+  "size-10 rounded-full border border-border bg-background p-0 opacity-30 grayscale not-data-pressed:hover:border-border-strong not-data-pressed:hover:opacity-60 data-pressed:border-white/40 data-pressed:opacity-100 data-pressed:grayscale-0 data-pressed:shadow-[0_0_18px_rgb(34_211_238/0.14)]";
+
 export default meta;
 type Story = StoryObj<typeof meta>;
 
@@ -50,7 +54,13 @@ export const Variants: Story = {
       </ToggleGroup>
 
       <span>accent</span>
-      <ToggleGroup aria-label="Accent" variant="accent" multiple defaultValue={["bold"]}>
+      <ToggleGroup
+        aria-label="Accent"
+        variant="accent"
+        size="icon-sm"
+        multiple
+        defaultValue={["bold"]}
+      >
         <ToggleGroupItem value="bold" aria-label="Bold">
           <Bold strokeWidth={1.75} />
         </ToggleGroupItem>
@@ -68,15 +78,23 @@ export const Variants: Story = {
         <ToggleGroupItem value="sign-up">Sign up</ToggleGroupItem>
       </ToggleGroup>
 
-      <span>round</span>
+      <span>segmented, three options</span>
+      <ToggleGroup aria-label="View" variant="segmented" defaultValue={["week"]}>
+        <ToggleGroupItem value="day">Day</ToggleGroupItem>
+        <ToggleGroupItem value="week">Week</ToggleGroupItem>
+        <ToggleGroupItem value="month">Month</ToggleGroupItem>
+      </ToggleGroup>
+
+      <span>custom look (variant=null)</span>
       <ToggleGroup
-        aria-label="Deck colors"
-        variant="round"
+        aria-label="Colors"
+        variant={null}
+        className="flex shrink-0 gap-2"
         multiple
         defaultValue={["White", "Blue", "Black", "Green"]}
       >
         {colors.map(({ label, dot }) => (
-          <ToggleGroupItem key={label} value={label} aria-label={label}>
+          <ToggleGroupItem key={label} value={label} aria-label={label} className={swatchLook}>
             <ColorDot className={dot} />
           </ToggleGroupItem>
         ))}
@@ -174,7 +192,7 @@ export const FeedbackType: Story = {
 export const MultipleKeyboard: Story = {
   args: { multiple: true, defaultValue: ["bold"] },
   render: (args) => (
-    <ToggleGroup {...args} variant="accent">
+    <ToggleGroup {...args} variant="accent" size="icon-sm">
       <ToggleGroupItem value="bold" aria-label="Bold">
         <Bold strokeWidth={1.75} />
       </ToggleGroupItem>

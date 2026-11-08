@@ -11,10 +11,11 @@ type ToggleVariantProps = VariantProps<typeof toggleVariants>;
 const toggleGroupVariants = cva("", {
   variants: {
     variant: {
-      outline: "flex gap-2",
-      accent: "flex gap-2",
-      segmented: "grid grid-cols-2 gap-2 rounded-2xl border border-border bg-surface p-1",
-      round: "flex shrink-0 gap-2",
+      outline: "flex gap-2 data-[orientation=vertical]:flex-col",
+      accent: "flex gap-2 data-[orientation=vertical]:flex-col",
+      // Equal-width segments, however many options there are.
+      segmented:
+        "grid auto-cols-fr grid-flow-col gap-2 rounded-2xl border border-border bg-surface p-1 data-[orientation=vertical]:grid-flow-row",
     },
   },
   defaultVariants: { variant: "outline" },

@@ -46,8 +46,13 @@ exports[`Variants 1`] = `
 - group "Segmented":
   - button "Sign in"
   - button "Sign up" [pressed]
-- text: round
-- group "Deck colors":
+- text: segmented, three options
+- group "View":
+  - button "Day"
+  - button "Week" [pressed]
+  - button "Month"
+- text: custom look (variant=null)
+- group "Colors":
   - button "White" [pressed]
   - button "Blue" [pressed]
   - button "Black" [pressed]
