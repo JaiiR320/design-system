@@ -159,6 +159,8 @@ Every story is a test. After it renders and its play function runs, the whole pa
 
 Overlay examples in the sidebar start closed: click the trigger. Stories that exist only to test an open state or an interaction are tagged `["!dev", "!autodocs"]`, which hides them from the sidebar and docs; they still run in `pnpm test`.
 
+Chromatic also publishes Storybook and snapshots every story on each push to `main` and each pull request (`.github/workflows/chromatic.yml`, repo secret `CHROMATIC_PROJECT_TOKEN`). Visual changes wait for review in Chromatic rather than failing the job. To publish by hand: `CHROMATIC_PROJECT_TOKEN=<token> pnpm chromatic`.
+
 Keep stories host-independent so baselines match on any Linux:
 
 - no network images;

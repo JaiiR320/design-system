@@ -293,6 +293,8 @@ export const DropAddsToFolderTest: Story = {
     const notes = canvas.getByRole("region", { name: "Notes folder" });
     fireEvent.dragStart(tile, { dataTransfer: new DataTransfer() });
     fireEvent.dragOver(notes);
+    // A real drop comes after React has rendered the drag; without the wait, onDrop reads stale state.
+    await waitFor(() => expect(notes).toHaveAttribute("data-drop-target"));
     fireEvent.drop(notes);
     fireEvent.dragEnd(tile);
     await expect(args.onAdd).toHaveBeenCalledWith("Release notes", "Notes");

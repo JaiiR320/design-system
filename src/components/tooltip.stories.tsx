@@ -41,6 +41,9 @@ export const Default: Story = {
 
 export const OpenTest: Story = {
   tags: ["!dev", "!autodocs"],
+  // In Chromatic the browser's real pointer rests on the page and closes a hover-opened tooltip.
+  // KeyboardFocusTest captures the open tooltip there instead.
+  parameters: { chromatic: { disableSnapshot: true } },
   render: () => <UndoTooltip />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

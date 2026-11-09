@@ -300,8 +300,10 @@ export const ScrollingTest: Story = {
 export const MobileWidthTest: Story = {
   tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
+  parameters: { chromatic: { modes: { mobile: { viewport: "mobile" } } } },
+  // A phone-width form field: centered layout would otherwise shrink the trigger to its value.
   render: (args) => (
-    <div>
+    <div className="w-[calc(100vw-2rem)]">
       <span className="text-sm font-semibold text-strong-foreground">Order by</span>
       <Select items={orderOptions} defaultValue="date" onValueChange={args.onValueChange}>
         <SelectTrigger aria-label="Order documents by" className="mt-1">

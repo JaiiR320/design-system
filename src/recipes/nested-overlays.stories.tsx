@@ -444,6 +444,7 @@ export const EdgeOfViewportTest: Story = {
 export const MobileTest: Story = {
   tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
+  parameters: { chromatic: { modes: { mobile: { viewport: "mobile" } } } },
   play: async ({ canvasElement }) => {
     await expect(window.innerWidth).toBe(390);
     const { dialog } = await openDialog(canvasElement);

@@ -15,6 +15,7 @@ const preview: Preview = {
     layout: "centered",
     backgrounds: { options: { dark: { name: "Dark", value: "#09090b" } } },
     // Opt a story into a phone-sized page with `globals: { viewport: { value: "mobile" } }`.
+    // Chromatic ignores that global; add `parameters: { chromatic: { modes: { mobile: { viewport: "mobile" } } } }`.
     viewport: {
       options: {
         mobile: { name: "Mobile", styles: { width: "390px", height: "844px" }, type: "mobile" },

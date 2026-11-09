@@ -407,6 +407,7 @@ export const FullScreenTest: Story = {
 export const FullScreenMobileTest: Story = {
   tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
+  parameters: { chromatic: { modes: { mobile: { viewport: "mobile" } } } },
   render: () => <FullScreenPicker />,
   play: async () => {
     await expect(window.innerWidth).toBe(390);
