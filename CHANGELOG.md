@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **Buttons show the pointer cursor.** `styles.css` gives every enabled `<button>` and `[role="button"]` `cursor: pointer`, including Button, Tabs, Switch, the Select trigger and the Collapsible trigger. Menu and select rows keep the arrow. To get the old cursor back on one element, add `className="cursor-default"`.
+
 ## 0.2.0
 
 The system is now generic. App-specific looks and tokens moved out; recreate the ones you use in your app with `variant={null}` plus className (see the README's "App-specific looks").

@@ -124,4 +124,10 @@
   select {
     font: inherit;
   }
+
+  /* Tailwind v4 dropped the pointer on buttons. Menu and select rows keep the arrow, like native menus. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
