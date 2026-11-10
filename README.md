@@ -9,8 +9,10 @@ It ships TypeScript source and CSS, with no build step. Your app compiles it.
 Requires React 19, Tailwind CSS v4 and a bundler that compiles TSX from `node_modules` (Vite does).
 
 ```sh
-pnpm add github:JaiiR320/design-system#<commit-sha>
+pnpm add "github:JaiiR320/design-system#semver:^0.2.0"
 ```
+
+pnpm picks the newest [release](https://github.com/JaiiR320/design-system/releases) in the range and pins its commit in your lockfile. To upgrade, read the release notes, then run `pnpm update @jaiir320/design-system` or widen the range for a breaking release.
 
 ```css
 /* app.css */
@@ -166,6 +168,17 @@ Keep stories host-independent so baselines match on any Linux:
 - no network images;
 - no smooth gradients, which dither differently per machine; use hard color stops;
 - no glyphs outside JetBrains Mono's bundled Latin subsets, such as `⌘`, which fall back to OS fonts.
+
+### Releasing
+
+Versions follow semver. Until 1.0, a breaking change bumps the minor version (0.2.x → 0.3.0) and anything else bumps the patch, so `^0.2.0` never pulls in a breaking release.
+
+```sh
+npm version patch -m "Release %s"   # or minor for a breaking change; commits and tags v<version>
+git push --follow-tags
+```
+
+Pushing the tag runs `.github/workflows/release.yml`, which checks the tag matches `package.json` and publishes a GitHub release listing the commits since the previous tag. A breaking commit names its replacement in its message, so the notes double as the upgrade guide.
 
 ### Adding a shadcn component
 
