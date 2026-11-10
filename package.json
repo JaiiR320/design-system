@@ -1,6 +1,6 @@
 {
   "name": "@jaiir320/design-system",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Semantic tokens and composable React primitives on shadcn/ui + Base UI.",
   "license": "MIT",
