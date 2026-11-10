@@ -10,5 +10,5 @@ Read `README.md` first. Each rule comes with its reason; use the reason for case
 - **Overlay stories start closed, behind a trigger.** Open-state and interaction tests are hidden fixtures (`tags: ["!dev", "!autodocs"]`), so browsing Storybook doesn't open a dialog on every page.
 - **Keep stories host-independent:** no network images, no smooth gradients, and no glyphs outside JetBrains Mono's Latin subset (such as `⌘`). Screenshots must match on Ubuntu CI.
 - **Run `pnpm verify` before every commit, and look at the PNG diffs after `pnpm test:update`.** Stale baselines have slipped into commits before.
-- **Name the replacement in the commit message of a breaking change, and release it as a new minor version while below 1.0.** Apps pin a semver range and upgrade by reading the release notes, which are built from commit messages.
+- **Give a breaking commit a `Breaking:` line in its body that names the replacement, and release it as a new minor version while below 1.0.** Apps pin a semver range and upgrade by reading the release notes, which are built from commit messages. Release with `.claude/skills/release/SKILL.md`.
 - **Ask before adding a light theme, motion tokens, or semantic radius and spacing tokens.** None of them is decided yet, and a guess tends to stick.

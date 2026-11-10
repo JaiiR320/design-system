@@ -178,7 +178,7 @@ npm version patch -m "Release %s"   # or minor for a breaking change; commits an
 git push --follow-tags
 ```
 
-Pushing the tag runs `.github/workflows/release.yml`, which checks the tag matches `package.json` and publishes a GitHub release listing the commits since the previous tag. A breaking commit names its replacement in its message, so the notes double as the upgrade guide.
+Pushing the tag runs `.github/workflows/release.yml`, which checks the tag matches `package.json` and publishes a GitHub release from the template `.github/release-notes.md`, filled by `scripts/release-notes.mjs` with the commits since the previous tag. A breaking commit has a `Breaking:` line in its body naming the replacement; those commits get their own section, so the notes double as the upgrade guide. Preview the notes with `node scripts/release-notes.mjs v<version>`. Agents follow `.claude/skills/release/SKILL.md`.
 
 ### Adding a shadcn component
 

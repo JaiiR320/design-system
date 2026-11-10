@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          # The notes list every commit since the previous tag.
+          # The notes list every commit since the previous tag (scripts/release-notes.mjs).
           fetch-depth: 0
       - name: Check the tag matches package.json
         run: |
@@ -26,7 +26,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          previous=$(git describe --tags --abbrev=0 "$GITHUB_REF_NAME^" 2>/dev/null || true)
-          range=${previous:+$previous..}$GITHUB_REF_NAME
-          git log --no-merges --invert-grep --grep='^Release ' --format='- %s (%h)%w(0,2,2)%+b' "$range" > notes.md
+          node scripts/release-notes.mjs "$GITHUB_REF_NAME" > notes.md
           gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md
