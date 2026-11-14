@@ -67,6 +67,8 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 | Actions on right click or long press             | `ContextMenu`, plus another way to reach the same actions                                              |
 | An on/off setting that applies at once           | `Switch`                                                                                               |
 | A pressed state on one button                    | `Toggle`                                                                                               |
+| A number or range along a scale                  | `Slider`; `Input type="number"` when people know the exact value                                       |
+| Copying text to the clipboard                    | `CopyButton`; `CodeBlockCopyButton` inside a `CodeBlock`                                               |
 | One value from a few options                     | `ToggleGroup variant="segmented"`; `Select` when there are many                                        |
 | Switching between panels of content              | `Tabs`                                                                                                 |
 | A label, control, description and error together | `Field`; attach icons or buttons to an input with `InputGroup`                                         |
@@ -157,7 +159,7 @@ Defaults worth knowing:
 - **Select:** pass `items` to `Select` so the closed trigger can render its label during SSR, and mark disabled options `disabled` there too: navigation and typeahead read the data. `onValueChange` can give `null`, so guard for it.
 - **Single-select `ToggleGroup`:** pass `deselectable={false}` to keep one item pressed.
 - **App-controlled field errors:** pass `invalid` to the `Field` and put the message in `FieldError`. Leave `invalid` out to show the browser's validation once a submit finds the control invalid.
-- **`Input`, `Textarea`, `Select` and `Switch` join a `Field` on their own.** `FieldControl` is only for a control this system doesn't ship, like a native `<select>`.
+- **`Input`, `Textarea`, `Select`, `Switch` and `Slider` join a `Field` on their own.** `FieldControl` is only for a control this system doesn't ship, like a native `<select>`.
 - **Pending actions:** a `Button` `onClick`, an `AlertDialogAction` `action` or a `DialogClose` `action` that returns a Promise stays pending (`data-pending`, `aria-busy`) until it settles. A rejected `AlertDialogAction` keeps the dialog open for a retry.
 - **Tooltips name or describe their trigger** (`role="tooltip"`). After one opens, the next opens at once; no provider is needed. For a disabled control, give it `focusableWhenDisabled` so it can still show why.
 - **Focus targets** (`initialFocus`, `finalFocus`) take a selector, an element, a function or `"none"`, not a ref. Pass `finalFocus` when the element that opened a dialog may be gone by the time it closes.
@@ -202,6 +204,6 @@ Pushing the tag runs `.github/workflows/release.yml`, which checks the tag match
 Build it on UI SDK. Its docs ship with the package: start at `node_modules/@ui-sdk/react/docs/llms.txt`, then read the component's page in `docs/components/`.
 
 1. If UI SDK ships the component, wrap its parts like the existing modules do: keep UI SDK's behavior and `data-slot`, add classes from the tokens with `cn`, and type `className` as a string with `WithClassName` from `#lib/utils`.
-2. If it doesn't, compose it from the behaviors in `@ui-sdk/core` (`docs/core.md`, searched by heading) rather than hand-writing focus, keys or ARIA.
+2. If it doesn't, define a primitive with `definePrimitive` from `@ui-sdk/core` in `src/lib/`, built from its behaviors (`docs/core.md`, searched by heading), and render it with `createParts` (`docs/rendering.md`) rather than hand-writing state, focus, keys or ARIA. `CopyButton` (`src/lib/copy-button.ts`) is the example.
 3. A part with no behavior of its own (a header, a footer) is a plain element; give it a `data-slot`, and use `renderElement` from `@ui-sdk/react/primitive` when it should take `render`.
 4. Add stories, then run `pnpm test:update` and review the PNG diffs.

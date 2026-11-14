@@ -2,9 +2,9 @@
 
 exports[`Copy 1`] = `
 - text: src/lib/date.ts
-- button "Copied"
-- text: Copied
-- code: "export function parseDate(input: string) { const date = new Date(input); if (Number.isNaN(date.getTime())) { throw new RangeError(\`Invalid date: \${input}\`); } return date; }"
+- button "Copy"
+- code: export function parseDate(input: string) { const date = new Date(input); if (Number.isNaN(date.getTime())) { throw new RangeError(\`Invalid date: \${input}\`); } return date; }
+- status: Copied
 `;
 
 exports[`Default 1`] = `

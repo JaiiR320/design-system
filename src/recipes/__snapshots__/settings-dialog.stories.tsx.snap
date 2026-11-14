@@ -65,6 +65,7 @@ exports[`Folders Tab Test 1`] = `
 `;
 
 exports[`General Tab Test 1`] = `
+- button "Settings"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project settings
@@ -86,8 +87,9 @@ exports[`General Tab Test 1`] = `
       - button "Emerald" [pressed]
     - text: Text size
     - paragraph: Scale of document previews.
-    - slider "Text size": "140"
-    - status: 140%
+    - group:
+      - slider "Text size": "140"
+      - status: 140%
     - text: Show archived
     - paragraph: Keep archived documents in the list, dimmed.
     - switch "Show archived": "Off"

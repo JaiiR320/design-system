@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- group:
+  - text: Text size
+  - status: 120%
+  - slider "Text size": "120"
+- paragraph: Scale of document previews.
+`;
+
+exports[`Disabled 1`] = `
+- group:
+  - text: Text size
+  - status: 120%
+  - slider "Text size" [disabled]: "120"
+- paragraph: Scale of document previews.
+`;
+
+exports[`Disabled Test 1`] = `
+- group:
+  - text: Text size
+  - status: 120%
+  - slider "Text size" [disabled]: "120"
+- paragraph: Scale of document previews.
+`;
+
+exports[`Keyboard Test 1`] = `
+- group:
+  - text: Text size
+  - status: 200%
+  - slider "Text size": "200"
+- paragraph: Scale of document previews.
+`;
+
+exports[`Range 1`] = `
+- group "Price":
+  - text: Price
+  - status: $20 – $80
+  - slider "Minimum price": "20"
+  - slider "Maximum price": "80"
+`;
+
+exports[`Track Press Test 1`] = `
+- group:
+  - text: Text size
+  - status: 200%
+  - slider "Text size": "200"
+- paragraph: Scale of document previews.
+`;

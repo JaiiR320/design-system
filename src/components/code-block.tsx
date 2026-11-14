@@ -1,9 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { Check, Copy } from "lucide-react";
-import { useEffect, useState } from "react";
 import type * as React from "react";
 
-import { Button, type ButtonProps } from "#components/button";
+import { CopyButton, type CopyButtonProps } from "#components/copy-button";
 import { cn } from "#lib/utils";
 
 // No syntax highlighting is bundled: pass highlighted nodes (from shiki, for example) as the
@@ -87,51 +85,14 @@ function CodeBlockActions({ className, ...props }: React.ComponentProps<"div">) 
   );
 }
 
-type CodeBlockCopyButtonProps = ButtonProps & {
+type CodeBlockCopyButtonProps = Omit<CopyButtonProps, "text"> & {
   /** Text written to the clipboard. */
   value: string;
 };
 
-/** Copies `value`; shows a check and announces "Copied" for 2 seconds. */
-function CodeBlockCopyButton({
-  value,
-  variant = "ghost",
-  size = "icon-sm",
-  onClick,
-  ...props
-}: CodeBlockCopyButtonProps) {
-  const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    if (!copied) return;
-    const timeout = setTimeout(() => setCopied(false), 2000);
-    return () => clearTimeout(timeout);
-  }, [copied]);
-
-  return (
-    <>
-      <Button
-        data-slot="code-block-copy-button"
-        data-copied={copied || undefined}
-        variant={variant}
-        size={size}
-        aria-label={copied ? "Copied" : "Copy"}
-        onClick={(event, details) => {
-          onClick?.(event, details);
-          navigator.clipboard
-            .writeText(value)
-            .then(() => setCopied(true))
-            .catch(() => {});
-        }}
-        {...props}
-      >
-        {copied ? <Check /> : <Copy />}
-      </Button>
-      <span aria-live="polite" className="sr-only">
-        {copied ? "Copied" : ""}
-      </span>
-    </>
-  );
+/** A `CopyButton` for the block: copies `value` and shows a check for 2 seconds. */
+function CodeBlockCopyButton({ value, ...props }: CodeBlockCopyButtonProps) {
+  return <CopyButton aria-label="Copy" text={value} {...props} />;
 }
 
 type CodeBlockContentProps = React.ComponentProps<"pre"> & {
