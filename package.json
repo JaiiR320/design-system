@@ -1,6 +1,6 @@
 {
   "name": "@jaiir320/design-system",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "description": "Semantic tokens and composable React primitives on UI SDK behaviors.",
   "license": "MIT",
