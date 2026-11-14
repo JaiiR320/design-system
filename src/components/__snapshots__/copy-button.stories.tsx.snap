@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Copies Test 1`] = `
+- button "Copy command"
+- status: Copied
+`;
+
+exports[`Default 1`] = `
+- button "Copy command"
+`;
+
+exports[`Fails Test 1`] = `
+- status: Couldn't copy
+- button "Couldn't copy"
+`;
+
+exports[`Keyboard Test 1`] = `
+- status: Copied
+- button "Copy command"
+`;
+
+exports[`With Text 1`] = `
+- button "Copy link"
+`;

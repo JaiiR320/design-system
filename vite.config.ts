@@ -16,6 +16,7 @@ const uiSdkParts = [
   "scroll-area",
   "select",
   "separator",
+  "slider",
   "switch",
   "tabs",
   "textarea",
@@ -28,6 +29,7 @@ export default defineConfig({
   // Pre-bundle up front: discovering these mid-run makes Vite reload and fail in-flight tests.
   optimizeDeps: {
     include: [
+      "@ui-sdk/core",
       ...uiSdkParts.map((part) => `@ui-sdk/react/${part}`),
       "class-variance-authority",
       "clsx",

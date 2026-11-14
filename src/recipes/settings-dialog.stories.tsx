@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { GripVertical, Plus, Settings } from "lucide-react";
 import type * as React from "react";
 import { useState } from "react";
-import { expect, fireEvent, fn, userEvent, waitFor, within } from "storybook/test";
+import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import { Button } from "#components/button";
 import { Card } from "#components/card";
@@ -28,7 +28,14 @@ import {
   ItemMedia,
   ItemTitle,
 } from "#components/item";
-import { Label } from "#components/label";
+import {
+  Slider,
+  SliderControl,
+  SliderIndicator,
+  SliderThumb,
+  SliderTrack,
+  SliderValue,
+} from "#components/slider";
 import { SwitchChip } from "#components/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "#components/tabs";
 import { ToggleGroup, ToggleGroupItem } from "#components/toggle-group";
@@ -96,25 +103,32 @@ function GeneralPanel() {
 
       <Item variant="muted" size="sm" className="px-4 py-3">
         <ItemContent>
-          <Label htmlFor="text-size" className="font-medium text-foreground">
-            Text size
-          </Label>
-          <ItemDescription className="text-xs">Scale of document previews.</ItemDescription>
+          <ItemTitle id="text-size-title">Text size</ItemTitle>
+          <ItemDescription id="text-size-description" className="text-xs">
+            Scale of document previews.
+          </ItemDescription>
         </ItemContent>
-        <ItemActions className="w-72 gap-3">
-          <input
-            id="text-size"
-            type="range"
+        <ItemActions className="w-72">
+          <Slider
+            value={textSize}
+            onValueChange={(value) => setTextSize(value as number)}
             min={100}
             max={200}
             step={10}
-            value={textSize}
-            onChange={(event) => setTextSize(Number(event.currentTarget.value))}
-            className="w-full accent-cyan-400"
-          />
-          <output htmlFor="text-size" className="w-12 text-right text-xs text-subtle-foreground">
-            {textSize}%
-          </output>
+            format={(value) => `${value}%`}
+            className="flex-row items-center gap-3"
+          >
+            <SliderControl>
+              <SliderTrack>
+                <SliderIndicator />
+                <SliderThumb
+                  aria-labelledby="text-size-title"
+                  aria-describedby="text-size-description"
+                />
+              </SliderTrack>
+            </SliderControl>
+            <SliderValue className="w-12 shrink-0 text-right" />
+          </Slider>
         </ItemActions>
       </Item>
 
@@ -299,7 +313,7 @@ export const EscapeClosesTest: Story = {
   },
 };
 
-/** General tab: multi ToggleGroup, native range and SwitchChip each change their value. */
+/** General tab: multi ToggleGroup, Slider and SwitchChip each change their value. */
 export const GeneralTabTest: Story = {
   tags: ["!dev", "!autodocs"],
   play: async ({ canvasElement }) => {
@@ -324,9 +338,10 @@ export const GeneralTabTest: Story = {
     );
 
     const size = dialog.getByRole("slider", { name: "Text size" });
-    // user-event has no range key support; a change event is what the browser fires on drag.
-    fireEvent.change(size, { target: { value: "140" } });
-    await expect(size).toHaveValue("140");
+    await expect(size).toHaveAccessibleDescription("Scale of document previews.");
+    size.focus();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}");
+    await waitFor(() => expect(size).toHaveAttribute("aria-valuetext", "140%"));
     await expect(dialog.getByText("140%")).toBeVisible();
 
     const archived = dialog.getByRole("switch", { name: "Show archived" });

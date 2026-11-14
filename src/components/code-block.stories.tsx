@@ -157,6 +157,8 @@ export const Copy: Story = {
     const canvas = within(canvasElement);
     await userEvent.click(canvas.getByRole("button", { name: "Copy" }));
     await expect(writeText).toHaveBeenCalledWith(source);
-    await waitFor(() => expect(canvas.getByRole("button", { name: "Copied" })).toBeVisible());
+    await waitFor(() =>
+      expect(canvas.getByRole("button", { name: "Copy" })).toHaveAttribute("data-copied"),
+    );
   },
 };
