@@ -33,7 +33,7 @@ const meta = {
       <ContextMenuContent>
         <ContextMenuGroup>
           <ContextMenuLabel>Atlas board</ContextMenuLabel>
-          <ContextMenuItem onClick={onNewDocument}>New document</ContextMenuItem>
+          <ContextMenuItem onSelect={onNewDocument}>New document</ContextMenuItem>
           <ContextMenuItem disabled>Paste</ContextMenuItem>
         </ContextMenuGroup>
         <ContextMenuSeparator />
@@ -84,7 +84,7 @@ export const RightClickTest: Story = {
     // Reopen and choose an item with the keyboard; disabled Paste is focusable but inert.
     await rightClick(canvas.getByLabelText("Atlas board"));
     const menu = await body.findByRole("menu");
-    // Base UI focuses the popup after opening; navigating before that would race it.
+    // The menu takes focus after opening; navigating before that would race it.
     await waitFor(() => expect(menu).toHaveFocus());
     await userEvent.keyboard("{ArrowDown}");
     await waitFor(() => expect(body.getByRole("menuitem", { name: "New document" })).toHaveFocus());
@@ -122,8 +122,8 @@ export const SubmenuTest: Story = {
   },
 };
 
-/** A positioner class extends the overlay layer: the menu paints above its Dialog. */
-export const InDialogWithPositionerClassTest: Story = {
+/** The menu renders in the top layer above its Dialog, so it overlaps the dialog's edge. */
+export const InDialogTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: (args) => (
     <Dialog defaultOpen>
@@ -136,7 +136,7 @@ export const InDialogWithPositionerClassTest: Story = {
           >
             Right-click empty board space
           </ContextMenuTrigger>
-          <ContextMenuContent positionerProps={{ className: "ml-1" }}>
+          <ContextMenuContent>
             <ContextMenuItem>New document</ContextMenuItem>
             <ContextMenuItem>Paste</ContextMenuItem>
             <ContextMenuItem>Collapse all</ContextMenuItem>
@@ -152,12 +152,9 @@ export const InDialogWithPositionerClassTest: Story = {
     await rightClick(await body.findByLabelText("Atlas board"));
     const menu = await body.findByRole("menu");
     await waitFor(() => expect(menu).toBeVisible());
-    const positioner = menu.closest("[data-slot='context-menu-positioner']");
-    await expect(positioner).toHaveClass("ml-1");
     // Hit test the lower half of the menu, which overlaps the dialog's bottom edge and backdrop.
     const rect = menu.getBoundingClientRect();
     const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
     await expect(menu.contains(hit)).toBe(true);
-    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };

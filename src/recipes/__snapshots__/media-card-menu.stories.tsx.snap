@@ -105,11 +105,10 @@ exports[`Submenu Keyboard Test 1`] = `
 - menu "Borealis actions":
   - menuitem "Rename"
   - menuitem "Move to folder Root" [expanded]
-  - group:
-    - menu "Move to folder Root":
-      - menuitem "Root" [disabled]
-      - menuitem "Shared"
-      - menuitem "Archived"
+  - menu "Move to folder Root":
+    - menuitem "Root" [disabled]
+    - menuitem "Shared"
+    - menuitem "Archived"
   - menuitem "Duplicate"
   - menuitem "Export"
   - menuitem "Change cover"

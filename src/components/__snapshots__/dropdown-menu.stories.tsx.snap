@@ -4,7 +4,7 @@ exports[`Default 1`] = `
 - button "Actions"
 `;
 
-exports[`In Dialog With Positioner Class Test 1`] = `
+exports[`In Dialog Test 1`] = `
 - dialog "Project settings":
   - heading "Project settings" [level=2]
   - button "Actions" [expanded]
@@ -49,17 +49,16 @@ exports[`Submenu Keyboard Test 1`] = `
   - menuitem "Rename"
   - menuitem "Duplicate"
   - menuitem "Move to folder" [expanded]
-  - group:
-    - menu "Move to folder":
-      - menuitem "Atlas"
-      - menuitem "Borealis"
-      - menuitem "Cobalt"
-      - menuitem "Drafts"
-      - menuitem "Shared"
-      - menuitem "Archived"
-      - menuitem "Personal"
-      - menuitem "Templates"
-      - menuitem "Inbox"
-      - menuitem "Reports"
-      - menuitem "Notes"
+  - menu "Move to folder":
+    - menuitem "Atlas"
+    - menuitem "Borealis"
+    - menuitem "Cobalt"
+    - menuitem "Drafts"
+    - menuitem "Shared"
+    - menuitem "Archived"
+    - menuitem "Personal"
+    - menuitem "Templates"
+    - menuitem "Inbox"
+    - menuitem "Reports"
+    - menuitem "Notes"
 `;

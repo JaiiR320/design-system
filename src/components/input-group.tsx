@@ -1,20 +1,23 @@
-import { mergeProps } from "@base-ui/react/merge-props";
+import { InputGroup as InputGroupPrimitive } from "@ui-sdk/react/input";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 
 import { Button, type ButtonProps } from "#components/button";
 import { Input, type InputProps } from "#components/input";
-import { Textarea } from "#components/textarea";
-import { cn } from "#lib/utils";
+import { Textarea, type TextareaProps } from "#components/textarea";
+import { cn, type WithClassName } from "#lib/utils";
 
 /**
  * One bordered shell around a borderless control and its addons. The shell shows the
- * control's focus border/ring, invalid border and disabled dimming.
+ * control's focus border/ring, invalid border and disabled dimming. Pressing an addon's text
+ * focuses the control (UI SDK's InputGroup).
  */
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputGroup({
+  className,
+  ...props
+}: WithClassName<React.ComponentProps<typeof InputGroupPrimitive>>) {
   return (
-    <div
-      data-slot="input-group"
+    <InputGroupPrimitive
       role="group"
       className={cn(
         "relative flex w-full min-w-0 items-center rounded-xl border border-input bg-surface transition motion-reduce:transition-none",
@@ -51,25 +54,14 @@ const inputGroupAddonVariants = cva(
 type InputGroupAddonProps = React.ComponentProps<"div"> &
   VariantProps<typeof inputGroupAddonVariants>;
 
-// Clicks on these inside an addon keep their own behavior and focus.
-const interactive = "a[href], button, input, select, textarea, [tabindex], [contenteditable=true]";
-
 function InputGroupAddon({ className, align = "inline-start", ...props }: InputGroupAddonProps) {
-  const ownProps: React.ComponentProps<"div"> = {
-    className: cn(inputGroupAddonVariants({ align }), className),
-    // Pointer convenience only: clicking the addon's text/icon focuses the control.
-    // A consumer onClick runs first; its preventDefault (or preventBaseUIHandler) skips this.
-    onClick: (event) => {
-      if (event.defaultPrevented) return;
-      const addon = event.currentTarget;
-      const hit = event.target instanceof Element ? event.target.closest(interactive) : null;
-      if (hit && addon.contains(hit)) return;
-      addon.parentElement?.querySelector<HTMLElement>("[data-input-group-control]")?.focus();
-    },
-  };
   return (
-    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-    <div data-slot="input-group-addon" data-align={align} {...mergeProps<"div">(ownProps, props)} />
+    <div
+      data-slot="input-group-addon"
+      data-align={align}
+      className={cn(inputGroupAddonVariants({ align }), className)}
+      {...props}
+    />
   );
 }
 
@@ -91,28 +83,20 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   );
 }
 
-// data-input-group-control marks the control for the shell selectors and the addon's focus
-// lookup. It's separate from data-slot, which FieldControl's render prop replaces.
+// data-input-group-control marks the control for the shell selectors; its data-slot stays
+// UI SDK's (`input`, `textarea`).
 // The shell draws border, background, radius and ring; the control keeps padding and type.
 // Disabled dimming also moves to the shell so it isn't applied twice.
 const controlReset =
   "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:opacity-100 data-disabled:opacity-100";
 
 function InputGroupInput({ className, ...props }: InputProps) {
-  return (
-    <Input
-      data-slot="input-group-control"
-      className={cn(controlReset, className)}
-      {...props}
-      data-input-group-control=""
-    />
-  );
+  return <Input className={cn(controlReset, className)} {...props} data-input-group-control="" />;
 }
 
-function InputGroupTextarea({ className, ...props }: React.ComponentProps<"textarea">) {
+function InputGroupTextarea({ className, ...props }: TextareaProps) {
   return (
     <Textarea
-      data-slot="input-group-control"
       className={cn(controlReset, "resize-none", className)}
       {...props}
       data-input-group-control=""

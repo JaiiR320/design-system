@@ -1,9 +1,10 @@
-import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
+import { Toggle as TogglePrimitive } from "@ui-sdk/react/toggle";
 import { cva, type VariantProps } from "class-variance-authority";
+import type * as React from "react";
 
 import { buttonSizeVariants } from "#components/button";
 import { disabledState, focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // Off-state hovers are scoped to not-data-pressed so hovering an active toggle changes nothing.
 const toggleCva = cva(
@@ -48,17 +49,11 @@ function toggleVariants({
   );
 }
 
-type ToggleProps = Omit<TogglePrimitive.Props, "className"> &
-  VariantProps<typeof toggleVariants> & { className?: string };
+type ToggleProps = WithClassName<React.ComponentProps<typeof TogglePrimitive>> &
+  VariantProps<typeof toggleVariants>;
 
 function Toggle({ className, variant, size, ...props }: ToggleProps) {
-  return (
-    <TogglePrimitive
-      data-slot="toggle"
-      className={toggleVariants({ variant, size, className })}
-      {...props}
-    />
-  );
+  return <TogglePrimitive className={toggleVariants({ variant, size, className })} {...props} />;
 }
 
 export { Toggle, toggleVariants };

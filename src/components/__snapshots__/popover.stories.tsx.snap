@@ -8,7 +8,7 @@ exports[`Escape Returns Focus Test 1`] = `
 - button "Details"
 `;
 
-exports[`In Dialog With Positioner Class Test 1`] = `
+exports[`In Dialog Test 1`] = `
 - dialog "Project settings":
   - heading "Project settings" [level=2]
   - button "Details" [expanded]
@@ -36,7 +36,7 @@ exports[`Rename 1`] = `
 exports[`Rename Open Test 1`] = `
 - text: Drafts
 - button "Drafts actions" [expanded]
-- dialog "Rename folder":
+- dialog "Drafts actions":
   - text: Rename folder
   - textbox "Rename folder": Drafts
   - button "Cancel"
@@ -51,7 +51,7 @@ exports[`Rename Save Test 1`] = `
 exports[`Rename Typing Test 1`] = `
 - text: Drafts
 - button "Drafts actions" [expanded]
-- dialog "Rename folder":
+- dialog "Drafts actions":
   - text: Rename folder
   - textbox "Rename folder": Shared drafts
   - button "Cancel"

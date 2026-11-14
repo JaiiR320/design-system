@@ -1,8 +1,9 @@
-import { Input as InputPrimitive } from "@base-ui/react/input";
+import { Input as InputPrimitive } from "@ui-sdk/react/input";
 import { cva, type VariantProps } from "class-variance-authority";
+import type * as React from "react";
 
 import { disabledState, focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // Shared by Textarea: bordered control chrome, mouse focus recolors the border,
 // keyboard focus adds the ring.
@@ -22,17 +23,11 @@ const inputVariants = cva(
   },
 );
 
-type InputProps = Omit<InputPrimitive.Props, "className"> &
-  VariantProps<typeof inputVariants> & { className?: string };
+type InputProps = WithClassName<React.ComponentProps<typeof InputPrimitive>> &
+  VariantProps<typeof inputVariants>;
 
 function Input({ className, inputSize, ...props }: InputProps) {
-  return (
-    <InputPrimitive
-      data-slot="input"
-      className={cn(inputVariants({ inputSize }), className)}
-      {...props}
-    />
-  );
+  return <InputPrimitive className={cn(inputVariants({ inputSize }), className)} {...props} />;
 }
 
 export { Input, inputVariants };

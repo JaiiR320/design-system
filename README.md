@@ -1,6 +1,6 @@
 # @jaiir320/design-system
 
-A small design system: semantic tokens and composable React primitives built on [shadcn/ui](https://ui.shadcn.com) (base-nova) and [Base UI](https://base-ui.com). The default theme is dark zinc with a cyan accent and JetBrains Mono everywhere; apps can rebrand it and add their own tokens and looks.
+A small design system: semantic tokens and composable React primitives built on the behaviors of [UI SDK](https://ui-sdk.dev) (`@ui-sdk/react`). The default theme is dark zinc with a cyan accent and JetBrains Mono everywhere; apps can rebrand it and add their own tokens and looks.
 
 It ships TypeScript source and CSS, with no build step. Your app compiles it.
 
@@ -16,9 +16,12 @@ pnpm picks the newest [release](https://github.com/JaiiR320/design-system/releas
 
 ```css
 /* app.css */
+@layer ui-sdk;
 @import "tailwindcss";
 @import "@jaiir320/design-system/styles.css";
 ```
+
+`@layer ui-sdk;` must come first. UI SDK adds the little CSS its behaviors need (hiding closed popups, for example) in that layer; declaring it before Tailwind keeps it below every utility.
 
 ```tsx
 import { Button } from "@jaiir320/design-system/components/button";
@@ -34,8 +37,8 @@ import {
     <MoreHorizontal />
   </DropdownMenuTrigger>
   <DropdownMenuContent>
-    <DropdownMenuItem onClick={rename}>Rename</DropdownMenuItem>
-    <DropdownMenuItem variant="destructive" onClick={remove}>
+    <DropdownMenuItem onSelect={rename}>Rename</DropdownMenuItem>
+    <DropdownMenuItem variant="destructive" onSelect={remove}>
       Delete
     </DropdownMenuItem>
   </DropdownMenuContent>
@@ -46,11 +49,11 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 
 ## Principles
 
-- **Compose, don't configure.** Components are compound parts (`Dialog`, `DialogContent`, `DialogHeader`, ...) with a `data-slot` on every DOM part. Swap the rendered element with Base UI's `render` prop: `<DialogTrigger render={<Button />}>`.
+- **Compose, don't configure.** Components are compound parts (`Dialog`, `DialogContent`, `DialogHeader`, ...) with a `data-slot` on every DOM part (UI SDK's slot names on its parts, such as `menu-item` inside a `DropdownMenuItem`). Swap the rendered element with the `render` prop: `<DialogTrigger render={<Button />}>`.
 - **Variants are real axes only.** `cva` variants cover generic looks; everything else is `className`, merged last with `cn` (clsx + tailwind-merge). App-specific looks live in the app (see below).
 - **Tokens are Tailwind utilities.** `bg-surface`, `text-subtle-foreground`, `border-border-strong`, `bg-destructive-surface/30`, `shadow-overlay`, `tracking-label`. See `src/styles.css` and the Foundation stories.
-- **Behaviour comes from Base UI.** Focus management, keyboard navigation, dismissal and positioning are not reimplemented.
-- **Layers.** Sticky chrome uses `z-(--z-sticky)`. Every portaled overlay shares `z-(--z-overlay)`, and nested overlays stack in the order they open.
+- **Behaviour comes from UI SDK.** Focus management, keyboard navigation, dismissal, positioning, pending actions and stick-to-end scrolling are not reimplemented. State shows as data attributes (`data-open`, `data-highlighted`, `data-pending`…), which the styles read.
+- **Layers.** Popups (dialogs, menus, selects, popovers, tooltips) render in place but sit in the browser's top layer, above every `z-index`, and nested popups stack in the order they open. No portals. Sticky chrome uses `z-(--z-sticky)`.
 
 ## Choosing a component
 
@@ -73,6 +76,19 @@ Each component is its own module (`components/<name>`); there is no barrel. `lib
 | A message about the page or a form               | `Alert`                                                                                                |
 | A short, non-interactive label or count          | `Badge`; use `Toggle` if it's clickable                                                                |
 | Loading with a known layout                      | `Skeleton`; `Spinner` inside a control or for an unknown shape                                         |
+| A turn in a conversation                         | `Message`; the user's text in a `MessageBubble`                                                        |
+| A conversation that follows new messages         | `MessageScroller`                                                                                      |
+| Agent steps: reasoning, tool calls, a plan       | `Trace`; `TraceCollapsible` for a step with detail                                                     |
+| Code, command output or a diff                   | `CodeBlock`                                                                                            |
+
+## Agent chat
+
+`Message`, `MessageScroller`, `Trace` and `CodeBlock` are the parts of an agent UI; the AgentChat recipe puts them together with a prompt input built on `InputGroup`.
+
+- **`MessageScroller` stays pinned to the newest message** while content grows (UI SDK's ScrollArea `stickToEnd`), so streamed replies stay in view. Scrolling up unpins it and shows `MessageScrollerButton` (always mounted; it shows with `data-visible`). To pin on send from a prompt input outside the scroller, wrap both in `MessageScrollerProvider` and call `scrollToEnd()` from `useMessageScroller()`; `isAtEnd()` reads the position from a handler. Style from the root's `data-at-end` and `data-sticking`.
+- **The prompt is a `Textarea`** with `submitShortcut="enter"` (Shift+Enter for a new line) inside an `InputGroup`; add `autoResize` to grow it with the text.
+- **One `Trace` per agent turn**, one `TraceLine` per step. `status` is `running`, `error` or `pending`; omit it when the step is done. Say the state in the title too ("Running tests", "Failed to run lint"). To open reasoning while it streams and still let the user close it: `const [open, setOpen] = useState<boolean>()`, then `<TraceCollapsible open={open ?? running} onOpenChange={setOpen}>`.
+- **`CodeBlock` has no syntax highlighting.** Pass highlighted nodes (from shiki, for example) as `CodeBlockLine` children, one per line. `CodeBlockLine variant="added" | "removed" | "highlighted"` marks a diff.
 
 ## Theming
 
@@ -97,7 +113,7 @@ Tokens are Tailwind v4 theme variables in one `@theme` block (`src/styles.css`).
 ```
 
 - **Dark only.** `:root` sets `color-scheme: dark`; there is no light palette.
-- **Layers** are plain variables in `:root`: `--z-sticky` (1000) and `--z-overlay` (1100). Add your own relative to them (for example drag feedback above overlays).
+- **Layers** are plain variables in `:root`: `--z-sticky` (1000) and `--z-overlay` (1100), for the app's own overlays outside the top layer. Add your own relative to them (for example drag feedback).
 - **`cn` only knows the system's custom shadow and tracking names** (`shadow-overlay|raised|panel`, `tracking-label|eyebrow`). If your own shadow or tracking token can meet a conflicting class in one `cn` call, write it as a variable utility (`shadow-(--shadow-glow)`) so tailwind-merge keeps it.
 
 ## App-specific looks
@@ -131,20 +147,21 @@ Defaults worth knowing:
 
 - `Button` is `outline` unless you pass `variant`.
 - `Alert` is `info` unless you pass `tone`.
-- Menus are non-modal.
+- Menus and popovers are non-modal.
 - Tabs activate on Enter/Space, not on focus.
 - `AlertDialog` focuses Cancel first.
 
 ## Good to know
 
-- **Select:** pass `items` to `Select` so the closed trigger can render its label during SSR. `onValueChange` can give `null`, so guard for it.
-- **Single-select `ToggleGroup`:** pressing the active item empties the value array. Ignore empty arrays if a selection is required.
-- **App-controlled field errors:** render `{error && <FieldError match>{error}</FieldError>}`. A `Field`'s `invalid` flag alone doesn't show `FieldError`.
-- **Tooltips are visual hints.** Base UI gives them no `role="tooltip"` and no `aria-describedby`. Keep essential information in the control's name or in persistent text.
-- **Dialogs opened from state:** pass `finalFocus` when the element that opened the dialog may be gone by the time it closes.
-- **Popover anchored to an input:** focus stays in the input, so handle Escape on the input itself.
-- **Disabled menu items stay focusable** (`aria-disabled`), as Base UI intends. Clicking them does nothing.
-- **Server rendering with Vite 8 + Nitro:** Base UI imports the CommonJS `use-sync-external-store` shim. The production server build leaves the shim's `require("react")` as a runtime require, which loads a second React and breaks SSR with an invalid hook call ([nitrojs/nitro#4171](https://github.com/nitrojs/nitro/issues/4171)). Until the Nitro fix ships, alias `use-sync-external-store/shim` and `use-sync-external-store/shim/with-selector` to a small ESM module that re-exports React's `useSyncExternalStore`.
+- **Menu items run through `onSelect`** (or the menu's `onAction(value)` with an item `value`), not `onClick`: keyboard selection doesn't fire a click. Return a Promise to keep the item pending and the menu open until it settles.
+- **Select:** pass `items` to `Select` so the closed trigger can render its label during SSR, and mark disabled options `disabled` there too: navigation and typeahead read the data. `onValueChange` can give `null`, so guard for it.
+- **Single-select `ToggleGroup`:** pass `deselectable={false}` to keep one item pressed.
+- **App-controlled field errors:** pass `invalid` to the `Field` and put the message in `FieldError`. Leave `invalid` out to show the browser's validation once a submit finds the control invalid.
+- **`Input`, `Textarea`, `Select` and `Switch` join a `Field` on their own.** `FieldControl` is only for a control this system doesn't ship, like a native `<select>`.
+- **Pending actions:** a `Button` `onClick`, an `AlertDialogAction` `action` or a `DialogClose` `action` that returns a Promise stays pending (`data-pending`, `aria-busy`) until it settles. A rejected `AlertDialogAction` keeps the dialog open for a retry.
+- **Tooltips name or describe their trigger** (`role="tooltip"`). After one opens, the next opens at once; no provider is needed. For a disabled control, give it `focusableWhenDisabled` so it can still show why.
+- **Focus targets** (`initialFocus`, `finalFocus`) take a selector, an element, a function or `"none"`, not a ref. Pass `finalFocus` when the element that opened a dialog may be gone by the time it closes.
+- **Disabled menu items stay focusable** (`aria-disabled`), as the menu pattern asks. Selecting them does nothing.
 
 ## Develop
 
@@ -180,18 +197,11 @@ git push --follow-tags
 
 Pushing the tag runs `.github/workflows/release.yml`, which checks the tag matches `package.json` and publishes a GitHub release from the template `.github/release-notes.md`, filled by `scripts/release-notes.mjs` with the commits since the previous tag. A breaking commit has a `Breaking:` line in its body naming the replacement; those commits get their own section, so the notes double as the upgrade guide. Preview the notes with `node scripts/release-notes.mjs v<version>`. Agents follow `.claude/skills/release/SKILL.md`.
 
-### Adding a shadcn component
+### Adding a component
 
-```sh
-pnpm dlx shadcn@latest add <name> --dry-run   # inspect first
-pnpm dlx shadcn@latest add <name>
-```
+Build it on UI SDK. Its docs ship with the package: start at `node_modules/@ui-sdk/react/docs/llms.txt`, then read the component's page in `docs/components/`.
 
-Then:
-
-1. Rewrite imports to `#lib/utils` and `#components/*`.
-2. Restyle with the tokens.
-3. Drop parts nothing uses.
-4. Add stories, then run `pnpm test:update`.
-
-`shadcn` stays a CLI; it is never a runtime dependency.
+1. If UI SDK ships the component, wrap its parts like the existing modules do: keep UI SDK's behavior and `data-slot`, add classes from the tokens with `cn`, and type `className` as a string with `WithClassName` from `#lib/utils`.
+2. If it doesn't, compose it from the behaviors in `@ui-sdk/core` (`docs/core.md`, searched by heading) rather than hand-writing focus, keys or ARIA.
+3. A part with no behavior of its own (a header, a footer) is a plain element; give it a `data-slot`, and use `renderElement` from `@ui-sdk/react/primitive` when it should take `render`.
+4. Add stories, then run `pnpm test:update` and review the PNG diffs.

@@ -2,26 +2,25 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
-const baseUiParts = [
+const uiSdkParts = [
   "alert-dialog",
   "button",
   "collapsible",
-  "context-menu",
   "dialog",
   "field",
   "input",
+  "label",
   "menu",
-  "merge-props",
   "popover",
+  "primitive",
   "scroll-area",
   "select",
   "separator",
   "switch",
   "tabs",
+  "textarea",
   "toggle",
-  "toggle-group",
   "tooltip",
-  "use-render",
 ];
 
 export default defineConfig({
@@ -29,7 +28,7 @@ export default defineConfig({
   // Pre-bundle up front: discovering these mid-run makes Vite reload and fail in-flight tests.
   optimizeDeps: {
     include: [
-      ...baseUiParts.map((part) => `@base-ui/react/${part}`),
+      ...uiSdkParts.map((part) => `@ui-sdk/react/${part}`),
       "class-variance-authority",
       "clsx",
       "lucide-react",

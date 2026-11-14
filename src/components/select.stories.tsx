@@ -31,14 +31,17 @@ const orderOptions = [
   { value: "size", label: "Size" },
 ];
 
+// Select is generic, so the stories type only the callback they spy on.
+type Args = { onValueChange: (value: string | null, details: unknown) => void };
+
 const meta = {
   title: "Primitives/Select",
   component: Select,
   args: { onValueChange: fn() },
-} satisfies Meta<typeof Select>;
+} satisfies Meta<Args>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<Args>;
 
 const body = () => within(document.body);
 
@@ -107,15 +110,21 @@ export const States: Story = {
   ),
 };
 
-function SortSelect({ onValueChange }: { onValueChange?: (value: string | null) => void }) {
+// Disabled in the data too: the select navigates and types ahead over `items`.
+const sortOptionsOwnerDisabled = sortOptions.map((option) => ({
+  ...option,
+  disabled: option.value === "owner",
+}));
+
+function SortSelect({ onValueChange }: Partial<Args>) {
   return (
-    <Select items={sortOptions} defaultValue="modified" onValueChange={onValueChange}>
+    <Select items={sortOptionsOwnerDisabled} defaultValue="modified" onValueChange={onValueChange}>
       <SelectTrigger aria-label="Sort documents" className="w-44">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {sortOptions.map((option) => (
-          <SelectItem key={option.value} value={option.value} disabled={option.value === "owner"}>
+        {sortOptionsOwnerDisabled.map((option) => (
+          <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
             {option.label}
           </SelectItem>
         ))}
@@ -153,7 +162,7 @@ export const SelectedTest: Story = {
   },
 };
 
-/** Enter/Space open, Escape returns focus, Home/End/arrows, disabled row not selectable, typeahead, Enter selects. */
+/** Enter/Space open, Escape returns focus, Home/End/arrows, disabled row skipped, typeahead, Enter selects. */
 export const KeyboardTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: (args) => <SortSelect onValueChange={args.onValueChange} />,
@@ -184,15 +193,10 @@ export const KeyboardTest: Story = {
     await expectHighlighted("Last modified");
     await userEvent.keyboard("{ArrowDown}");
     await expectHighlighted("Alphabetical");
-    // Base UI 1.9 keeps disabled rows in arrow navigation (screen readers can reach them)
-    // but Enter on one selects nothing and the popup stays open.
-    await userEvent.keyboard("{ArrowDown}");
-    await expectHighlighted("Owner");
-    await userEvent.keyboard("{Enter}");
-    await expect(body().getByRole("listbox")).toBeVisible();
-    await expect(args.onValueChange).not.toHaveBeenCalled();
+    // Arrow keys skip the disabled row, like a native select.
     await userEvent.keyboard("{ArrowDown}");
     await expectHighlighted("Date created");
+    await expect(args.onValueChange).not.toHaveBeenCalled();
     await userEvent.keyboard("a");
     await expectHighlighted("Alphabetical");
     await userEvent.keyboard("{Enter}");
@@ -325,9 +329,6 @@ export const MobileWidthTest: Story = {
     const listbox = await body().findByRole("listbox");
     const popup = listbox.closest("[data-slot='select-content']");
     await expect(window.innerWidth).toBe(390);
-    const positioner = popup?.parentElement;
-    await expect(positioner).toHaveAttribute("data-slot", "select-positioner");
-    await expect(positioner?.parentElement).toHaveAttribute("data-slot", "select-portal");
     await waitFor(() =>
       expect(popup?.getBoundingClientRect().width).toBe(trigger.getBoundingClientRect().width),
     );

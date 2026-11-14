@@ -1,17 +1,20 @@
+import { Textarea as TextareaPrimitive } from "@ui-sdk/react/textarea";
 import type * as React from "react";
 
 import { inputVariants } from "#components/input";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
-/** Native textarea with Input's chrome at lg padding. Inside Field: `<FieldControl render={<Textarea />} />`. */
-function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
+type TextareaProps = WithClassName<React.ComponentProps<typeof TextareaPrimitive>>;
+
+/**
+ * UI SDK's Textarea with Input's chrome at lg padding. It joins a Field directly. `autoResize`
+ * grows it with the text (bound it with `min-h-*` and `max-h-*`); `submitShortcut` submits on Enter.
+ */
+function Textarea({ className, ...props }: TextareaProps) {
   return (
-    <textarea
-      data-slot="textarea"
-      className={cn(inputVariants({ inputSize: "lg" }), className)}
-      {...props}
-    />
+    <TextareaPrimitive className={cn(inputVariants({ inputSize: "lg" }), className)} {...props} />
   );
 }
 
 export { Textarea };
+export type { TextareaProps };

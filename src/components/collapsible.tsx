@@ -1,17 +1,23 @@
-import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
+import {
+  CollapsiblePanel,
+  Collapsible as CollapsiblePrimitive,
+  CollapsibleTrigger as CollapsibleTriggerPrimitive,
+} from "@ui-sdk/react/collapsible";
+import type * as React from "react";
 
 // Behaviour only: no default styles or animations, callers own the layout.
+// The panel exposes `--collapsible-panel-height` for a height transition.
 
-function Collapsible(props: CollapsiblePrimitive.Root.Props) {
-  return <CollapsiblePrimitive.Root data-slot="collapsible" {...props} />;
+function Collapsible(props: React.ComponentProps<typeof CollapsiblePrimitive>) {
+  return <CollapsiblePrimitive {...props} />;
 }
 
-function CollapsibleTrigger(props: CollapsiblePrimitive.Trigger.Props) {
-  return <CollapsiblePrimitive.Trigger data-slot="collapsible-trigger" {...props} />;
+function CollapsibleTrigger(props: React.ComponentProps<typeof CollapsibleTriggerPrimitive>) {
+  return <CollapsibleTriggerPrimitive {...props} />;
 }
 
-function CollapsibleContent(props: CollapsiblePrimitive.Panel.Props) {
-  return <CollapsiblePrimitive.Panel data-slot="collapsible-content" {...props} />;
+function CollapsibleContent(props: React.ComponentProps<typeof CollapsiblePanel>) {
+  return <CollapsiblePanel {...props} />;
 }
 
 export { Collapsible, CollapsibleTrigger, CollapsibleContent };

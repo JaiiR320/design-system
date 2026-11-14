@@ -1,17 +1,17 @@
-import { Separator as SeparatorPrimitive } from "@base-ui/react/separator";
+import { Separator as SeparatorPrimitive } from "@ui-sdk/react/separator";
+import type * as React from "react";
 
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
-type SeparatorProps = Omit<SeparatorPrimitive.Props, "className"> & { className?: string };
+type SeparatorProps = WithClassName<React.ComponentProps<typeof SeparatorPrimitive>>;
 
 // No margins: dividers set their own spacing (e.g. `mx-1 h-10`) or flex-1 in a caption row.
 function Separator({ className, orientation = "horizontal", ...props }: SeparatorProps) {
   return (
     <SeparatorPrimitive
-      data-slot="separator"
       orientation={orientation}
       className={cn(
-        orientation === "vertical" ? "h-full w-px shrink-0 bg-border" : "h-px w-full bg-border",
+        "shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px data-[orientation=vertical]:self-stretch",
         className,
       )}
       {...props}

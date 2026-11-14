@@ -25,6 +25,7 @@ exports[`Dialog Open Test 1`] = `
 `;
 
 exports[`Edge Of Viewport Test 1`] = `
+- button "Project options"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project options
@@ -40,12 +41,11 @@ exports[`Edge Of Viewport Test 1`] = `
     - menuitem "Rename"
     - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
-    - group:
-      - menu "Move to":
-        - menuitem "Reports"
-        - menuitem "Designs"
-        - menuitem "Plans"
-        - menuitem "Archived"
+    - menu "Move to":
+      - menuitem "Reports"
+      - menuitem "Designs"
+      - menuitem "Plans"
+      - menuitem "Archived"
     - separator
     - menuitem "Delete"
   - button "Delete project"
@@ -57,6 +57,7 @@ exports[`Escape Closes Top Layer First Test 1`] = `
 `;
 
 exports[`Mobile Test 1`] = `
+- button "Project options"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project options
@@ -72,12 +73,11 @@ exports[`Mobile Test 1`] = `
     - menuitem "Rename"
     - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
-    - group:
-      - menu "Move to":
-        - menuitem "Reports"
-        - menuitem "Designs"
-        - menuitem "Plans"
-        - menuitem "Archived"
+    - menu "Move to":
+      - menuitem "Reports"
+      - menuitem "Designs"
+      - menuitem "Plans"
+      - menuitem "Archived"
     - separator
     - menuitem "Delete"
   - button "Delete project"
@@ -85,6 +85,7 @@ exports[`Mobile Test 1`] = `
 `;
 
 exports[`Move To Folder Test 1`] = `
+- button "Project options"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project options
@@ -101,14 +102,29 @@ exports[`Move To Folder Test 1`] = `
 `;
 
 exports[`Nested Alert Dialog Test 1`] = `
-- alertdialog "Delete Atlas?":
-  - heading "Delete Atlas?" [level=2]
-  - paragraph: The project and its 3 documents are removed for good.
-  - button "Cancel"
-  - button "Delete"
+- button "Project options"
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - paragraph: Project options
+  - button "Last saved"
+  - button "Close"
+  - text: Sort documents
+  - combobox "Sort documents": Name
+  - text: Quarterly report
+  - paragraph: Reports
+  - button "Shared"
+  - button "Quarterly report actions"
+  - button "Delete project"
+  - alertdialog "Delete Atlas?":
+    - heading "Delete Atlas?" [level=2]
+    - paragraph: The project and its 3 documents are removed for good.
+    - button "Cancel"
+    - button "Delete"
+  - button "Done"
 `;
 
 exports[`Popover And Tooltip Test 1`] = `
+- button "Project options"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project options
@@ -125,7 +141,6 @@ exports[`Popover And Tooltip Test 1`] = `
   - button "Quarterly report actions"
   - button "Delete project"
   - button "Done"
-- text: Saved Nov 7, 2026, 01:00 AM
 `;
 
 exports[`Select Open Test 1`] = `
@@ -149,6 +164,7 @@ exports[`Select Open Test 1`] = `
 `;
 
 exports[`Submenu Open Test 1`] = `
+- button "Project options"
 - dialog "Atlas":
   - heading "Atlas" [level=2]
   - paragraph: Project options
@@ -164,12 +180,11 @@ exports[`Submenu Open Test 1`] = `
     - menuitem "Rename"
     - menuitem "Duplicate"
     - menuitem "Move to" [expanded]
-    - group:
-      - menu "Move to":
-        - menuitem "Reports"
-        - menuitem "Designs"
-        - menuitem "Plans"
-        - menuitem "Archived"
+    - menu "Move to":
+      - menuitem "Reports"
+      - menuitem "Designs"
+      - menuitem "Plans"
+      - menuitem "Archived"
     - separator
     - menuitem "Delete"
   - button "Delete project"

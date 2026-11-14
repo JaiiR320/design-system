@@ -4,7 +4,6 @@ import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 import { Button } from "#components/button";
 import {
   Field,
-  FieldControl,
   FieldDescription,
   FieldError,
   FieldGroup,
@@ -76,8 +75,8 @@ export const States: Story = {
       <Field {...args} invalid>
         <FieldLabel>Invalid</FieldLabel>
         <Input defaultValue="not-an-email" />
-        {/* App-controlled errors need `match`: the `invalid` prop alone doesn't render FieldError. */}
-        <FieldError match>Enter a valid email address.</FieldError>
+        {/* `invalid` shows FieldError now: a server or form-library error. */}
+        <FieldError>Enter a valid email address.</FieldError>
       </Field>
       <Field {...args} disabled>
         <FieldLabel>Disabled</FieldLabel>
@@ -135,36 +134,36 @@ export const LabelFocusesControl: Story = {
   },
 };
 
-/** Native `required` validated on blur after an edit: error appears, is announced, and marks the control. */
+/** Native `required` checked on submit: the error appears, is announced, and marks the control. */
 export const RequiredValidation: Story = {
   render: (args) => (
-    <Field {...args} validationMode="onBlur">
-      <FieldLabel>Email</FieldLabel>
-      <Input type="email" required placeholder="you@example.com" />
-      <FieldError match="valueMissing">Email is required.</FieldError>
-    </Field>
+    <form className="flex flex-col gap-4" onSubmit={(event) => event.preventDefault()}>
+      <Field {...args}>
+        <FieldLabel>Email</FieldLabel>
+        <Input type="email" required placeholder="you@example.com" />
+        <FieldError match="valueMissing">Email is required.</FieldError>
+      </Field>
+      <Button type="submit" variant="default">
+        Save
+      </Button>
+    </form>
   ),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const input = canvas.getByLabelText("Email");
     await expect(input).toBeRequired();
-    // Base UI reports valueMissing only once the value has been edited.
-    await userEvent.type(input, "a");
-    await userEvent.clear(input);
-    await userEvent.tab();
+    await userEvent.click(canvas.getByRole("button", { name: "Save" }));
     await waitFor(() => expect(input).toHaveAttribute("aria-invalid", "true"));
     await expect(input).toHaveAccessibleDescription("Email is required.");
   },
 };
 
-/** Textarea joins the Field through FieldControl's render prop. */
+/** Textarea joins the Field on its own, like Input. */
 export const TextareaControl: Story = {
   render: (args) => (
     <Field {...args}>
       <FieldLabel>Description</FieldLabel>
-      <FieldControl
-        render={<Textarea rows={5} placeholder="Describe the issue or feature in detail…" />}
-      />
+      <Textarea rows={5} placeholder="Describe the issue or feature in detail…" />
       <FieldDescription>Markdown is supported.</FieldDescription>
     </Field>
   ),

@@ -6,7 +6,7 @@ import { cva } from "class-variance-authority";
 export const focusRing =
   "outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
-/** Native `disabled` and Base UI `data-disabled` look the same. */
+/** Native `disabled` and UI SDK's `data-disabled` look the same. */
 export const disabledState =
   "disabled:pointer-events-none disabled:opacity-50 data-disabled:pointer-events-none data-disabled:opacity-50";
 
@@ -14,10 +14,7 @@ export const disabledState =
 export const popupSurface =
   "rounded-xl border border-border bg-popover p-2 text-popover-foreground shadow-2xl shadow-black/50 outline-none";
 
-/** Base UI Positioner layer; nested popups stack by portal order within it. */
-export const popupLayer = "z-(--z-overlay)";
-
-/** Rows inside menus and select lists; Base UI marks the active row with data-highlighted. */
+/** Rows inside menus and select lists; UI SDK marks the active row with data-highlighted. */
 export const menuItemVariants = cva(
   `flex w-full cursor-default items-center gap-3 rounded-lg px-3 py-2 text-left transition outline-none select-none ${disabledState}`,
   {

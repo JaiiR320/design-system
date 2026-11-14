@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`As Link 1`] = `
+- link "Read the date-fns docs":
+  - /url: "#docs"
+`;
+
+exports[`Default 1`] = `
+- button "Thought for 6s"
+- text: Searched for parseDate 4 results Read src/lib/date.ts
+- button "Ran pnpm test date 1.2s"
+- text: Running pnpm lint
+`;
+
+exports[`Opened 1`] = `
+- button "Thought for 6s"
+- text: Searched for parseDate 4 results Read src/lib/date.ts
+- button "Ran pnpm test date 1.2s" [expanded]
+- code: PASS parses UTC PASS parses offsets 2 passed
+- text: Running pnpm lint
+`;
+
+exports[`Plan 1`] = `
+- button "Plan 1 of 4" [expanded]
+- text: Reproduce the timezone bug Fixing offset parsing Add a regression test Run the full suite
+`;
+
+exports[`Statuses 1`] = `
+- text: Ran pnpm install Running pnpm build Failed to run pnpm lint Run pnpm test
+`;
+
+exports[`Streaming Finishes 1`] = `
+- button "Thought for 3s" [expanded]
+- text: Checking whether the parser handles negative offsets.
+- button "Finish"
+`;
+
+exports[`Streaming Open State 1`] = `
+- button "Thinking" [expanded]
+- text: Checking whether the parser handles negative offsets.
+- button "Finish"
+`;

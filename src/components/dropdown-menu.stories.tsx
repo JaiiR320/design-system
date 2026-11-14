@@ -127,7 +127,7 @@ export const SubmenuKeyboardTest: Story = {
     // Pointer: hovering the trigger opens the submenu again.
     await userEvent.hover(moveTo);
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
-    await expect(moveTo).toHaveAttribute("data-popup-open");
+    await expect(moveTo).toHaveAttribute("data-open");
   },
 };
 
@@ -142,7 +142,7 @@ export const KeyboardNavigationTest: Story = {
       <DropdownMenuContent>
         <DropdownMenuItem>Move to folder</DropdownMenuItem>
         <DropdownMenuItem disabled>Rename</DropdownMenuItem>
-        <DropdownMenuItem onClick={onArchive}>Archive</DropdownMenuItem>
+        <DropdownMenuItem onSelect={onArchive}>Archive</DropdownMenuItem>
         <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -155,7 +155,7 @@ export const KeyboardNavigationTest: Story = {
     await userEvent.keyboard("{ArrowDown}");
     const first = await body.findByRole("menuitem", { name: "Move to folder" });
     await waitFor(() => expect(first).toHaveFocus());
-    // Base UI keeps disabled items focusable (announced as disabled) but inert.
+    // UI SDK keeps disabled items focusable (announced as disabled) but inert.
     await userEvent.keyboard("{ArrowDown}");
     const rename = body.getByRole("menuitem", { name: "Rename" });
     await expect(rename).toHaveFocus();
@@ -199,18 +199,22 @@ function ProjectMenu({ onMove }: { onMove: (name: string) => void }) {
             <DropdownMenuGroup>
               <DropdownMenuLabel>Move to</DropdownMenuLabel>
               {folders.slice(0, 4).map((name) => (
-                <DropdownMenuItem key={name} onClick={() => onMove(name)}>
+                <DropdownMenuItem key={name} onSelect={() => onMove(name)}>
                   {name}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuGroup>
-            <DropdownMenuItem variant="muted" closeOnClick={false} onClick={() => setMoving(false)}>
+            <DropdownMenuItem
+              variant="muted"
+              closeOnSelect={false}
+              onSelect={() => setMoving(false)}
+            >
               Back
             </DropdownMenuItem>
           </>
         ) : (
           <>
-            <DropdownMenuItem closeOnClick={false} onClick={() => setMoving(true)}>
+            <DropdownMenuItem closeOnSelect={false} onSelect={() => setMoving(true)}>
               Move to folder
             </DropdownMenuItem>
             <DropdownMenuItem>Rename</DropdownMenuItem>
@@ -225,7 +229,7 @@ function ProjectMenu({ onMove }: { onMove: (name: string) => void }) {
   );
 }
 
-/** closeOnClick={false} swaps to a same-width second page. */
+/** closeOnSelect={false} swaps to a same-width second page. */
 export const SecondPageTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <ProjectMenu onMove={fn()} />,
@@ -242,8 +246,8 @@ export const SecondPageTest: Story = {
   },
 };
 
-/** A positioner class extends the overlay layer: the menu paints above its Dialog. */
-export const InDialogWithPositionerClassTest: Story = {
+/** The menu renders in the top layer above its Dialog, so it overlaps the dialog's edge. */
+export const InDialogTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: (args) => (
     <Dialog defaultOpen>
@@ -251,7 +255,7 @@ export const InDialogWithPositionerClassTest: Story = {
         <DialogTitle>Project settings</DialogTitle>
         <DropdownMenu {...args}>
           <DropdownMenuTrigger render={<Button className="mt-4" />}>Actions</DropdownMenuTrigger>
-          <DropdownMenuContent align="start" positionerProps={{ className: "mt-1" }}>
+          <DropdownMenuContent align="start">
             <DropdownMenuItem>Move to folder</DropdownMenuItem>
             <DropdownMenuItem>Rename</DropdownMenuItem>
             <DropdownMenuItem>Duplicate</DropdownMenuItem>
@@ -266,12 +270,9 @@ export const InDialogWithPositionerClassTest: Story = {
     await userEvent.click(await body.findByRole("button", { name: "Actions" }));
     const menu = await body.findByRole("menu");
     await waitFor(() => expect(menu).toBeVisible());
-    const positioner = menu.closest("[data-slot='dropdown-menu-positioner']");
-    await expect(positioner).toHaveClass("mt-1");
     // Hit test the lower half of the menu, which overlaps the dialog's bottom edge and backdrop.
     const rect = menu.getBoundingClientRect();
     const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
     await expect(menu.contains(hit)).toBe(true);
-    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };

@@ -2,7 +2,7 @@
   "name": "@jaiir320/design-system",
   "version": "0.2.1",
   "private": true,
-  "description": "Semantic tokens and composable React primitives on shadcn/ui + Base UI.",
+  "description": "Semantic tokens and composable React primitives on UI SDK behaviors.",
   "license": "MIT",
   "files": [
     "src",
@@ -39,8 +39,9 @@
     "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
-    "@base-ui/react": "^1.9.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@ui-sdk/core": "0.1.0-beta.2",
+    "@ui-sdk/react": "0.1.0-beta.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.7.0"

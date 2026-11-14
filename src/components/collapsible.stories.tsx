@@ -28,10 +28,7 @@ function MoveToFolder({ defaultOpen = false }: { defaultOpen?: boolean }) {
         </span>
         <span className="flex min-w-0 items-center gap-2 text-subtle-foreground">
           <span className="truncate">Root</span>
-          <ChevronRight
-            className="size-4 shrink-0 group-data-panel-open:rotate-90"
-            strokeWidth={1.75}
-          />
+          <ChevronRight className="size-4 shrink-0 group-data-open:rotate-90" strokeWidth={1.75} />
         </span>
       </CollapsibleTrigger>
       <CollapsibleContent className="mt-3 space-y-1 rounded-xl border border-border bg-background/60 p-1">

@@ -1,8 +1,7 @@
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
+import { mergeProps, renderElement, type PartProps } from "@ui-sdk/react/primitive";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // Position, inset and app-specific looks stay with the caller (`variant={null}` + className).
 const badgeVariants = cva("", {
@@ -15,17 +14,17 @@ const badgeVariants = cva("", {
   defaultVariants: { variant: "neutral" },
 });
 
-type BadgeProps = useRender.ComponentProps<"span"> & VariantProps<typeof badgeVariants>;
+type BadgeProps = WithClassName<PartProps<"span">> & VariantProps<typeof badgeVariants>;
 
 function Badge({ className, variant, render, ...props }: BadgeProps) {
-  return useRender({
-    defaultTagName: "span",
+  return renderElement(
+    "span",
+    mergeProps(
+      { "data-slot": "badge", className: cn(badgeVariants({ variant }), className) },
+      props,
+    ),
     render,
-    props: {
-      "data-slot": "badge",
-      ...mergeProps<"span">({ className: cn(badgeVariants({ variant }), className) }, props),
-    },
-  });
+  );
 }
 
 export { Badge, badgeVariants };

@@ -113,14 +113,16 @@ export const Scrolled: Story = {
     const canvas = within(canvasElement);
     const viewport = canvas.getByRole("region", { name: "Documents" });
     await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
-    // Scroll only once the thumb is measured; an earlier scroll event is lost.
-    const thumb = await waitFor(() => {
-      const element = canvasElement.querySelector<HTMLElement>("[data-slot=scroll-area-thumb]");
-      expect(element?.style.transform).toBe("translate3d(0px, 0px, 0px)");
-      return element;
-    });
+    // The scrollbar measures its thumb into CSS variables; scroll once it has.
+    const offset = () =>
+      parseFloat(
+        canvasElement
+          .querySelector<HTMLElement>("[data-slot=scroll-area-scrollbar]")
+          ?.style.getPropertyValue("--scroll-area-thumb-offset") ?? "",
+      );
+    await waitFor(() => expect(offset()).toBe(0));
     viewport.scrollTop = viewport.scrollHeight;
     await waitFor(() => expect(canvas.getByText("Document 24")).toBeVisible());
-    await waitFor(() => expect(thumb?.style.transform ?? "").toMatch(/translate3d\(0px, [1-9]/));
+    await waitFor(() => expect(offset()).toBeGreaterThan(0));
   },
 };

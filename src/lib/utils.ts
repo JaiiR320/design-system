@@ -16,3 +16,6 @@ const merge = extendTailwindMerge({
 export function cn(...inputs: ClassValue[]) {
   return merge(clsx(inputs));
 }
+
+/** UI SDK parts take a class name or a function of their state; this system's parts take a string, merged with `cn`. */
+export type WithClassName<Props> = Omit<Props, "className"> & { className?: string };

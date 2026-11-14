@@ -1,12 +1,15 @@
+import { Label as LabelPrimitive } from "@ui-sdk/react/label";
 import type * as React from "react";
 
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
-/** Native label for controls outside Field (Field has its own connected FieldLabel). */
-function Label({ className, ...props }: React.ComponentProps<"label">) {
+/** For controls outside Field (Field has its own connected FieldLabel). A press on it reaches its control. */
+function Label({
+  className,
+  ...props
+}: WithClassName<React.ComponentProps<typeof LabelPrimitive>>) {
   return (
-    <label
-      data-slot="label"
+    <LabelPrimitive
       className={cn("block text-sm font-medium text-subtle-foreground", className)}
       {...props}
     />

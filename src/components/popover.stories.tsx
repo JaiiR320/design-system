@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Ellipsis } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import { Button } from "#components/button";
@@ -115,7 +115,6 @@ export const SidesTest: Story = {
 function RenameFolder({ onRename }: { onRename: (name: string) => void }) {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState("Drafts");
-  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="ml-56 flex w-40 items-center justify-between border-b border-border px-3 py-2">
@@ -134,7 +133,7 @@ function RenameFolder({ onRename }: { onRename: (name: string) => void }) {
         >
           <Ellipsis className="size-4" strokeWidth={1.75} />
         </PopoverTrigger>
-        <PopoverContent initialFocus={inputRef} aria-label="Rename folder">
+        <PopoverContent initialFocus="#rename-folder" aria-label="Rename folder">
           <form
             className="space-y-2"
             onSubmit={(event) => {
@@ -147,7 +146,6 @@ function RenameFolder({ onRename }: { onRename: (name: string) => void }) {
               Rename folder
             </Label>
             <Input
-              ref={inputRef}
               id="rename-folder"
               inputSize="sm"
               value={draft}
@@ -222,13 +220,13 @@ const results = ["Launch plan", "Launch checklist", "Launch budget", "Launch ret
 
 // Search-as-you-type: programmatic popover anchored to the input wrapper, focus stays in the input.
 function SearchResults() {
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
 
   return (
     <div className="w-[540px]">
-      <div ref={anchorRef}>
+      <div ref={setAnchor}>
         <Input
           aria-label="Search documents"
           placeholder="Search documents"
@@ -243,15 +241,16 @@ function SearchResults() {
         open={open}
         onOpenChange={(next, details) => {
           // Pressing the anchored input is not "outside" for this popover.
-          const target = details.event.target;
-          if (target instanceof Node && anchorRef.current?.contains(target)) return;
+          const target = details.event?.target;
+          const inAnchor = target instanceof Node && anchor?.contains(target);
+          if (details.reason === "outside-press" && inAnchor) return;
           setOpen(next);
         }}
       >
         <PopoverContent
-          anchor={anchorRef}
+          anchor={anchor}
           align="start"
-          initialFocus={false}
+          initialFocus="none"
           aria-label="Search results"
           className="w-(--anchor-width) overflow-hidden p-0 shadow-black/40"
         >
@@ -298,8 +297,8 @@ export const SearchTest: Story = {
   },
 };
 
-/** A positioner class extends the overlay layer: the popover paints above its Dialog. */
-export const InDialogWithPositionerClassTest: Story = {
+/** Popovers render in the top layer: one opened from a Dialog paints above it. */
+export const InDialogTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => (
     <Dialog defaultOpen>
@@ -307,7 +306,7 @@ export const InDialogWithPositionerClassTest: Story = {
         <DialogTitle>Project settings</DialogTitle>
         <Popover>
           <PopoverTrigger render={<Button className="mt-4" />}>Details</PopoverTrigger>
-          <PopoverContent align="start" positionerProps={{ className: "mt-1" }}>
+          <PopoverContent align="start">
             <PopoverHeader>
               <PopoverTitle>Quarterly report</PopoverTitle>
               <PopoverDescription>
@@ -324,12 +323,9 @@ export const InDialogWithPositionerClassTest: Story = {
     await userEvent.click(await body.findByRole("button", { name: "Details" }));
     const popup = await body.findByRole("dialog", { name: "Quarterly report" });
     await waitFor(() => expect(popup).toBeVisible());
-    const positioner = popup.closest("[data-slot='popover-positioner']");
-    await expect(positioner).toHaveClass("mt-1");
     // Hit test the lower half of the popover, which overlaps the dialog's bottom edge and backdrop.
     const rect = popup.getBoundingClientRect();
     const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.bottom - 8);
     await expect(popup.contains(hit)).toBe(true);
-    await expect(getComputedStyle(positioner as Element).zIndex).toBe("1100");
   },
 };

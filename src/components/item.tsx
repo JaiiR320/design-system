@@ -1,11 +1,10 @@
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
+import { mergeProps, renderElement, type PartProps } from "@ui-sdk/react/primitive";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 
 import { Separator, type SeparatorProps } from "#components/separator";
 import { focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // Hover only when the row is rendered interactive (a/button, e.g. render={<Toggle />}).
 // font-normal resets the weight a rendered Toggle/Button would otherwise pass to the description.
@@ -29,15 +28,17 @@ const itemVariants = cva(
   },
 );
 
-type ItemProps = useRender.ComponentProps<"div"> & VariantProps<typeof itemVariants>;
+type ItemProps = WithClassName<PartProps<"div">> & VariantProps<typeof itemVariants>;
 
 function Item({ className, variant, size, render, ...props }: ItemProps) {
-  return useRender({
-    defaultTagName: "div",
+  return renderElement(
+    "div",
+    mergeProps(
+      { "data-slot": "item", className: cn(itemVariants({ variant, size }), className) },
+      props,
+    ),
     render,
-    props: mergeProps<"div">({ className: cn(itemVariants({ variant, size }), className) }, props),
-    state: { slot: "item" },
-  });
+  );
 }
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {

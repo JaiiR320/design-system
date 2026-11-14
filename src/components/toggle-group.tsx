@@ -1,10 +1,16 @@
-import { Toggle as TogglePrimitive } from "@base-ui/react/toggle";
-import { ToggleGroup as ToggleGroupPrimitive } from "@base-ui/react/toggle-group";
+import {
+  Toggle as TogglePrimitive,
+  ToggleGroup as ToggleGroupPrimitive,
+  type ToggleGroupOptions,
+  type ToggleGroupState,
+} from "@ui-sdk/react/toggle";
+import type { PartProps } from "@ui-sdk/react/primitive";
 import { cva, type VariantProps } from "class-variance-authority";
 import { createContext, useContext } from "react";
+import type * as React from "react";
 
 import { toggleVariants } from "#components/toggle";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 type ToggleVariantProps = VariantProps<typeof toggleVariants>;
 
@@ -24,11 +30,14 @@ const toggleGroupVariants = cva("", {
 // Size stays undefined unless the group sets it, so items keep Toggle's per-variant default.
 const ToggleGroupContext = createContext<ToggleVariantProps>({});
 
-type ToggleGroupProps<Value extends string = string> = Omit<
-  ToggleGroupPrimitive.Props<Value>,
-  "className"
-> &
-  ToggleVariantProps & { className?: string };
+type ToggleGroupProps<Value extends string = string> = ToggleGroupOptions<Value> &
+  WithClassName<
+    Omit<
+      PartProps<"div", ToggleGroupState<Value>>,
+      "defaultValue" | "onChange" | "onSelect" | "children"
+    >
+  > &
+  ToggleVariantProps & { children?: React.ReactNode };
 
 /** Array-valued selection for single and `multiple` groups. Give it an accessible name. */
 function ToggleGroup<Value extends string = string>({
@@ -40,7 +49,6 @@ function ToggleGroup<Value extends string = string>({
 }: ToggleGroupProps<Value>) {
   return (
     <ToggleGroupPrimitive<Value>
-      data-slot="toggle-group"
       className={cn(toggleGroupVariants({ variant }), className)}
       {...props}
     >
@@ -51,23 +59,12 @@ function ToggleGroup<Value extends string = string>({
   );
 }
 
-type ToggleGroupItemProps<Value extends string = string> = Omit<
-  TogglePrimitive.Props<Value>,
-  "className"
-> & { className?: string };
+type ToggleGroupItemProps = WithClassName<React.ComponentProps<typeof TogglePrimitive>>;
 
-function ToggleGroupItem<Value extends string = string>({
-  className,
-  ...props
-}: ToggleGroupItemProps<Value>) {
+/** A Toggle inside the group; give it a `value`. */
+function ToggleGroupItem({ className, ...props }: ToggleGroupItemProps) {
   const { variant, size } = useContext(ToggleGroupContext);
-  return (
-    <TogglePrimitive<Value>
-      data-slot="toggle-group-item"
-      className={toggleVariants({ variant, size, className })}
-      {...props}
-    />
-  );
+  return <TogglePrimitive className={toggleVariants({ variant, size, className })} {...props} />;
 }
 
 export { ToggleGroup, ToggleGroupItem, toggleGroupVariants };

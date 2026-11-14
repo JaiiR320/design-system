@@ -1,9 +1,8 @@
 import type * as React from "react";
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
+import { mergeProps, renderElement, type PartProps } from "@ui-sdk/react/primitive";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // No automatic role: callers add role="alert"/"status" only for dynamically revealed alerts.
 const alertVariants = cva("border text-sm", {
@@ -24,17 +23,17 @@ const alertVariants = cva("border text-sm", {
   defaultVariants: { tone: "info", size: "default" },
 });
 
-type AlertProps = useRender.ComponentProps<"div"> & VariantProps<typeof alertVariants>;
+type AlertProps = WithClassName<PartProps<"div">> & VariantProps<typeof alertVariants>;
 
 function Alert({ className, tone, size, render, ...props }: AlertProps) {
-  return useRender({
-    defaultTagName: "div",
+  return renderElement(
+    "div",
+    mergeProps(
+      { "data-slot": "alert", className: cn(alertVariants({ tone, size }), className) },
+      props,
+    ),
     render,
-    props: {
-      "data-slot": "alert",
-      ...mergeProps<"div">({ className: cn(alertVariants({ tone, size }), className) }, props),
-    },
-  });
+  );
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {

@@ -1,6 +1,6 @@
 /*
  * @jaiir320/design-system theme entry.
- * The consuming app owns `@import "tailwindcss"` and imports this file right after it.
+ * The consuming app owns `@layer ui-sdk;` and `@import "tailwindcss"`, and imports this file right after them.
  * Dark only. Semantic tokens point at Tailwind's palette; override them in a later @theme block.
  */
 @import "@fontsource-variable/jetbrains-mono";
@@ -89,8 +89,8 @@
 }
 
 /*
- * Stacking: sticky chrome < every portaled overlay. Overlays share one layer; nested
- * popups stack by portal order (last opened on top). Use as `z-(--z-sticky)` / `z-(--z-overlay)`.
+ * Stacking for page content: sticky chrome < the app's own overlays. The system's popups use the
+ * browser's top layer instead, above any z-index. Use as `z-(--z-sticky)` / `z-(--z-overlay)`.
  * Apps add their own layers (e.g. drag feedback) relative to these.
  */
 :root {

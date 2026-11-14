@@ -9,6 +9,15 @@ exports[`Action Fails Test 1`] = `
   - button "Delete"
 `;
 
+exports[`Action First Keeps Cancel Focus Test 1`] = `
+- button "Delete project"
+- alertdialog "Delete Atlas?":
+  - heading "Delete Atlas?" [level=2]
+  - paragraph: This can't be undone.
+  - button "Delete"
+  - button "Cancel"
+`;
+
 exports[`Action Succeeds Test 1`] = `
 - button "Delete project"
 `;
@@ -38,11 +47,14 @@ exports[`Explicit Initial Focus Test 1`] = `
 `;
 
 exports[`Nested In Dialog Dims Test 1`] = `
-- alertdialog "Delete Atlas?":
-  - heading "Delete Atlas?" [level=2]
-  - paragraph: The project and its 3 documents are removed. This can't be undone.
-  - button "Cancel"
-  - button "Delete"
+- dialog "Atlas":
+  - heading "Atlas" [level=2]
+  - button "Delete project"
+  - alertdialog "Delete Atlas?":
+    - heading "Delete Atlas?" [level=2]
+    - paragraph: The project and its 3 documents are removed. This can't be undone.
+    - button "Cancel"
+    - button "Delete"
 `;
 
 exports[`Open Test 1`] = `
@@ -80,12 +92,4 @@ exports[`Small Test 1`] = `
   - paragraph: Unsaved edits to this document are lost.
   - button "Keep editing"
   - button "Discard"
-`;
-
-exports[`Viewport Ref Keeps Cancel Focus Test 1`] = `
-- alertdialog "Delete Atlas?":
-  - heading "Delete Atlas?" [level=2]
-  - paragraph: This can't be undone.
-  - button "Delete"
-  - button "Cancel"
 `;

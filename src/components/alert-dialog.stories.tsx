@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import {
@@ -26,30 +26,24 @@ type Story = StoryObj<typeof meta>;
 
 const body = within(document.body);
 
-// Caller owns open state: close on success, stay open with an error on failure.
+// The action's Promise keeps the dialog open and the button pending; it closes on success
+// and stays open on failure, where the caller shows the error.
 function DeleteProject({ onDelete }: { onDelete: () => Promise<void> }) {
-  const [open, setOpen] = useState(false);
-  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function handleDelete() {
-    setPending(true);
     setError(null);
     try {
       await onDelete();
-      setOpen(false);
-    } catch {
+    } catch (reason) {
       setError("Couldn't delete the project. Try again.");
-    } finally {
-      setPending(false);
+      throw reason;
     }
   }
 
   return (
     <AlertDialog
-      open={open}
       onOpenChange={(next) => {
-        setOpen(next);
         if (next) setError(null);
       }}
     >
@@ -70,8 +64,8 @@ function DeleteProject({ onDelete }: { onDelete: () => Promise<void> }) {
         ) : null}
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction disabled={pending} aria-busy={pending} onClick={handleDelete}>
-            {pending ? "Deleting…" : "Delete"}
+          <AlertDialogAction action={handleDelete}>
+            {(state) => (state.pending ? "Deleting…" : "Delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -111,9 +105,9 @@ export const OutsidePressStaysOpenTest: Story = {
   render: () => <DeleteProject onDelete={succeed} />,
   play: async ({ canvasElement }) => {
     await openAlert(canvasElement);
-    const viewport = document.querySelector<HTMLElement>('[data-slot="alert-dialog-viewport"]');
-    if (!viewport) throw new Error("viewport missing");
-    await userEvent.click(viewport);
+    const backdrop = document.querySelector<HTMLElement>('[data-slot="alert-dialog-backdrop"]');
+    if (!backdrop) throw new Error("backdrop missing");
+    await userEvent.click(backdrop);
     const dialog = body.getByRole("alertdialog");
     await expect(dialog).toBeInTheDocument();
     // Where focus lands after a synthetic outside press is timing-dependent; pin it so the
@@ -170,7 +164,7 @@ export const ActionFailsTest: Story = {
   },
 };
 
-// Pending: Action disabled and busy while the request runs.
+// Pending: Action busy and inert while the request runs; the dialog stays open.
 export const PendingTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <DeleteProject onDelete={() => new Promise<void>(() => {})} />,
@@ -178,8 +172,11 @@ export const PendingTest: Story = {
     const { dialog } = await openAlert(canvasElement);
     await userEvent.click(within(dialog).getByRole("button", { name: "Delete" }));
     const busy = await within(dialog).findByRole("button", { name: "Deleting…" });
-    await expect(busy).toBeDisabled();
+    await expect(busy).toHaveAttribute("aria-disabled", "true");
     await expect(busy).toHaveAttribute("aria-busy", "true");
+    await expect(busy).toHaveAttribute("data-pending");
+    await userEvent.keyboard("{Escape}");
+    await expect(dialog).toBeInTheDocument();
   },
 };
 
@@ -217,26 +214,20 @@ export const SmallTest: Story = {
   render: () => <DiscardChanges />,
 };
 
-// Action first in the footer, with the caller holding the viewport ref.
-const viewportRef: { current: HTMLDivElement | null } = { current: null };
-
+// Action first in the footer.
 function ActionFirst({ focusAction = false }: { focusAction?: boolean }) {
-  const actionRef = useRef<HTMLButtonElement>(null);
   return (
     <AlertDialog>
       <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
         Delete project
       </AlertDialogTrigger>
-      <AlertDialogContent
-        viewportProps={{ ref: viewportRef }}
-        initialFocus={focusAction ? actionRef : undefined}
-      >
+      <AlertDialogContent initialFocus={focusAction ? "[data-action]" : undefined}>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Atlas?</AlertDialogTitle>
           <AlertDialogDescription>This can't be undone.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction ref={actionRef}>Delete</AlertDialogAction>
+          <AlertDialogAction data-action="">Delete</AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -244,17 +235,14 @@ function ActionFirst({ focusAction = false }: { focusAction?: boolean }) {
   );
 }
 
-// A caller's viewport ref is filled and Cancel still gets initial focus.
-export const ViewportRefKeepsCancelFocusTest: Story = {
+// Cancel gets initial focus even when it isn't the first button.
+export const ActionFirstKeepsCancelFocusTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <ActionFirst />,
   play: async ({ canvasElement }) => {
     const { dialog } = await openAlert(canvasElement);
     await waitFor(() =>
       expect(within(dialog).getByRole("button", { name: "Cancel" })).toHaveFocus(),
-    );
-    await expect(viewportRef.current).toBe(
-      document.querySelector('[data-slot="alert-dialog-viewport"]'),
     );
   },
 };
@@ -305,7 +293,7 @@ export const CancelCustomRenderTest: Story = {
     const dialog = await body.findByRole("alertdialog", { name: "Discard changes?" });
     const cancel = within(dialog).getByRole("button", { name: "Keep editing" });
     await expect(cancelRef.current).toBe(cancel);
-    await expect(cancel).toHaveAttribute("data-slot", "alert-dialog-cancel");
+    await expect(cancel).toHaveAttribute("data-alert-dialog-cancel");
     // Outline recipe, sm size and the caller's class all reach the custom element.
     await expect(cancel).toHaveClass("rounded-xl", "border", "border-warning", "px-3", "py-2");
     await expect(getComputedStyle(cancel).borderTopWidth).toBe("1px");
@@ -334,7 +322,7 @@ export const NestedInDialogDimsTest: Story = {
     const parent = await body.findByRole("dialog", { name: "Atlas" });
     await userEvent.click(within(parent).getByRole("button", { name: "Delete project" }));
     await body.findByRole("alertdialog", { name: "Delete Atlas?" });
-    const overlay = document.querySelector<HTMLElement>('[data-slot="alert-dialog-overlay"]');
+    const overlay = document.querySelector<HTMLElement>('[data-slot="alert-dialog-backdrop"]');
     if (!overlay) throw new Error("nested alert overlay not rendered");
     await expect(getComputedStyle(overlay).backgroundColor).not.toBe("rgba(0, 0, 0, 0)");
     // The scrim paints above the parent dialog's popup.

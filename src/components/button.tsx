@@ -1,9 +1,9 @@
-import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { Button as ButtonPrimitive } from "@ui-sdk/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
-import { isValidElement } from "react";
+import type * as React from "react";
 
 import { disabledState, focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 /**
  * Size axis on its own so Toggle can reuse it: `cn(toggleBase, toggleVariant, buttonSizeVariants({ size }))`.
@@ -28,7 +28,7 @@ const buttonSizeVariants = cva("", {
 
 const buttonRecipe = cva(
   [
-    "inline-flex items-center justify-center gap-2 rounded-xl transition motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4",
+    "inline-flex items-center justify-center gap-2 rounded-xl transition data-pending:cursor-progress motion-reduce:transition-none [&_svg:not([class*='size-'])]:size-4",
     focusRing,
     disabledState,
   ],
@@ -69,41 +69,14 @@ function buttonVariants({
   return cn(buttonRecipe({ variant }), buttonSizeVariants({ size }), className);
 }
 
-type ButtonProps = ButtonPrimitive.Props & ButtonVariantProps & { className?: string };
+type ButtonProps = WithClassName<React.ComponentProps<typeof ButtonPrimitive>> & ButtonVariantProps;
 
-type KeyEvent = Parameters<NonNullable<ButtonProps["onKeyDown"]>>[0];
-
-// Base UI gives links rendered with nativeButton={false} button keys: it blocks Space's
-// page scroll and clicks on keyup. A real link only activates on Enter (left to the
-// browser), so Space is handed back to the browser. Disabled links stay blocked by Base UI.
-function keepLinkSpace(event: KeyEvent) {
-  const target = event.currentTarget;
-  if (event.key === " " && event.target === target && target.matches("a[href]")) {
-    event.preventBaseUIHandler();
-  }
-}
-
-function Button({ className, variant, size, render, onKeyDown, onKeyUp, ...props }: ButtonProps) {
-  // An <a href> keeps its link role; any other non-native element keeps Base UI's role="button".
-  const isLink =
-    isValidElement<{ href?: string }>(render) && render.type === "a" && Boolean(render.props.href);
-  return (
-    <ButtonPrimitive
-      data-slot="button"
-      render={render}
-      className={buttonVariants({ variant, size, className })}
-      {...(isLink && { role: undefined })}
-      {...props}
-      onKeyDown={(event) => {
-        onKeyDown?.(event);
-        keepLinkSpace(event);
-      }}
-      onKeyUp={(event) => {
-        onKeyUp?.(event);
-        keepLinkSpace(event);
-      }}
-    />
-  );
+/**
+ * UI SDK's Button: a native button, or a link through `render={<a href />}` that keeps its link
+ * role and keys. Return a Promise from `onClick` to keep it pending (`data-pending`) until it settles.
+ */
+function Button({ className, variant, size, ...props }: ButtonProps) {
+  return <ButtonPrimitive className={buttonVariants({ variant, size, className })} {...props} />;
 }
 
 export { Button, buttonSizeVariants, buttonVariants };

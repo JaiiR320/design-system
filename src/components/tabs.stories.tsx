@@ -82,8 +82,8 @@ export const Keyboard: Story = {
     await userEvent.keyboard("{ArrowRight}");
     await userEvent.keyboard(" ");
     await expect(stats).toHaveAttribute("aria-selected", "true");
-    await expect(stats).toHaveAttribute("data-active");
-    // Base UI unmounts the old panel after its exit frame.
+    await expect(stats).toHaveAttribute("data-selected");
+    // The old panel unmounts after its exit frame.
     await waitFor(() => expect(canvas.queryByText("History panel")).not.toBeInTheDocument());
   },
 };
@@ -140,7 +140,7 @@ export const FocusVisible: Story = {
   },
 };
 
-// The active panel is a tab stop (Base UI tabindex=0); keyboard focus on it shows the ring.
+// The selected panel is a tab stop; keyboard focus on it shows the ring.
 export const PanelFocusVisible: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

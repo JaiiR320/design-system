@@ -1,3 +1,5 @@
 /* Storybook plays the consuming app: it owns the Tailwind import, the package brings tokens + sources. */
+/* UI SDK injects its behavior CSS into this layer; declaring it first lets every utility win. */
+@layer ui-sdk;
 @import "tailwindcss";
 @import "../src/styles.css";

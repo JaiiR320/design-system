@@ -80,7 +80,6 @@ function MediaCard({ project, onOpen, onAction }: MediaCardProps) {
 
       {/* Stretched primary action: a real link covering the card, below the menu trigger. */}
       <Button
-        nativeButton={false}
         render={<a href={`#project-${project.id}`} />}
         variant="ghost"
         size="none"
@@ -103,7 +102,7 @@ function MediaCard({ project, onOpen, onAction }: MediaCardProps) {
                 hasCover
                   ? "absolute top-5 right-5 z-20 bg-black/35 p-2 text-white backdrop-blur-sm hover:bg-black/50"
                   : // Plain cards reveal the action on hover or when anything in the card has focus.
-                    "absolute top-5 right-5 z-20 p-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 data-popup-open:opacity-100"
+                    "absolute top-5 right-5 z-20 p-2 opacity-0 group-focus-within:opacity-100 group-hover:opacity-100 data-open:opacity-100"
               }
             />
           }
@@ -111,7 +110,7 @@ function MediaCard({ project, onOpen, onAction }: MediaCardProps) {
           <MoreVertical className="size-5" strokeWidth={1.75} />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-64">
-          <DropdownMenuItem onClick={() => onAction("rename", project.id)}>
+          <DropdownMenuItem onSelect={() => onAction("rename", project.id)}>
             <Pencil strokeWidth={1.75} />
             Rename
           </DropdownMenuItem>
@@ -128,34 +127,34 @@ function MediaCard({ project, onOpen, onAction }: MediaCardProps) {
                 <DropdownMenuItem
                   key={name}
                   disabled={name === folder}
-                  onClick={() => setFolder(name)}
+                  onSelect={() => setFolder(name)}
                 >
                   {name}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuSubContent>
           </DropdownMenuSub>
-          <DropdownMenuItem onClick={() => onAction("duplicate", project.id)}>
+          <DropdownMenuItem onSelect={() => onAction("duplicate", project.id)}>
             <Copy strokeWidth={1.75} />
             Duplicate
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onAction("export", project.id)}>
+          <DropdownMenuItem onSelect={() => onAction("export", project.id)}>
             <Download strokeWidth={1.75} />
             Export
           </DropdownMenuItem>
-          <DropdownMenuItem disabled={!hasCover} onClick={() => onAction("cover", project.id)}>
+          <DropdownMenuItem disabled={!hasCover} onSelect={() => onAction("cover", project.id)}>
             <ImageIcon strokeWidth={1.75} />
             Change cover
           </DropdownMenuItem>
           <DropdownMenuItem
             disabled={!hasCover}
-            onClick={() => onAction("remove-cover", project.id)}
+            onSelect={() => onAction("remove-cover", project.id)}
           >
             <ImageOff strokeWidth={1.75} />
             Remove cover
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive" onClick={() => onAction("delete", project.id)}>
+          <DropdownMenuItem variant="destructive" onSelect={() => onAction("delete", project.id)}>
             <Trash2 strokeWidth={1.75} />
             Delete
           </DropdownMenuItem>
@@ -255,11 +254,12 @@ export const SubmenuKeyboardTest: Story = {
     await waitFor(() => expect(moveTo).toHaveFocus());
     await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
-    // The current folder is disabled, so opening the submenu focuses the next folder.
-    await expect(body.getByRole("menuitem", { name: "Root" })).toHaveAttribute(
-      "aria-disabled",
-      "true",
-    );
+    // The current folder is disabled but stays focusable, as the menu pattern asks: opening
+    // the submenu focuses it, and ArrowDown moves on to the next folder.
+    const root = body.getByRole("menuitem", { name: "Root" });
+    await expect(root).toHaveAttribute("aria-disabled", "true");
+    await waitFor(() => expect(root).toHaveFocus());
+    await userEvent.keyboard("{ArrowDown}");
     await waitFor(() => expect(body.getByRole("menuitem", { name: "Shared" })).toHaveFocus());
 
     await userEvent.keyboard("{Escape}");
@@ -278,6 +278,8 @@ export const SubmenuKeyboardTest: Story = {
     );
     await userEvent.keyboard("{ArrowRight}");
     await waitFor(() => expect(body.getAllByRole("menu")).toHaveLength(2));
+    await waitFor(() => expect(body.getByRole("menuitem", { name: "Root" })).toHaveFocus());
+    await userEvent.keyboard("{ArrowDown}");
     await waitFor(() => expect(body.getByRole("menuitem", { name: "Shared" })).toHaveFocus());
   },
 };

@@ -1,17 +1,30 @@
-import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area";
+import {
+  ScrollAreaCorner as ScrollAreaCornerPrimitive,
+  ScrollArea as ScrollAreaPrimitive,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaViewport as ScrollAreaViewportPrimitive,
+} from "@ui-sdk/react/scroll-area";
 import { cva } from "class-variance-authority";
+import type * as React from "react";
 
 import { focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 // Compound parts: compose Root > Viewport + ScrollBar(s) + Corner explicitly.
 
-type WithStringClassName<Props> = Omit<Props, "className"> & { className?: string };
-
-function ScrollArea({ className, ...props }: WithStringClassName<ScrollAreaPrimitive.Root.Props>) {
+/**
+ * Root. Give it a size. Scrollbars show whenever their axis overflows (`type="auto"`); pass
+ * `type="hover"` or `"scroll"` to show them less. `stickToEnd` keeps a growing end in view, like a chat.
+ */
+function ScrollArea({
+  className,
+  type = "auto",
+  ...props
+}: WithClassName<React.ComponentProps<typeof ScrollAreaPrimitive>>) {
   return (
-    <ScrollAreaPrimitive.Root
-      data-slot="scroll-area"
+    <ScrollAreaPrimitive
+      type={type}
       className={cn("relative min-h-0 min-w-0", className)}
       {...props}
     />
@@ -22,48 +35,46 @@ function ScrollArea({ className, ...props }: WithStringClassName<ScrollAreaPrimi
 function ScrollAreaViewport({
   className,
   ...props
-}: WithStringClassName<ScrollAreaPrimitive.Viewport.Props>) {
+}: WithClassName<React.ComponentProps<typeof ScrollAreaViewportPrimitive>>) {
   return (
-    <ScrollAreaPrimitive.Viewport
-      data-slot="scroll-area-viewport"
+    <ScrollAreaViewportPrimitive
       className={cn("size-full rounded-[inherit]", focusRing, className)}
       {...props}
     />
   );
 }
 
-const scrollBarVariants = cva("flex touch-none p-px select-none", {
-  variants: {
-    orientation: {
-      vertical: "w-2.5",
-      horizontal: "h-2.5 flex-col",
+const scrollBarVariants = cva(
+  "flex touch-none p-px opacity-0 transition-opacity select-none data-visible:opacity-100 motion-reduce:transition-none",
+  {
+    variants: {
+      orientation: {
+        vertical: "w-2.5",
+        horizontal: "h-2.5 flex-col",
+      },
     },
+    defaultVariants: { orientation: "vertical" },
   },
-  defaultVariants: { orientation: "vertical" },
-});
+);
 
 function ScrollBar({
   className,
   orientation = "vertical",
   ...props
-}: WithStringClassName<ScrollAreaPrimitive.Scrollbar.Props>) {
+}: WithClassName<React.ComponentProps<typeof ScrollAreaScrollbar>>) {
   return (
-    <ScrollAreaPrimitive.Scrollbar
-      data-slot="scroll-area-scrollbar"
+    <ScrollAreaScrollbar
       orientation={orientation}
       className={cn(scrollBarVariants({ orientation }), className)}
       {...props}
     >
-      <ScrollAreaPrimitive.Thumb
-        data-slot="scroll-area-thumb"
-        className="flex-1 rounded-full bg-border-strong"
-      />
-    </ScrollAreaPrimitive.Scrollbar>
+      <ScrollAreaThumb className="flex-1 rounded-full bg-border-strong" />
+    </ScrollAreaScrollbar>
   );
 }
 
-function ScrollAreaCorner(props: ScrollAreaPrimitive.Corner.Props) {
-  return <ScrollAreaPrimitive.Corner data-slot="scroll-area-corner" {...props} />;
+function ScrollAreaCorner(props: React.ComponentProps<typeof ScrollAreaCornerPrimitive>) {
+  return <ScrollAreaCornerPrimitive {...props} />;
 }
 
 export { ScrollArea, ScrollAreaViewport, ScrollBar, ScrollAreaCorner };

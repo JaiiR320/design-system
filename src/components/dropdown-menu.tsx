@@ -1,76 +1,64 @@
-import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import {
+  MenuContent,
+  MenuGroup,
+  MenuGroupLabel,
+  MenuItem,
+  Menu as MenuPrimitive,
+  MenuSeparator,
+  MenuSub,
+  MenuSubContent,
+  MenuSubTrigger,
+  MenuTrigger,
+} from "@ui-sdk/react/menu";
 import type { VariantProps } from "class-variance-authority";
 import { ChevronRightIcon } from "lucide-react";
+import type * as React from "react";
 
-import { menuItemVariants, menuLabel, menuSeparator, popupLayer, popupSurface } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { menuItemVariants, menuLabel, menuSeparator, popupSurface } from "#lib/recipes";
+import { cn, type WithClassName } from "#lib/utils";
+
+const menuContentClassName = cn(popupSurface, "max-h-(--available-height) w-56 overflow-y-auto");
 
 // Nonmodal by default: the page stays scrollable and clickable while open.
-function DropdownMenu({ modal = false, ...props }: MenuPrimitive.Root.Props) {
-  return <MenuPrimitive.Root modal={modal} {...props} />;
+// Handle `onAction(value)` here, or `onSelect` on an item; a returned Promise keeps it pending.
+function DropdownMenu({ modal = false, ...props }: React.ComponentProps<typeof MenuPrimitive>) {
+  return <MenuPrimitive modal={modal} {...props} />;
 }
 
-function DropdownMenuTrigger(props: MenuPrimitive.Trigger.Props) {
-  return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+function DropdownMenuTrigger(props: React.ComponentProps<typeof MenuTrigger>) {
+  return <MenuTrigger {...props} />;
 }
 
-function DropdownMenuPortal(props: MenuPrimitive.Portal.Props) {
-  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
-}
+type DropdownMenuContentProps = WithClassName<React.ComponentProps<typeof MenuContent>>;
 
-type DropdownMenuContentProps = Omit<MenuPrimitive.Popup.Props, "className"> &
-  Pick<
-    MenuPrimitive.Positioner.Props,
-    "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding"
-  > & {
-    className?: string;
-    portalProps?: MenuPrimitive.Portal.Props;
-    positionerProps?: Omit<MenuPrimitive.Positioner.Props, "className"> & { className?: string };
-  };
-
+// Renders in the browser's top layer, anchored to its trigger; flips and shifts to stay in view.
 function DropdownMenuContent({
   className,
   side = "bottom",
   align = "end",
   sideOffset = 8,
-  alignOffset = 0,
   collisionPadding = 8,
-  portalProps,
-  positionerProps,
   ...props
 }: DropdownMenuContentProps) {
-  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...portalProps}>
-      <MenuPrimitive.Positioner
-        data-slot="dropdown-menu-positioner"
-        side={side}
-        align={align}
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-        collisionPadding={collisionPadding}
-        className={cn(popupLayer, positionerClassName)}
-        {...restPositionerProps}
-      >
-        <MenuPrimitive.Popup
-          data-slot="dropdown-menu-content"
-          className={cn(popupSurface, "max-h-(--available-height) w-56 overflow-y-auto", className)}
-          {...props}
-        />
-      </MenuPrimitive.Positioner>
-    </MenuPrimitive.Portal>
+    <MenuContent
+      side={side}
+      align={align}
+      sideOffset={sideOffset}
+      collisionPadding={collisionPadding}
+      className={cn(menuContentClassName, className)}
+      {...props}
+    />
   );
 }
 
-function DropdownMenuItem({
-  className,
-  variant,
-  ...props
-}: Omit<MenuPrimitive.Item.Props, "className"> &
-  VariantProps<typeof menuItemVariants> & { className?: string }) {
+type DropdownMenuItemProps = WithClassName<React.ComponentProps<typeof MenuItem>> &
+  VariantProps<typeof menuItemVariants>;
+
+function DropdownMenuItem({ className, variant, ...props }: DropdownMenuItemProps) {
   return (
-    <MenuPrimitive.Item
-      data-slot="dropdown-menu-item"
+    <MenuItem
+      destructive={variant === "destructive" || undefined}
       className={cn(
         menuItemVariants({ variant }),
         "[&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -81,85 +69,68 @@ function DropdownMenuItem({
   );
 }
 
-function DropdownMenuGroup(props: MenuPrimitive.Group.Props) {
-  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
+function DropdownMenuGroup(props: React.ComponentProps<typeof MenuGroup>) {
+  return <MenuGroup {...props} />;
 }
 
 // Must sit inside a DropdownMenuGroup, which it names.
 function DropdownMenuLabel({
   className,
   ...props
-}: Omit<MenuPrimitive.GroupLabel.Props, "className"> & { className?: string }) {
-  return (
-    <MenuPrimitive.GroupLabel
-      data-slot="dropdown-menu-label"
-      className={cn(menuLabel, className)}
-      {...props}
-    />
-  );
+}: WithClassName<React.ComponentProps<typeof MenuGroupLabel>>) {
+  return <MenuGroupLabel className={cn(menuLabel, className)} {...props} />;
 }
 
 function DropdownMenuSeparator({
   className,
   ...props
-}: Omit<MenuPrimitive.Separator.Props, "className"> & { className?: string }) {
-  return (
-    <MenuPrimitive.Separator
-      data-slot="dropdown-menu-separator"
-      className={cn(menuSeparator, className)}
-      {...props}
-    />
-  );
+}: WithClassName<React.ComponentProps<typeof MenuSeparator>>) {
+  return <MenuSeparator className={cn(menuSeparator, className)} {...props} />;
 }
 
-function DropdownMenuSub(props: MenuPrimitive.SubmenuRoot.Props) {
-  return <MenuPrimitive.SubmenuRoot {...props} />;
+function DropdownMenuSub(props: React.ComponentProps<typeof MenuSub>) {
+  return <MenuSub {...props} />;
 }
 
 function DropdownMenuSubTrigger({
   className,
   children,
   ...props
-}: Omit<MenuPrimitive.SubmenuTrigger.Props, "className"> & { className?: string }) {
+}: WithClassName<Omit<React.ComponentProps<typeof MenuSubTrigger>, "children">> & {
+  children?: React.ReactNode;
+}) {
   return (
-    <MenuPrimitive.SubmenuTrigger
-      data-slot="dropdown-menu-sub-trigger"
+    <MenuSubTrigger
       className={cn(
         menuItemVariants(),
-        "justify-between data-popup-open:bg-accent data-popup-open:text-foreground",
+        "justify-between data-open:bg-accent data-open:text-foreground [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
     >
       {children}
       <ChevronRightIcon
-        data-slot="dropdown-menu-sub-trigger-icon"
-        className="size-4 shrink-0 text-muted-foreground"
+        className="size-4 shrink-0 text-muted-foreground rtl:-scale-x-100"
         strokeWidth={1.75}
         aria-hidden="true"
       />
-    </MenuPrimitive.SubmenuTrigger>
+    </MenuSubTrigger>
   );
 }
 
 function DropdownMenuSubContent({
   className,
-  side = "right",
-  align = "start",
   sideOffset = 8,
-  alignOffset = 0,
   collisionPadding = 8,
   ...props
-}: DropdownMenuContentProps) {
+}: WithClassName<React.ComponentProps<typeof MenuSubContent>>) {
   return (
-    <DropdownMenuContent
-      data-slot="dropdown-menu-sub-content"
-      side={side}
-      align={align}
+    <MenuSubContent
       sideOffset={sideOffset}
-      alignOffset={alignOffset}
       collisionPadding={collisionPadding}
-      className={cn("w-48", className)}
+      // A submenu flips to the other side when there's no room but doesn't slide back on
+      // screen; capping it at the room it has keeps a phone-width submenu in view.
+      className={cn(menuContentClassName, "w-48 max-w-(--available-width)", className)}
       {...props}
     />
   );
@@ -171,10 +142,10 @@ export {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 };
+export type { DropdownMenuContentProps, DropdownMenuItemProps };

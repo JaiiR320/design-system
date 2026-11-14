@@ -31,37 +31,29 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "#compo
 type ConfirmProps = { onConfirm: () => Promise<void> };
 
 /**
- * Plain composition, no promise-based confirm service: the caller owns open, pending and error
- * state, closes on success and stays open with an error on failure.
+ * Plain composition, no promise-based confirm service. The action's Promise keeps the dialog
+ * open and pending (nothing but success closes it meanwhile); a rejection keeps it open, and the
+ * caller shows the error.
  */
 function DeleteDocumentConfirm({ onConfirm }: ConfirmProps) {
-  const [open, setOpen] = useState(false);
-  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deleted, setDeleted] = useState(false);
 
   async function handleDelete() {
-    setPending(true);
     setError(null);
     try {
       await onConfirm();
-      setOpen(false);
       setDeleted(true);
-    } catch {
+    } catch (reason) {
       setError("Couldn't delete the document. Check your connection and try again.");
-    } finally {
-      setPending(false);
+      throw reason;
     }
   }
 
   return (
     <div className="flex items-center gap-4">
       <AlertDialog
-        open={open}
         onOpenChange={(next) => {
-          // Keep the dialog up while the request is in flight.
-          if (pending) return;
-          setOpen(next);
           if (next) setError(null);
         }}
       >
@@ -69,8 +61,7 @@ function DeleteDocumentConfirm({ onConfirm }: ConfirmProps) {
           <Trash2 strokeWidth={1.75} />
           Delete document
         </AlertDialogTrigger>
-        {/* Base UI skips nested backdrops by default; forceRender dims a parent dialog too. */}
-        <AlertDialogContent overlayProps={{ forceRender: true }}>
+        <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Launch plan?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -83,9 +74,9 @@ function DeleteDocumentConfirm({ onConfirm }: ConfirmProps) {
             </Alert>
           ) : null}
           <AlertDialogFooter layout="stretch">
-            <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
-            <AlertDialogAction disabled={pending} aria-busy={pending} onClick={handleDelete}>
-              {pending ? "Deleting…" : error ? "Try again" : "Delete"}
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction action={handleDelete}>
+              {(state) => (state.pending ? "Deleting…" : state.error ? "Try again" : "Delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -145,7 +136,7 @@ export const OpenTest: Story = {
   },
 };
 
-/** While the request runs, both actions are disabled and Escape cannot dismiss the dialog. */
+/** While the request runs, the action is busy and neither Cancel nor Escape dismisses the dialog. */
 export const PendingTest: Story = {
   tags: ["!dev", "!autodocs"],
   args: { onConfirm: fn(() => new Promise<void>(() => {})) },
@@ -153,9 +144,11 @@ export const PendingTest: Story = {
     const dialog = within(await openConfirm(canvasElement));
     await userEvent.click(dialog.getByRole("button", { name: "Delete" }));
     const action = await dialog.findByRole("button", { name: "Deleting…" });
-    await expect(action).toBeDisabled();
+    await expect(action).toHaveAttribute("aria-disabled", "true");
     await expect(action).toHaveAttribute("aria-busy", "true");
-    await expect(dialog.getByRole("button", { name: "Cancel" })).toBeDisabled();
+    await userEvent.click(dialog.getByRole("button", { name: "Cancel" }));
+    await expect(body.getByRole("alertdialog")).toBeVisible();
+    action.focus();
     await userEvent.keyboard("{Escape}");
     await expect(body.getByRole("alertdialog")).toBeVisible();
     await expect(args.onConfirm).toHaveBeenCalledTimes(1);
@@ -240,11 +233,9 @@ export const NestedInDialogTest: Story = {
     const deleteDocument = within(details).getByRole("button", { name: "Delete document" });
     await userEvent.click(deleteDocument);
     const confirm = await body.findByRole("alertdialog");
-    // One z layer; the later portal paints above: the confirm follows the dialog, outside it.
-    await expect(details).not.toContainElement(confirm);
-    await expect(
-      details.compareDocumentPosition(confirm) & Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
+    // The confirm renders in place, inside the details dialog, and joins its stack in the top layer.
+    await expect(details).toContainElement(confirm);
+    await expect(details.style.getPropertyValue("--dialog-stack")).toBe("1");
 
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(body.queryByRole("alertdialog")).not.toBeInTheDocument());

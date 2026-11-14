@@ -14,6 +14,7 @@ exports[`Escape Closes Test 1`] = `
 `;
 
 exports[`Failed Test 1`] = `
+- button "Delete document"
 - alertdialog "Delete Launch plan?":
   - heading "Delete Launch plan?" [level=2]
   - paragraph: This will delete the document and all 3 versions. This can't be undone.
@@ -27,11 +28,20 @@ exports[`Nested In Dialog 1`] = `
 `;
 
 exports[`Nested In Dialog Test 1`] = `
-- alertdialog "Delete Launch plan?":
-  - heading "Delete Launch plan?" [level=2]
-  - paragraph: This will delete the document and all 3 versions. This can't be undone.
-  - button "Cancel"
-  - button "Delete"
+- button "Document details"
+- dialog "Launch plan":
+  - heading "Launch plan" [level=2]
+  - text: Export
+  - paragraph: Download as PDF or Markdown.
+  - text: Danger zone
+  - paragraph: Remove the document and its history.
+  - button "Delete document"
+  - alertdialog "Delete Launch plan?":
+    - heading "Delete Launch plan?" [level=2]
+    - paragraph: This will delete the document and all 3 versions. This can't be undone.
+    - button "Cancel"
+    - button "Delete"
+  - button "Close"
 `;
 
 exports[`Open Test 1`] = `
@@ -43,9 +53,10 @@ exports[`Open Test 1`] = `
 `;
 
 exports[`Pending Test 1`] = `
+- button "Delete document"
 - alertdialog "Delete Launch plan?":
   - heading "Delete Launch plan?" [level=2]
   - paragraph: This will delete the document and all 3 versions. This can't be undone.
-  - button "Cancel" [disabled]
+  - button "Cancel"
   - button "Deleting…" [disabled]
 `;

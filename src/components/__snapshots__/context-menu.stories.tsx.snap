@@ -4,13 +4,16 @@ exports[`Default 1`] = `
 - text: Right-click empty board space
 `;
 
-exports[`In Dialog With Positioner Class Test 1`] = `
-- menu:
-  - menuitem "New document"
-  - menuitem "Paste"
-  - menuitem "Collapse all"
-  - menuitem "Refresh"
-  - menuitem "Archive all"
+exports[`In Dialog Test 1`] = `
+- dialog "Project settings":
+  - heading "Project settings" [level=2]
+  - text: Right-click empty board space
+  - menu:
+    - menuitem "New document"
+    - menuitem "Paste"
+    - menuitem "Collapse all"
+    - menuitem "Refresh"
+    - menuitem "Archive all"
 `;
 
 exports[`Right Click Test 1`] = `
@@ -25,17 +28,18 @@ exports[`Right Click Test 1`] = `
 `;
 
 exports[`Submenu Test 1`] = `
+- text: Right-click empty board space
 - menu:
   - group "Atlas board":
+    - text: Atlas board
     - menuitem "New document"
     - menuitem "Paste" [disabled]
   - separator
   - menuitem "Sort by" [expanded]
-  - group:
-    - menu "Sort by":
-      - menuitem "Name"
-      - menuitem "Date modified"
-      - menuitem "Owner"
+  - menu "Sort by":
+    - menuitem "Name"
+    - menuitem "Date modified"
+    - menuitem "Owner"
   - menuitem "Collapse all"
   - menuitem "Archive all"
 `;

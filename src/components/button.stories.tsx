@@ -1,10 +1,10 @@
-import { Collapsible } from "@base-ui/react/collapsible";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Download, Ellipsis, Plus, Settings, Trash2, X } from "lucide-react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
 import { Button } from "#components/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "#components/collapsible";
 import { Spinner } from "#components/spinner";
 
 const meta = {
@@ -180,20 +180,18 @@ export const Loading: Story = {
 export const AsLink: Story = {
   render: () => (
     <div className="flex items-center gap-3">
-      <Button render={<a href="#x" />} nativeButton={false}>
-        Projects
-      </Button>
+      <Button render={<a href="#x" />}>Projects</Button>
       <Button
         render={<a href="#x" aria-current="page" />}
-        nativeButton={false}
+
         className="aria-[current=page]:border-selected-border aria-[current=page]:bg-selected aria-[current=page]:text-selected-foreground"
       >
         Current
       </Button>
-      <Button variant="link" size="none" render={<a href="#x" />} nativeButton={false}>
+      <Button variant="link" size="none" render={<a href="#x" />}>
         Open an issue
       </Button>
-      <Button render={<a href="#x" />} nativeButton={false} disabled>
+      <Button render={<a href="#x" />} disabled>
         Disabled link
       </Button>
     </div>
@@ -225,12 +223,12 @@ export const Keyboard: Story = {
 
 export const AsTrigger: Story = {
   render: (args) => (
-    <Collapsible.Root className="flex w-72 flex-col gap-2">
-      <Collapsible.Trigger render={<Button onClick={args.onClick} />}>
+    <Collapsible className="flex w-72 flex-col gap-2">
+      <CollapsibleTrigger render={<Button onClick={args.onClick} />}>
         Move to folder
-      </Collapsible.Trigger>
-      <Collapsible.Panel className="text-sm text-muted-foreground">Root</Collapsible.Panel>
-    </Collapsible.Root>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="text-sm text-muted-foreground">Root</CollapsibleContent>
+    </Collapsible>
   ),
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement);
@@ -247,7 +245,7 @@ export const AsTrigger: Story = {
 const actionClick = fn();
 const linkClick = fn();
 
-// Records whether Base UI already blocked the click, then stops the test page navigating.
+// Records whether UI SDK already blocked the click, then stops the test page navigating.
 function trapLinkClick(event: ReactMouseEvent) {
   linkClick(event.defaultPrevented);
   event.preventDefault();
@@ -259,18 +257,18 @@ export const LinkKeyboardTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => (
     <div className="flex items-center gap-3">
-      <Button render={<a href="#link-keyboard" />} nativeButton={false} onClick={trapLinkClick}>
+      <Button render={<a href="#link-keyboard" />} onClick={trapLinkClick}>
         Projects
       </Button>
       <Button
         render={<a href="#link-keyboard" />}
-        nativeButton={false}
+
         disabled
         onClick={trapLinkClick}
       >
         Disabled link
       </Button>
-      <Button render={<div />} nativeButton={false} onClick={actionClick}>
+      <Button render={<div />} onClick={actionClick}>
         Action
       </Button>
     </div>

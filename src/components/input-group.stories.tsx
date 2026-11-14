@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { SearchIcon, XIcon } from "lucide-react";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import { Field, FieldControl, FieldDescription, FieldLabel } from "#components/field";
+import { Field, FieldDescription, FieldLabel } from "#components/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -226,8 +226,8 @@ export const AddonClickHandlerTest: Story = {
   },
 };
 
-/** The documented textarea composition: FieldControl renders InputGroupTextarea. */
-export const FieldControlTextarea: Story = {
+/** InputGroupTextarea joins the Field on its own. */
+export const FieldTextarea: Story = {
   render: (args) => (
     <div className="flex flex-col gap-4">
       {[
@@ -238,7 +238,7 @@ export const FieldControlTextarea: Story = {
         <Field key={label} {...state}>
           <FieldLabel>{label}</FieldLabel>
           <InputGroup {...args}>
-            <FieldControl render={<InputGroupTextarea rows={2} placeholder="Add a note…" />} />
+            <InputGroupTextarea rows={2} placeholder="Add a note…" />
             <InputGroupAddon align="block-end">
               <InputGroupText>{label} · 0 / 200</InputGroupText>
             </InputGroupAddon>

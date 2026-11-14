@@ -1,67 +1,48 @@
-import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
+import {
+  TooltipContent as TooltipContentPrimitive,
+  Tooltip as TooltipPrimitive,
+  TooltipTrigger as TooltipTriggerPrimitive,
+} from "@ui-sdk/react/tooltip";
+import type * as React from "react";
 
-import { popupLayer } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
-function TooltipProvider({ delay = 400, ...props }: TooltipPrimitive.Provider.Props) {
-  return <TooltipPrimitive.Provider delay={delay} {...props} />;
+/**
+ * Names an icon-only trigger, or describes any other (`role="tooltip"`, wired to the trigger).
+ * After one tooltip opens, the next opens at once; no provider needed.
+ */
+function Tooltip({ delay = 400, ...props }: React.ComponentProps<typeof TooltipPrimitive>) {
+  return <TooltipPrimitive delay={delay} {...props} />;
 }
 
-function Tooltip(props: TooltipPrimitive.Root.Props) {
-  return <TooltipPrimitive.Root {...props} />;
+function TooltipTrigger(props: React.ComponentProps<typeof TooltipTriggerPrimitive>) {
+  return <TooltipTriggerPrimitive {...props} />;
 }
 
-function TooltipTrigger(props: TooltipPrimitive.Trigger.Props) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
-}
-
-type TooltipContentProps = Omit<TooltipPrimitive.Popup.Props, "className"> &
-  Pick<
-    TooltipPrimitive.Positioner.Props,
-    "side" | "align" | "sideOffset" | "alignOffset" | "collisionPadding" | "anchor"
-  > & {
-    className?: string;
-    portalProps?: TooltipPrimitive.Portal.Props;
-    positionerProps?: Omit<TooltipPrimitive.Positioner.Props, "className"> & { className?: string };
-  };
+type TooltipContentProps = WithClassName<React.ComponentProps<typeof TooltipContentPrimitive>>;
 
 function TooltipContent({
   className,
   side = "top",
   align = "center",
   sideOffset = 8,
-  alignOffset = 0,
   collisionPadding = 8,
-  anchor,
-  portalProps,
-  positionerProps,
   ...props
 }: TooltipContentProps) {
-  const { className: positionerClassName, ...restPositionerProps } = positionerProps ?? {};
   return (
-    <TooltipPrimitive.Portal data-slot="tooltip-portal" {...portalProps}>
-      <TooltipPrimitive.Positioner
-        data-slot="tooltip-positioner"
-        side={side}
-        align={align}
-        sideOffset={sideOffset}
-        alignOffset={alignOffset}
-        collisionPadding={collisionPadding}
-        anchor={anchor}
-        className={cn(popupLayer, positionerClassName)}
-        {...restPositionerProps}
-      >
-        <TooltipPrimitive.Popup
-          data-slot="tooltip-content"
-          className={cn(
-            "w-fit max-w-xs rounded-lg border border-border bg-popover px-3 py-2 text-xs text-secondary-foreground shadow-raised",
-            className,
-          )}
-          {...props}
-        />
-      </TooltipPrimitive.Positioner>
-    </TooltipPrimitive.Portal>
+    <TooltipContentPrimitive
+      side={side}
+      align={align}
+      sideOffset={sideOffset}
+      collisionPadding={collisionPadding}
+      className={cn(
+        "w-fit max-w-xs rounded-lg border border-border bg-popover px-3 py-2 text-xs text-secondary-foreground shadow-raised",
+        className,
+      )}
+      {...props}
+    />
   );
 }
 
-export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };
+export { Tooltip, TooltipContent, TooltipTrigger };
+export type { TooltipContentProps };

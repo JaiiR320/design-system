@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- text: Why does parseDate return null for 2026-11-10T09:00+05:30?
+- paragraph:
+  - text: The regex only accepts offsets written as
+  - code: "+0530"
+  - text: ", without a colon. I changed it to accept both forms and added a test."
+- button "Copy"
+- button "Retry"
+`;
+
+exports[`Long Bubble 1`] = `
+- text: Refactor the date helpers so every parser returns a Result instead of throwing, keep the public names, and update the call sites in the importer and the scheduler. Edited
+`;
+
+exports[`With Avatar And Header 1`] = `
+- text: Reviewer 09:41
+- paragraph: "Looks good. One nit: name the regex."
+`;

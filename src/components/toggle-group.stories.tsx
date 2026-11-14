@@ -117,7 +117,7 @@ export const Variants: Story = {
 
 type Mode = "sign-in" | "sign-up";
 
-// Auth mode: single selection; the handler ignores the empty array so one segment stays pressed.
+// Auth mode: single selection; `deselectable={false}` keeps one segment pressed.
 export const AuthMode: Story = {
   render: () => {
     function Example() {
@@ -127,13 +127,12 @@ export const AuthMode: Story = {
           <ToggleGroup<Mode>
             aria-label="Authentication mode"
             variant="segmented"
+            deselectable={false}
             value={[mode]}
-            onValueChange={(value) => {
-              if (value[0]) setMode(value[0]);
-            }}
+            onValueChange={(value) => setMode(value[0])}
           >
-            <ToggleGroupItem<Mode> value="sign-in">Sign in</ToggleGroupItem>
-            <ToggleGroupItem<Mode> value="sign-up">Sign up</ToggleGroupItem>
+            <ToggleGroupItem value="sign-in">Sign in</ToggleGroupItem>
+            <ToggleGroupItem value="sign-up">Sign up</ToggleGroupItem>
           </ToggleGroup>
         </div>
       );
@@ -167,10 +166,9 @@ export const FeedbackType: Story = {
         <div className="w-[398px]">
           <ToggleGroup
             aria-label="Issue type"
+            deselectable={false}
             value={[type]}
-            onValueChange={(value) => {
-              if (value[0]) setType(value[0]);
-            }}
+            onValueChange={(value) => setType(value[0])}
           >
             <ToggleGroupItem value="bug" className={feedbackOff}>
               <Bug className="size-4" strokeWidth={1.75} />

@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Copy 1`] = `
+- text: src/lib/date.ts
+- button "Copied"
+- text: Copied
+- code: "export function parseDate(input: string) { const date = new Date(input); if (Number.isNaN(date.getTime())) { throw new RangeError(\`Invalid date: \${input}\`); } return date; }"
+`;
+
+exports[`Default 1`] = `
+- text: src/lib/date.ts
+- button "Copy"
+- code: "export function parseDate(input: string) { const date = new Date(input); if (Number.isNaN(date.getTime())) { throw new RangeError(\`Invalid date: \${input}\`); } return date; }"
+`;
+
+exports[`Destructive 1`] = `
+- text: pnpm lint
+- code: src/lib/date.ts:4:7 error 'offset' is never used 1 problem (1 error)
+`;
+
+exports[`Diff 1`] = `
+- text: src/lib/date.ts
+- code: "if (Number.isNaN(date.getTime())) { return null; - throw new RangeError(\`Invalid date: \${input}\`); + } return date;"
+`;
+
+exports[`Floating Actions 1`] = `
+- button "Copy"
+- code: pnpm add date-fns
+`;
+
+exports[`Floating Actions Focused 1`] = `
+- button "Copy"
+- code: pnpm add date-fns
+`;
+
+exports[`Line Numbers 1`] = `
+- code: "export function parseDate(input: string) { const date = new Date(input); if (Number.isNaN(date.getTime())) { throw new RangeError(\`Invalid date: \${input}\`); } return date; }"
+`;
+
+exports[`Overflow 1`] = `
+- code: "Error: connect ECONNREFUSED 127.0.0.1:5432 at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)"
+- code: "Error: connect ECONNREFUSED 127.0.0.1:5432 at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)"
+`;

@@ -67,7 +67,7 @@ function ResultTile({
 }
 
 function SearchPopover({ onAdd }: SearchPopoverProps) {
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -88,17 +88,13 @@ function SearchPopover({ onAdd }: SearchPopoverProps) {
 
   return (
     <div className="w-[900px] space-y-4">
-      <div ref={anchorRef} className="w-[540px]">
+      <div ref={setAnchor} className="w-[540px]">
         <Input
           ref={inputRef}
           aria-label="Add document"
           placeholder="Add document"
           autoComplete="off"
           value={query}
-          // Focus never enters the popup, so its own Escape handling can't see the key.
-          onKeyDown={(event) => {
-            if (event.key === "Escape" && open) setOpen(false);
-          }}
           onValueChange={(value) => {
             setQuery(value);
             setOpen(value.trim().length > 0);
@@ -109,16 +105,17 @@ function SearchPopover({ onAdd }: SearchPopoverProps) {
         open={open}
         onOpenChange={(next, details) => {
           // Pressing the anchored input is not "outside" for this popover.
-          const target = details.event.target;
-          if (target instanceof Node && anchorRef.current?.contains(target)) return;
+          const target = details.event?.target;
+          const inAnchor = target instanceof Node && anchor?.contains(target);
+          if (details.reason === "outside-press" && inAnchor) return;
           setOpen(next);
         }}
       >
         <PopoverContent
-          anchor={anchorRef}
+          anchor={anchor}
           align="start"
-          initialFocus={false}
-          finalFocus={false}
+          initialFocus="none"
+          finalFocus="none"
           aria-label="Search results"
           data-dragging={dragging ? "" : undefined}
           className="w-(--anchor-width) overflow-hidden p-0 data-dragging:pointer-events-none data-dragging:opacity-0"

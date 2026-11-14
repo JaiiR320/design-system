@@ -1,8 +1,17 @@
-import { Field as FieldPrimitive } from "@base-ui/react/field";
+import {
+  FieldControl as FieldControlPrimitive,
+  FieldDescription as FieldDescriptionPrimitive,
+  FieldError as FieldErrorPrimitive,
+  FieldGroup as FieldGroupPrimitive,
+  FieldLabel as FieldLabelPrimitive,
+  FieldLegend as FieldLegendPrimitive,
+  Field as FieldPrimitive,
+  FieldSet as FieldSetPrimitive,
+} from "@ui-sdk/react/field";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 const fieldVariants = cva("", {
   variants: {
@@ -14,14 +23,17 @@ const fieldVariants = cva("", {
   defaultVariants: { orientation: "vertical" },
 });
 
-type FieldProps = Omit<FieldPrimitive.Root.Props, "className"> &
-  VariantProps<typeof fieldVariants> & { className?: string };
+type FieldProps = WithClassName<React.ComponentProps<typeof FieldPrimitive>> &
+  VariantProps<typeof fieldVariants>;
 
-/** One label + one control. Base UI connects label, description and error to the control. */
+/**
+ * One label + one control. UI SDK connects label, description and error to the control.
+ * `invalid` shows the field as invalid now (a server or form-library error); leave it out to
+ * show the browser's validation once a submit finds the control invalid.
+ */
 function Field({ className, orientation = "vertical", ...props }: FieldProps) {
   return (
-    <FieldPrimitive.Root
-      data-slot="field"
+    <FieldPrimitive
       data-orientation={orientation}
       className={cn(fieldVariants({ orientation }), className)}
       {...props}
@@ -40,85 +52,69 @@ const fieldLabelVariants = cva("block font-medium data-disabled:opacity-50", {
   defaultVariants: { size: "md" },
 });
 
-type FieldLabelProps = Omit<FieldPrimitive.Label.Props, "className"> &
-  VariantProps<typeof fieldLabelVariants> & { className?: string };
+type FieldLabelProps = WithClassName<React.ComponentProps<typeof FieldLabelPrimitive>> &
+  VariantProps<typeof fieldLabelVariants>;
 
 function FieldLabel({ className, size, ...props }: FieldLabelProps) {
-  return (
-    <FieldPrimitive.Label
-      data-slot="field-label"
-      className={cn(fieldLabelVariants({ size }), className)}
-      {...props}
-    />
-  );
+  return <FieldLabelPrimitive className={cn(fieldLabelVariants({ size }), className)} {...props} />;
 }
 
-type FieldDescriptionProps = Omit<FieldPrimitive.Description.Props, "className"> & {
-  className?: string;
-};
+type FieldDescriptionProps = WithClassName<React.ComponentProps<typeof FieldDescriptionPrimitive>>;
 
 function FieldDescription({ className, ...props }: FieldDescriptionProps) {
   return (
-    <FieldPrimitive.Description
-      data-slot="field-description"
+    <FieldDescriptionPrimitive
       className={cn("text-xs text-muted-foreground", className)}
       {...props}
     />
   );
 }
 
-type FieldErrorProps = Omit<FieldPrimitive.Error.Props, "className"> & { className?: string };
+type FieldErrorProps = WithClassName<React.ComponentProps<typeof FieldErrorPrimitive>>;
 
 /**
- * Shown when native/`validate` validation fails. Base UI ignores Field's `invalid` prop here,
- * so render app-controlled errors conditionally with `match`: `{error && <FieldError match>…}`.
+ * Shows while the field is invalid: by its `invalid` prop, or once a submit finds the control
+ * invalid. Without children it shows the browser's message; `match` limits it to one problem.
  */
 function FieldError({ className, ...props }: FieldErrorProps) {
   return (
-    <FieldPrimitive.Error
-      data-slot="field-error"
-      className={cn("text-xs text-destructive-text", className)}
-      {...props}
-    />
+    <FieldErrorPrimitive className={cn("text-xs text-destructive-text", className)} {...props} />
   );
 }
 
-type FieldControlProps = FieldPrimitive.Control.Props;
+type FieldControlProps = React.ComponentProps<typeof FieldControlPrimitive>;
 
 /**
- * Unstyled: connects a non-Base-UI control to the Field, e.g.
- * `<FieldControl render={<Textarea />} />`. Input already integrates; don't wrap it.
+ * Unstyled: connects a control this system doesn't ship to the Field, e.g.
+ * `<FieldControl render={<select />} />`. Input, Textarea, Select and Switch join a Field on their own.
  */
 function FieldControl(props: FieldControlProps) {
-  return <FieldPrimitive.Control data-slot="field-control" {...props} />;
+  return <FieldControlPrimitive {...props} />;
 }
 
-function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
+function FieldGroup({
+  className,
+  ...props
+}: WithClassName<React.ComponentProps<typeof FieldGroupPrimitive>>) {
+  return <FieldGroupPrimitive className={cn("flex flex-col gap-4", className)} {...props} />;
+}
+
+/** A fieldset for grouped controls (e.g. a ToggleGroup named by FieldLegend). */
+function FieldSet({
+  className,
+  ...props
+}: WithClassName<React.ComponentProps<typeof FieldSetPrimitive>>) {
   return (
-    <div data-slot="field-group" className={cn("flex flex-col gap-4", className)} {...props} />
+    <FieldSetPrimitive className={cn("min-w-0 space-y-2 border-0 p-0", className)} {...props} />
   );
 }
 
-/** Native fieldset for grouped controls (e.g. a ToggleGroup named by FieldLegend). */
-function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
-  return (
-    <fieldset
-      data-slot="field-set"
-      className={cn("min-w-0 space-y-2 border-0 p-0", className)}
-      {...props}
-    />
-  );
-}
-
-type FieldLegendProps = React.ComponentProps<"legend"> & VariantProps<typeof fieldLabelVariants>;
+type FieldLegendProps = WithClassName<React.ComponentProps<typeof FieldLegendPrimitive>> &
+  VariantProps<typeof fieldLabelVariants>;
 
 function FieldLegend({ className, size, ...props }: FieldLegendProps) {
   return (
-    <legend
-      data-slot="field-legend"
-      className={cn(fieldLabelVariants({ size }), className)}
-      {...props}
-    />
+    <FieldLegendPrimitive className={cn(fieldLabelVariants({ size }), className)} {...props} />
   );
 }
 

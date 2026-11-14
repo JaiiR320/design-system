@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- region "Conversation":
+  - text: Why does parseDate return null for 2026-11-10T09:00+05:30?
+  - button "Thought for 4s"
+  - text: Searched for parseDate 4 results Read src/lib/date.ts Ran pnpm test date 1.2s
+  - paragraph:
+    - text: The offset pattern only accepted
+    - code: "+0530"
+    - text: ". I made the colon optional:"
+  - text: src/lib/date.ts
+  - button "Copy"
+  - code: "const offset = /([+-])(\\\\d{4})$/; - const offset = /([+-])(\\\\d{2}):?(\\\\d{2})$/; +"
+  - button "Copy reply"
+  - button "Retry"
+- group:
+  - textbox "Message":
+    - /placeholder: Ask the agent
+  - button "Attach file"
+  - button "Send" [disabled]
+`;
+
+exports[`Send And Stop 1`] = `
+- region "Conversation":
+  - text: Why does parseDate return null for 2026-11-10T09:00+05:30?
+  - button "Thought for 4s"
+  - text: Searched for parseDate 4 results Read src/lib/date.ts Ran pnpm test date 1.2s
+  - paragraph:
+    - text: The offset pattern only accepted
+    - code: "+0530"
+    - text: ". I made the colon optional:"
+  - text: src/lib/date.ts
+  - button "Copy"
+  - code: "const offset = /([+-])(\\\\d{4})$/; - const offset = /([+-])(\\\\d{2}):?(\\\\d{2})$/; +"
+  - button "Copy reply"
+  - button "Retry"
+  - text: Now find the callers and fix them
+  - button "Stopped"
+- group:
+  - textbox "Message":
+    - /placeholder: Ask the agent
+  - button "Attach file"
+  - button "Send" [disabled]
+`;

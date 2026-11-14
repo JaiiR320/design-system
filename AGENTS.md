@@ -2,6 +2,7 @@
 
 Read `README.md` first. Each rule comes with its reason; use the reason for cases the rules don't cover.
 
+- **Behavior comes from UI SDK (`@ui-sdk/react`, `@ui-sdk/core`); write custom behavior only when it has no equivalent there, and say why in a comment.** Its docs for the installed version are in `node_modules/@ui-sdk/react/docs/`: read `llms.txt`, then only the component pages you need. Hand-written focus, keys or ARIA drift from the tested behavior and the agent tooling UI SDK provides.
 - **Keep the system generic.** App-specific looks, tokens and layers belong in the app, through `variant={null}` plus className. Every future site shares this package.
 - **Style with the semantic tokens in `src/styles.css`,** not palette colors or one-off values. A theme override should reach every component.
 - **Use status colors (destructive, warning, success, info) only for meaning.** Decorative red or green reads as a state.

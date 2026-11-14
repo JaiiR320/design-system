@@ -5,15 +5,12 @@ exports[`Default 1`] = `
 `;
 
 exports[`Disabled Reason 1`] = `
-- group "Redo":
-  - button "Redo" [disabled]
-- text: Nothing to redo
+- button "Redo" [disabled]
 `;
 
 exports[`Disabled Reason Test 1`] = `
-- group "Redo":
-  - button "Redo" [disabled]
-- text: Nothing to redo Nothing to redo
+- button "Redo" [disabled]
+- tooltip "Nothing to redo"
 `;
 
 exports[`Escape Closes Test 1`] = `
@@ -22,17 +19,17 @@ exports[`Escape Closes Test 1`] = `
 
 exports[`Keyboard Focus Test 1`] = `
 - button "Undo"
-- text: Undo
+- tooltip "Undo"
 `;
 
 exports[`Long Text Test 1`] = `
 - button "Sort direction"
-- text: Sort direction toggles between ascending and descending order for the current grouping
+- tooltip "Sort direction toggles between ascending and descending order for the current grouping"
 `;
 
 exports[`Open Test 1`] = `
 - button "Undo"
-- text: Undo
+- tooltip "Undo"
 `;
 
 exports[`Sides 1`] = `
@@ -44,8 +41,11 @@ exports[`Sides 1`] = `
 
 exports[`Sides Test 1`] = `
 - button "Tooltip top"
+- tooltip "Side top"
 - button "Tooltip right"
+- tooltip "Side right"
 - button "Tooltip bottom"
+- tooltip "Side bottom"
 - button "Tooltip left"
-- text: Side top Side right Side bottom Side left
+- tooltip "Side left"
 `;

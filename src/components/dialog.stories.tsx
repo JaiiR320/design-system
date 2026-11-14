@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { X } from "lucide-react";
-import { useRef, type ComponentProps } from "react";
+import type { ComponentProps } from "react";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import { Button } from "#components/button";
@@ -39,20 +39,14 @@ function HeaderClose() {
 
 // Form dialog: title, labelled input with initial focus, Cancel/Create footer.
 function NewProjectDialog({ onOpenChange }: Pick<ComponentProps<typeof Dialog>, "onOpenChange">) {
-  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <Dialog onOpenChange={onOpenChange}>
       <DialogTrigger render={<Button />}>New project</DialogTrigger>
-      <DialogContent initialFocus={inputRef}>
+      <DialogContent initialFocus="#project-name">
         <DialogTitle>New project</DialogTitle>
         <form className="mt-5" onSubmit={(event) => event.preventDefault()}>
           <Label htmlFor="project-name">Project name</Label>
-          <Input
-            ref={inputRef}
-            id="project-name"
-            placeholder="Enter a project name"
-            className="mt-2"
-          />
+          <Input id="project-name" placeholder="Enter a project name" className="mt-2" />
           <DialogFooter>
             <DialogClose render={<Button />}>Cancel</DialogClose>
             <Button type="submit" variant="default">
@@ -113,9 +107,9 @@ export const BackdropClosesTest: Story = {
     const trigger = within(canvasElement).getByRole("button", { name: "New project" });
     await userEvent.click(trigger);
     await body.findByRole("dialog", { name: "New project" });
-    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
-    if (!viewport) throw new Error("viewport missing");
-    await userEvent.click(viewport);
+    const backdrop = document.querySelector<HTMLElement>('[data-slot="dialog-backdrop"]');
+    if (!backdrop) throw new Error("backdrop missing");
+    await userEvent.click(backdrop);
     await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
     await expect(args.onOpenChange).toHaveBeenCalledTimes(2);
     await expect(trigger).toHaveFocus();
@@ -129,11 +123,10 @@ type DemoProps = DialogContentProps & {
 
 // Generic dialogs open with focus on the popup itself, not the first button.
 function DemoDialog({ trigger, ...props }: DemoProps) {
-  const popupRef = useRef<HTMLDivElement>(null);
   return (
     <Dialog defaultOpen={!trigger}>
       {trigger ? <DialogTrigger render={<Button />}>{trigger}</DialogTrigger> : null}
-      <DialogContent ref={popupRef} tabIndex={-1} initialFocus={popupRef} {...props} />
+      <DialogContent initialFocus="content" {...props} />
     </Dialog>
   );
 }
@@ -259,10 +252,10 @@ const paragraphs = Array.from(
     `Version ${index + 1}: Ada Park updated the launch plan and moved two tasks from Atlas to Borealis.`,
 );
 
-// Taller than the viewport: the viewport scrolls, the page behind does not.
+// Taller than the viewport: the dialog scrolls, the page behind does not.
 function LongContentDialog({ trigger }: { trigger?: string }) {
   return (
-    <DemoDialog className="my-6" trigger={trigger}>
+    <DemoDialog trigger={trigger}>
       <DialogTitle>Change log</DialogTitle>
       <DialogBody className="mt-4 space-y-3 text-sm text-secondary-foreground">
         {paragraphs.map((text) => (
@@ -300,49 +293,50 @@ const templates = Array.from({ length: 15 }, (_, index) => ({
   pages: (index % 4) + 1,
 }));
 
-// A chrome-free full-width picker over a darker blurred scrim, scrolling as one page:
+// A chrome-free full-screen picker over a darker blurred scrim, scrolling as one page:
 // built from the ordinary parts, no special size.
 function FullScreenPicker({ trigger }: { trigger?: string }) {
   return (
     <DemoDialog
       trigger={trigger}
       padding="none"
-      className="mx-auto max-w-7xl rounded-none border-0 bg-transparent shadow-none"
+      className="h-full max-h-none w-full max-w-none rounded-none border-0 bg-transparent px-4 py-5 shadow-none sm:px-6"
       overlayProps={{ className: "bg-black/80 backdrop-blur-sm" }}
-      viewportProps={{ className: "block px-4 py-5 sm:px-6" }}
     >
-      <DialogHeader className="mb-5">
-        <div className="min-w-0 flex-1">
-          <DialogTitle className="text-2xl">Choose a template</DialogTitle>
-          <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,360px)_170px]">
-            <div>
-              <Label htmlFor="template-filter" className="font-semibold text-strong-foreground">
-                Search templates
-              </Label>
-              <Input
-                id="template-filter"
-                inputSize="sm"
-                placeholder="Filter by name"
-                className="mt-1"
-              />
+      <div className="mx-auto max-w-7xl">
+        <DialogHeader className="mb-5">
+          <div className="min-w-0 flex-1">
+            <DialogTitle className="text-2xl">Choose a template</DialogTitle>
+            <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,360px)_170px]">
+              <div>
+                <Label htmlFor="template-filter" className="font-semibold text-strong-foreground">
+                  Search templates
+                </Label>
+                <Input
+                  id="template-filter"
+                  inputSize="sm"
+                  placeholder="Filter by name"
+                  className="mt-1"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <DialogClose render={<Button variant="ghost" size="icon" aria-label="Close" />}>
-          <X className="size-5" strokeWidth={1.75} />
-        </DialogClose>
-      </DialogHeader>
-      <DialogBody className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-        {templates.map(({ name, pages }) => (
-          <div key={name} className="min-w-0">
-            <div className="aspect-[3/4] rounded-xl bg-surface ring-1 ring-border-strong" />
-            <div className="mt-2 flex justify-between px-1 text-sm text-strong-foreground">
-              <span className="font-semibold">{name}</span>
-              <span>{pages === 1 ? "1 page" : `${pages} pages`}</span>
+          <DialogClose render={<Button variant="ghost" size="icon" aria-label="Close" />}>
+            <X className="size-5" strokeWidth={1.75} />
+          </DialogClose>
+        </DialogHeader>
+        <DialogBody className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+          {templates.map(({ name, pages }) => (
+            <div key={name} className="min-w-0">
+              <div className="aspect-[3/4] rounded-xl bg-surface ring-1 ring-border-strong" />
+              <div className="mt-2 flex justify-between px-1 text-sm text-strong-foreground">
+                <span className="font-semibold">{name}</span>
+                <span>{pages === 1 ? "1 page" : `${pages} pages`}</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </DialogBody>
+          ))}
+        </DialogBody>
+      </div>
     </DemoDialog>
   );
 }
@@ -374,10 +368,8 @@ export const LongContentTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <LongContentDialog />,
   play: async () => {
-    await body.findByRole("dialog", { name: "Change log" });
-    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
-    if (!viewport) throw new Error("viewport missing");
-    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+    const dialog = await body.findByRole("dialog", { name: "Change log" });
+    await expect(dialog.scrollHeight).toBeGreaterThan(dialog.clientHeight);
   },
 };
 
@@ -396,14 +388,12 @@ export const FullScreenTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <FullScreenPicker />,
   play: async () => {
-    await body.findByRole("dialog", { name: "Choose a template" });
-    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
-    if (!viewport) throw new Error("viewport missing");
-    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+    const dialog = await body.findByRole("dialog", { name: "Choose a template" });
+    await expect(dialog.scrollHeight).toBeGreaterThan(dialog.clientHeight);
   },
 };
 
-// The full-screen picker on a real 390x844 phone: two columns, no sideways scroll, viewport scrolls.
+// The full-screen picker on a real 390x844 phone: two columns, no sideways scroll, the dialog scrolls.
 export const FullScreenMobileTest: Story = {
   tags: ["!dev", "!autodocs"],
   globals: { viewport: { value: "mobile" } },
@@ -412,13 +402,12 @@ export const FullScreenMobileTest: Story = {
   play: async () => {
     await expect(window.innerWidth).toBe(390);
     const dialog = await body.findByRole("dialog", { name: "Choose a template" });
-    const viewport = document.querySelector<HTMLElement>('[data-slot="dialog-viewport"]');
     const grid = dialog.querySelector<HTMLElement>('[data-slot="dialog-body"]');
-    if (!viewport || !grid) throw new Error("viewport or body missing");
+    if (!grid) throw new Error("body missing");
     await expect(getComputedStyle(grid).gridTemplateColumns.split(" ")).toHaveLength(2);
-    await expect(viewport.scrollWidth).toBe(viewport.clientWidth);
+    await expect(dialog.scrollWidth).toBe(dialog.clientWidth);
     await expect(dialog.getBoundingClientRect().right).toBeLessThanOrEqual(390);
-    await expect(viewport.scrollHeight).toBeGreaterThan(viewport.clientHeight);
+    await expect(dialog.scrollHeight).toBeGreaterThan(dialog.clientHeight);
     // The close button stays reachable on screen.
     const close = within(dialog).getByRole("button", { name: "Close" });
     const box = close.getBoundingClientRect();

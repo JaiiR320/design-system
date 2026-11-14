@@ -42,7 +42,7 @@ exports[`Default 1`] = `
     - /placeholder: Add member…
 `;
 
-exports[`Field Control Textarea 1`] = `
+exports[`Field Textarea 1`] = `
 - text: Notes
 - group:
   - textbox "Notes":

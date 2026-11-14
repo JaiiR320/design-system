@@ -1,10 +1,9 @@
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
+import { mergeProps, renderElement, type PartProps } from "@ui-sdk/react/primitive";
 import { ChevronRight } from "lucide-react";
 import type * as React from "react";
 
 import { focusRing } from "#lib/recipes";
-import { cn } from "#lib/utils";
+import { cn, type WithClassName } from "#lib/utils";
 
 function Breadcrumb({
   "aria-label": ariaLabel = "Breadcrumb",
@@ -37,12 +36,12 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
  * Anchor by default; `render` swaps in a router link or a navigation button.
  * A link/button for the current location takes `aria-current="page"`.
  */
-function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProps<"a">) {
-  return useRender({
-    defaultTagName: "a",
-    render,
-    props: mergeProps<"a">(
+function BreadcrumbLink({ className, render, ...props }: WithClassName<PartProps<"a">>) {
+  return renderElement(
+    "a",
+    mergeProps(
       {
+        "data-slot": "breadcrumb-link",
         className: cn(
           "rounded-sm transition hover:text-strong-foreground aria-[current=page]:text-foreground motion-reduce:transition-none",
           focusRing,
@@ -51,8 +50,8 @@ function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProp
       },
       props,
     ),
-    state: { slot: "breadcrumb-link" },
-  });
+    render,
+  );
 }
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {

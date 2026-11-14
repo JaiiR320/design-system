@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Default 1`] = `
+- region "Conversation":
+  - text: "Question 1: what changed in the parser?"
+  - paragraph: "Answer 1: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 2: what changed in the parser?"
+  - paragraph: "Answer 2: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 3: what changed in the parser?"
+  - paragraph: "Answer 3: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 4: what changed in the parser?"
+  - paragraph: "Answer 4: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 5: what changed in the parser?"
+  - paragraph: "Answer 5: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+- button "Scroll to latest message"
+- button "Agent replies"
+- button "Send"
+`;
+
+exports[`Follows New Messages 1`] = `
+- region "Conversation":
+  - text: "Question 1: what changed in the parser?"
+  - paragraph: "Answer 1: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 2: what changed in the parser?"
+  - paragraph: "Answer 2: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 3: what changed in the parser?"
+  - paragraph: "Answer 3: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 4: what changed in the parser?"
+  - paragraph: "Answer 4: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 5: what changed in the parser?"
+  - paragraph: "Answer 5: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - paragraph: Reply 11
+  - paragraph: Reply 12
+- button "Agent replies"
+- button "Send"
+`;
+
+exports[`Jump To Latest 1`] = `
+- region "Conversation":
+  - text: "Question 1: what changed in the parser?"
+  - paragraph: "Answer 1: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 2: what changed in the parser?"
+  - paragraph: "Answer 2: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 3: what changed in the parser?"
+  - paragraph: "Answer 3: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 4: what changed in the parser?"
+  - paragraph: "Answer 4: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 5: what changed in the parser?"
+  - paragraph: "Answer 5: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - paragraph: Reply 11
+- button "Scroll to latest message"
+- button "Agent replies"
+- button "Send"
+`;
+
+exports[`Keeps Place When Scrolled Up 1`] = `
+- region "Conversation":
+  - text: "Question 1: what changed in the parser?"
+  - paragraph: "Answer 1: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 2: what changed in the parser?"
+  - paragraph: "Answer 2: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 3: what changed in the parser?"
+  - paragraph: "Answer 3: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 4: what changed in the parser?"
+  - paragraph: "Answer 4: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 5: what changed in the parser?"
+  - paragraph: "Answer 5: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - paragraph: Reply 11
+- button "Scroll to latest message"
+- button "Agent replies"
+- button "Send"
+`;
+
+exports[`Send Pins To End 1`] = `
+- region "Conversation":
+  - text: "Question 1: what changed in the parser?"
+  - paragraph: "Answer 1: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 2: what changed in the parser?"
+  - paragraph: "Answer 2: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 3: what changed in the parser?"
+  - paragraph: "Answer 3: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 4: what changed in the parser?"
+  - paragraph: "Answer 4: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: "Question 5: what changed in the parser?"
+  - paragraph: "Answer 5: the offset regex now accepts a colon, and invalid input throws a RangeError instead of returning null."
+  - text: Message 11
+- button "Agent replies"
+- button "Send"
+`;

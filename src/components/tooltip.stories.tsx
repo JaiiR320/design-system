@@ -3,19 +3,17 @@ import { ArrowDown, Redo2, Undo2 } from "lucide-react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { Button } from "#components/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "#components/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "#components/tooltip";
 
 const meta = {
   title: "Primitives/Tooltip",
   component: Tooltip,
   decorators: [
     (Story) => (
-      <TooltipProvider>
-        {/* Room above the trigger so the default top side doesn't flip. */}
-        <div className="p-12">
-          <Story />
-        </div>
-      </TooltipProvider>
+      // Room above the trigger so the default top side doesn't flip.
+      <div className="p-12">
+        <Story />
+      </div>
     ),
   ],
 } satisfies Meta<typeof Tooltip>;
@@ -82,7 +80,10 @@ export const EscapeClosesTest: Story = {
       expect(body.getByText("Undo", { selector: "[data-slot=tooltip-content]" })).toBeVisible(),
     );
     await userEvent.keyboard("{Escape}");
-    await waitFor(() => expect(document.querySelector("[data-slot=tooltip-content]")).toBeNull());
+    // The content stays in the page, hidden, so it keeps describing its trigger.
+    await waitFor(() =>
+      expect(document.querySelector("[data-slot=tooltip-content]")).not.toBeVisible(),
+    );
     await expect(trigger).toHaveFocus();
   },
 };
@@ -91,15 +92,12 @@ function SidesGrid({ open }: { open?: boolean }) {
   return (
     <div className="grid w-[480px] grid-cols-2 place-items-center gap-y-24 py-8">
       {(["top", "right", "bottom", "left"] as const).map((side) => (
-        // Separate providers: a shared one lets only one tooltip stay open.
-        <TooltipProvider key={side}>
-          <Tooltip defaultOpen={open}>
-            <TooltipTrigger render={<Button size="icon" aria-label={`Tooltip ${side}`} />}>
-              <Redo2 className="size-4" strokeWidth={1.75} />
-            </TooltipTrigger>
-            <TooltipContent side={side}>Side {side}</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip key={side} defaultOpen={open}>
+          <TooltipTrigger render={<Button size="icon" aria-label={`Tooltip ${side}`} />}>
+            <Redo2 className="size-4" strokeWidth={1.75} />
+          </TooltipTrigger>
+          <TooltipContent side={side}>Side {side}</TooltipContent>
+        </Tooltip>
       ))}
     </div>
   );
@@ -115,30 +113,18 @@ export const SidesTest: Story = {
   render: () => <SidesGrid open />,
 };
 
-// Base UI 1.9 tooltips are visual hints: no role="tooltip", no aria-describedby. Disabled
-// buttons can't take focus, so a focusable group carries the name and describes itself with
-// persistent sr-only text; the tooltip only repeats it for sighted users.
+// A disabled button stays focusable with `focusableWhenDisabled`, so it can host the tooltip
+// that says why. The tooltip describes the button (role="tooltip", aria-describedby).
 function DisabledRedo() {
   return (
-    <>
-      <Tooltip>
-        <TooltipTrigger
-          render={<span tabIndex={0} />}
-          role="group"
-          aria-label="Redo"
-          aria-describedby="redo-reason"
-          className="inline-flex rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        >
-          <Button disabled size="icon" aria-label="Redo">
-            <Redo2 className="size-4" strokeWidth={1.75} />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Nothing to redo</TooltipContent>
-      </Tooltip>
-      <span id="redo-reason" className="sr-only">
-        Nothing to redo
-      </span>
-    </>
+    <Tooltip>
+      <TooltipTrigger
+        render={<Button disabled focusableWhenDisabled size="icon" aria-label="Redo" />}
+      >
+        <Redo2 className="size-4" strokeWidth={1.75} />
+      </TooltipTrigger>
+      <TooltipContent>Nothing to redo</TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -150,10 +136,11 @@ export const DisabledReasonTest: Story = {
   tags: ["!dev", "!autodocs"],
   render: () => <DisabledRedo />,
   play: async ({ canvasElement }) => {
-    const group = within(canvasElement).getByRole("group", { name: "Redo" });
-    await expect(group).toHaveAccessibleDescription("Nothing to redo");
+    const redo = within(canvasElement).getByRole("button", { name: "Redo" });
+    await expect(redo).toHaveAttribute("aria-disabled", "true");
+    await expect(redo).toHaveAccessibleDescription("Nothing to redo");
     await userEvent.tab();
-    await expect(group).toHaveFocus();
+    await expect(redo).toHaveFocus();
     const body = within(document.body);
     await waitFor(() =>
       expect(
