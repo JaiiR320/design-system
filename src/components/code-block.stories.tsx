@@ -79,7 +79,8 @@ export const FloatingActionsFocused: Story = {
     // The actions come first in tab order, before the scrollable code.
     await userEvent.tab();
     await expect(button).toHaveFocus();
-    await expect(getComputedStyle(button.parentElement!).opacity).toBe("1");
+    // Wait out the fade-in: Chromatic runs with transitions on.
+    await waitFor(() => expect(getComputedStyle(button.parentElement!).opacity).toBe("1"));
   },
 };
 
