@@ -193,6 +193,8 @@ export const SendPinsToEnd: Story = {
     const element = viewport(canvasElement);
     await waitFor(() => expect(distanceFromEnd(element)).toBeLessThanOrEqual(2));
     scrollToTop(element);
+    // Send once the scroll-up has landed, as a reader would: the jump button shows by then.
+    await waitFor(() => expect(jumpButton(canvasElement)).toHaveAttribute("data-visible"));
     await userEvent.click(canvas.getByRole("button", { name: "Send" }));
     await expect(canvas.getByText("Message 11")).toBeVisible();
     await waitFor(() => expect(distanceFromEnd(element)).toBeLessThanOrEqual(2));
